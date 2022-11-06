@@ -1,5 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
+const { ObjectId } = require('mongodb');
+const validation = require('../validation');
 
 let exportedMethods = {
     async getAllProducts() {
@@ -41,6 +43,9 @@ let exportedMethods = {
         //validation start
         Laptop = Laptop;
         //validation end
+        let newLaptop = {
+            Laptop: Laptop
+        }
     },
     async addPhone(
         Phone
@@ -55,7 +60,50 @@ let exportedMethods = {
         //validation start
         Tablet = Tablet;
         //validation end
+    },
+    async updateLaptop(
+        Laptop
+    ) {
+        //validation start
+        Laptop = Laptop;
+        //validation end
+    },
+    async updatePhone(
+        Phone
+    ) {
+        //validation start
+        Phone = Phone;
+        //validation end
+    },
+    async updateTablet(
+        Tablet
+    ) {
+        //validation start
+        Tablet = Tablet;
+        //validation end
+    },
+    async removeLaptop(
+        Laptop
+    ) {
+        //validation start
+        Laptop = Laptop;
+        //validation end
+    },
+    async removePhone(
+        Phone
+    ) {
+        //validation start
+        Phone = Phone;
+        //validation end
+    },
+    async removeTablet(
+        Tablet
+    ) {
+        //validation start
+        Tablet = Tablet;
+        //validation end
     }
+
 
 }
 
