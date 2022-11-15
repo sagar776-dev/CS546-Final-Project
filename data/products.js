@@ -6,105 +6,63 @@ const validation = require('../validation');
 let exportedMethods = {
     async getAllProducts() {
         const productCollection = await products();
-        const procuctsList = await productCollection.find({}).toArray();
-        if (!procuctsList) throw 'No users in system!';
-        return procuctsList;
+        const productList = await productCollection.find({}).toArray();
+        if (!productList) throw 'No product in system!';
+        return productList;
     },
-    async getLaptopByID(id) {
+    async addProduct(name, category, description, price, release_date, picture, amazonurl, bestbuyurl) {
         //validation start
-        id = id;
-        //validation end
+        name = name;
+        category = category;
+        picture = picture;
+        amazonurl = amazonurl;
+        bestbuyurl = bestbuyurl;
+        //validation end 
+
         const productCollection = await products();
-        const laptop = await productCollection.findOne({ _id: id });
-        if (!laptop) throw 'Laptop not found';
-        return laptop;
+
+        //unknown parameters
+        specifications = [];
+        reviews = [];
+        qna = [];
+        comments = [];
+        rating = 0;
+
+        let newProduct = {
+            name: name,
+            category: category,
+            specifications: specifications,
+            description: description,
+            price: price,
+            rating: rating,
+            release_date: release_date,
+            reviews: reviews,
+            qna: qna,
+
+            comments: comments,
+            picture: picture,
+            amazonurl: amazonurl,
+            bestbuyurl: bestbuyurl
+        };
+        const newInsertInformation = await productCollection.insertOne(newProduct);
+        if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
+        return await this.getUserById(newInsertInformation.insertedId.toString());
     },
-    async getPhoneByID(id) {
-        //validation start
-        id = id;
-        //validation end
-        const productCollection = await products();
-        const phone = await productCollection.findOne({ _id: id });
-        if (!phone) throw 'Phone not found';
-        return phone;
+    async getProductsByID() {
+
     },
-    async getTabletByID(id) {
-        //validation start
-        id = id;
-        //validation end
-        const productCollection = await products();
-        const tablet = await productCollection.findOne({ _id: id });
-        if (!tablet) throw 'Tablet not found';
-        return tablet;
+    async getProductsByName() {
+
     },
-    async addLaptop(
-        Laptop
-    ) {
-        //validation start
-        Laptop = Laptop;
-        //validation end
-        let newLaptop = {
-            Laptop: Laptop
-        }
+    async getProducts() {
+
     },
-    async addPhone(
-        Phone
-    ) {
-        //validation start
-        Phone = Phone;
-        //validation end
+    async updateProduct() {
+
     },
-    async addTablet(
-        Tablet
-    ) {
-        //validation start
-        Tablet = Tablet;
-        //validation end
-    },
-    async updateLaptop(
-        Laptop
-    ) {
-        //validation start
-        Laptop = Laptop;
-        //validation end
-    },
-    async updatePhone(
-        Phone
-    ) {
-        //validation start
-        Phone = Phone;
-        //validation end
-    },
-    async updateTablet(
-        Tablet
-    ) {
-        //validation start
-        Tablet = Tablet;
-        //validation end
-    },
-    async removeLaptop(
-        Laptop
-    ) {
-        //validation start
-        Laptop = Laptop;
-        //validation end
-    },
-    async removePhone(
-        Phone
-    ) {
-        //validation start
-        Phone = Phone;
-        //validation end
-    },
-    async removeTablet(
-        Tablet
-    ) {
-        //validation start
-        Tablet = Tablet;
-        //validation end
+    async removeProduct() {
+
     }
-
-
 }
 
 module.exports = exportedMethods;
