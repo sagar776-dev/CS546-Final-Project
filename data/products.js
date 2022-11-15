@@ -10,7 +10,15 @@ let exportedMethods = {
         if (!productList) throw 'No product in system!';
         return productList;
     },
-    async addProduct(name, category, description, price, release_date, picture, amazonurl, bestbuyurl) {
+    async addProduct(
+        name,
+        category,
+        description,
+        price,
+        release_date,
+        picture,
+        amazonurl,
+        bestbuyurl) {
         //validation start
         name = name;
         category = category;
@@ -31,9 +39,10 @@ let exportedMethods = {
         let newProduct = {
             name: name,
             category: category,
-            specifications: specifications,
             description: description,
             price: price,
+
+            specifications: specifications,
             rating: rating,
             release_date: release_date,
             reviews: reviews,
@@ -48,8 +57,14 @@ let exportedMethods = {
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
         return await this.getUserById(newInsertInformation.insertedId.toString());
     },
-    async getProductsByID() {
-
+    async getProductsByID(productId) {
+        //validation start
+        productId = productId
+        //validation end
+        const productCollection = await products();
+        const product = await productCollection.findOne({ _id: ObjectId(productId) });
+        if (!product) throw 'Product not found';
+        return product;
     },
     async getProductsByName() {
 
@@ -57,11 +72,29 @@ let exportedMethods = {
     async getProducts() {
 
     },
-    async updateProduct() {
+    async updateProduct(
+        productId,
+        name,
+        category,
+        description,
+        price,
+        release_date,
+        picture,
+        amazonurl,
+        bestbuyurl) {
 
     },
-    async removeProduct() {
-
+    async removeProduct(productId) {
+        //validation start
+        productId = productId;
+        //validation end
+        const productCollection = await products();
+        const product = await productCollection.findOne({ _id: ObjectId(productId) });
+        const deletionInfo = await productCollection.deleteOne({ _id: ObjectId(productId) });
+        if (deletionInfo.deletedCount === 0) {
+            throw `Could not delete product with id of ${productId}`;
+        }
+        return `${product["name"]} has been successfully deleted!`;
     }
 }
 
