@@ -1,0 +1,621 @@
+{
+    "from": 1,
+    "to": 99,
+    "currentPage": 1,
+    "total": 847,
+    "totalPages": 9,
+    "queryTime": "1.567",
+    "totalTime": "1.668",
+    "partial": false,
+    "canonicalUrl": "/v1/products((categoryPath.id=abcat0502000))?show=name,regularPrice,salePrice,onSale&sort=name&pageSize=99&format=json&facet=name,10&apiKey=qhqws47nyvgze2mq3qx4jadt",
+    "products": [
+        {
+            "name": "(CTO) MacBook Air 13.3\" Laptop - Apple M1 chip - 8C GPU 7C 16GB Memory -1TB SSD",
+            "regularPrice": 1499,
+            "salePrice": 1499,
+            "onSale": false
+        },
+        {
+            "name": "(CTO) MacBook Air 13.3\" Laptop - Apple M1 chip - 8C GPU 7C 16GB Memory -512GB SSD",
+            "regularPrice": 1399,
+            "salePrice": 1399,
+            "onSale": false
+        },
+        {
+            "name": "(CTO) MacBook Air 13.3\" Laptop - Apple M1 chip - 8C GPU 7C 8GB Memory -512GB SSD",
+            "regularPrice": 1199,
+            "salePrice": 1199,
+            "onSale": false
+        },
+        {
+            "name": "(CTO) MacBook Air 13.3\" Laptop - Apple M1 chip -8C GPU 7C  16GB Memory -256GB SSD",
+            "regularPrice": 1199,
+            "salePrice": 1199,
+            "onSale": false
+        },
+        {
+            "name": "Acer - 11.6\" Touch-Screen Chromebook - Intel Celeron - 4GB Memory - 16GB eMMC Flash Memory - Gray",
+            "regularPrice": 279,
+            "salePrice": 279,
+            "onSale": false
+        },
+        {
+            "name": "Acer - 15.6\" Refurbished Touch-Screen Laptop - AMD A4-Series - 4GB Memory - AMD Radeon R4 - 32GB eMMC Flash Memory - Pure Silver",
+            "regularPrice": 279.99,
+            "salePrice": 279.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - 311 - 11.6\" Chromebook AMD A4-9120C 1.6GHz 4GB RAM 64GB Flash ChromeOS - Refurbished",
+            "regularPrice": 207.99,
+            "salePrice": 207.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - 317 Chromebook - 17.3\" Intel Celeron N4500 1.1GHz 4GB RAM 64GB ChromeOS - Refurbished",
+            "regularPrice": 290.99,
+            "salePrice": 290.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Acer-Chromebook 317 Laptop–17.3 FHD IPS Touch Display–Intel Pentium Silver N6000 Processor–8GB LPDDR4X–64GB eMMC– WiFi6",
+            "regularPrice": 499,
+            "salePrice": 379,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Aspire 1 - 15.6\" Laptop Intel Celeron N4500 1.1GHz 4GB RAM 64GB Flash W10H - Refurbished",
+            "regularPrice": 239.99,
+            "salePrice": 215.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Aspire 3 – 17.3\" HD+ Laptop – 11th Gen Intel Core i3-1115G4 – 8GB Memory – 256GB SSD – Pure Silver",
+            "regularPrice": 529.99,
+            "salePrice": 399.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Chromebook 311 - 11.6\" AMD A4-9120C 1.6GHz 4GB RAM 64GB Flash Chrome OS - Refurbished",
+            "regularPrice": 207.99,
+            "salePrice": 207.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook 311 11.6\" Refurbished Chromebook - Intel Celeron - 4GB Memory - 32GB eMMC - Chrome OS",
+            "regularPrice": 208.99,
+            "salePrice": 167.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Chromebook 311 11.6\" Refurbished Chromebook - Intel Celeron - 4GB Memory - 32GB eMMC - Chrome OS",
+            "regularPrice": 228.99,
+            "salePrice": 228.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook 311 C733 11.6\" Chromebook - Intel Celeron - 4 GB Memory - 32 GB eMMC - Shale Black",
+            "regularPrice": 299.99,
+            "salePrice": 284.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Chromebook 311 Laptop–11.6” HD Display– MediaTek MT8183C Octa-Core– 4GB LPDDR4X– 32GB eMMC - WiFi 5– USB Type-C",
+            "regularPrice": 249,
+            "salePrice": 199.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Chromebook 311-11.6\" HD Touchscreen Chromebook - Intel Celeron N4000-4GB LPDDR4-32GB eMMC - Silver",
+            "regularPrice": 287.99,
+            "salePrice": 287.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook 315-15.6’’ HD Laptop- Intel Celeron N4000 - 4GB LPDDR4- 32GB eMMC",
+            "regularPrice": 249,
+            "salePrice": 199.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Chromebook 516 GE Cloud Gaming Chromebook - 16\" 2560x1600 120Hz - Intel Core i5-1240P - 8GB RAM - 256GB SSD - RGB KB - Titanium Gray",
+            "regularPrice": 649,
+            "salePrice": 649,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook Spin 513 - 13.5\" Touch 100% sRGB Display - MediaTek Kompanio 1380 - 8GB LPDDR4X - 128GB eMMC - Chrome OS",
+            "regularPrice": 599.99,
+            "salePrice": 599.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook Spin 514 Laptop - 14.0\" Full HD 2-in-1 Touchscreen - AMD Ryzen 3 5125C – 8GB – 128GB – WiFi 6- Silver",
+            "regularPrice": 549,
+            "salePrice": 549,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook Spin 514 Laptop– Convertible-14” Full HD Touch –Ryzen 3 3250C– GB DDR4 Memory–64GB eMMC Flash Memory",
+            "regularPrice": 499,
+            "salePrice": 374.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Chromebook Spin 514 – Convertible - 14” Full HD Touch – AMD Ryzen 5 3500C – 8GB DDR4 – 128GB eMMC – HDMI - Mist Green",
+            "regularPrice": 629,
+            "salePrice": 629,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook Spin 514 – Convertible - 14” Full HD Touch – Ryzen 3 3250C – 8GB DDR4 – 64GB eMMC - Backlit Keyboard",
+            "regularPrice": 559,
+            "salePrice": 559,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Chromebook Spin 714 Laptop - 14.0\" 2-in-1 Touchscreen - Intel Evo Core i5 – 8GB – 256GB SSD - Slate Blue",
+            "regularPrice": 729,
+            "salePrice": 629,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Geek Squad Certified Refurbished 15.6\" Chromebook - Intel Celeron - 4GB Memory - 16GB eMMC Flash Memory - Granite Gray",
+            "regularPrice": 229,
+            "salePrice": 229,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Nitro 5 - 15.6\" Laptop Intel Core i5-10300H 2.5GHz 16GB Ram 512GB SSD W10H - Refurbished",
+            "regularPrice": 859.99,
+            "salePrice": 859.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - P414RN-51 14\" Laptop - Intel Core i5 - 8 GB Memory - 256 GB SSD - Slate Blue",
+            "regularPrice": 999.99,
+            "salePrice": 999.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Predator 300 SE 14\" Laptop Intel i7-11375H 3.3GHz 16GB RAM 512GB SSD W10H - Refurbished",
+            "regularPrice": 1035.99,
+            "salePrice": 1035.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Predator Triton 500 SE 16\" 2560x1600 165Hz G-SYNC - Intel 11th Gen i7 - NVIDIA GeForce RTX 3080 - 16GB DDR4 - 1TB SSD",
+            "regularPrice": 2399.99,
+            "salePrice": 2399.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Spin 3 14\" Refurbished Laptop - Intel Core i5 1035G1 - 8GB Memory - 256GB Solid State Drive - Black",
+            "regularPrice": 723.99,
+            "salePrice": 723.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Spin 3 2-in-1 14\" Touch-Screen Laptop - Intel Core i5 - 8GB Memory - 256GB Solid State Drive - Pure Silver",
+            "regularPrice": 639.99,
+            "salePrice": 639.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Spin 5 13.5\" Refurbished Laptop - Intel Core i5 - 8GB Memory - 512GB SSD",
+            "regularPrice": 879.99,
+            "salePrice": 879.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Spin 5 13.5\" Refurbished Laptop - Intel Core i7 - 16GB Memory - 512GB SSD",
+            "regularPrice": 981.99,
+            "salePrice": 981.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Spin 5 13.5\" Refurbished Laptop - Intel i5 - 16GB Memory - 512GB SSD",
+            "regularPrice": 909.99,
+            "salePrice": 909.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 3 - 13.5\" Laptop Intel Core i7-1165G7 2.8GHz 16GB RAM 512GB SSD W10H - Refurbished",
+            "regularPrice": 840.99,
+            "salePrice": 840.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 3 - 14\" Laptop Intel Core i7-1165G7 2.8GHz 16GB Ram 1TB SSD Win10H - Refurbished",
+            "regularPrice": 1035.99,
+            "salePrice": 1035.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 3 - 14\" Laptop Intel Core i7-1165G7 2.8GHz 8GB Ram 256GB SSD Win10H - Refurbished",
+            "regularPrice": 725.99,
+            "salePrice": 725.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 3 - 14” FHD IPS Laptop - Intel Evo Core i7 - Intel Iris Xe - 16GB LPDDR4X - 512GB SSD",
+            "regularPrice": 999.99,
+            "salePrice": 999.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 3 13.5\" Refurbished Laptop - Intel i5 - 8GB Memory - 256GB SSD",
+            "regularPrice": 627.99,
+            "salePrice": 627.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 3- 14\" FHD IPS Widescreen LED Laptop- Intel Core i7- Intel Iris Xe Graphics- 8GB LPDDR4X-512GB NVMe SSD",
+            "regularPrice": 899.99,
+            "salePrice": 899.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 5 - 14\" Intel Core i7-1165G7 2.8GHz 16GB Ram 1TB HDD Windows 10 Home - Refurbished",
+            "regularPrice": 1035.99,
+            "salePrice": 1035.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - Swift 5 - 14” FHD IPS Laptop -Intel Evo Core i7 - 16GB RAM – 1TB SSD",
+            "regularPrice": 1299.99,
+            "salePrice": 1299.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - TravelMate P2 P214-53 14\" Laptop - Intel Core i5 - 8 GB Memory - 512 GB SSD - Shale Black",
+            "regularPrice": 679.99,
+            "salePrice": 679.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - TravelMate P4 P414-51 14\" Laptop - Intel Core i5 - 8 GB Memory - 256 GB SSD - Slate Blue",
+            "regularPrice": 899.99,
+            "salePrice": 899.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - TravelMate P4 P414-51 14\" Laptop - Intel Core i7 - 16 GB Memory - 512 GB SSD - Slate Blue",
+            "regularPrice": 1099.99,
+            "salePrice": 1099.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer - TravelMate Spin B3 B311RN-31 11.6\" Laptop - Intel Celeron - 4 GB Memory - 128 GB eMMC - Shale Black",
+            "regularPrice": 429.99,
+            "salePrice": 359.99,
+            "onSale": true
+        },
+        {
+            "name": "Acer - Vero 514 Chromebook Green PC Laptop - 14\" FHD IPS - Intel Core i5 1235U - 8GB LPDDRX Memory - 256GB SSD",
+            "regularPrice": 599.99,
+            "salePrice": 599.99,
+            "onSale": false
+        },
+        {
+            "name": "Acer Chromebook 314 - 14\" Intel Celeron N4000 1.1GHz 4GB Ram 64GB Flash ChromeOS - Refurbished",
+            "regularPrice": 259.99,
+            "salePrice": 259.99,
+            "onSale": false
+        },
+        {
+            "name": "Alienware - AREA-51 2.8GHz Notebook",
+            "regularPrice": 2529.99,
+            "salePrice": 2529.99,
+            "onSale": false
+        },
+        {
+            "name": "Alienware - AREA-51m Notebook",
+            "regularPrice": 2529.99,
+            "salePrice": 2529.99,
+            "onSale": false
+        },
+        {
+            "name": "Alienware - AREA-51m2 2.8GHz Notebook - Space Black",
+            "regularPrice": 2529.99,
+            "salePrice": 2529.99,
+            "onSale": false
+        },
+        {
+            "name": "Apple - 14.2\" MacBook Pro 8C/14G M1 Pro 32GB 512GB 67W",
+            "regularPrice": 2399,
+            "salePrice": 2399,
+            "onSale": false
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air - 13.3\" Retina Display - Intel Core i5 - 16GB Memory - 512GB Flash Storage - Space Gray",
+            "regularPrice": 1799.99,
+            "salePrice": 1259.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air - 13.3\" Retina Display - Intel Core i5 - 8GB Memory - 128GB Flash Storage - Gold",
+            "regularPrice": 1199.99,
+            "salePrice": 959.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air - 13.3\" Retina Display - Intel Core i5 - 8GB Memory - 128GB Flash Storage - Space Gray",
+            "regularPrice": 1199.99,
+            "salePrice": 959.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air - 13.3\" Retina Display - Intel Core i5 - 8GB Memory - 256GB Flash Storage - Silver",
+            "regularPrice": 1399.99,
+            "salePrice": 1119.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i3 - 8GB Memory - 256GB Solid State Drive - Gold",
+            "regularPrice": 949.99,
+            "salePrice": 794.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i3 - 8GB Memory - 256GB Solid State Drive - Silver",
+            "regularPrice": 949.99,
+            "salePrice": 794.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i5 - 8GB Memory - 128GB Solid State Drive - Gold",
+            "regularPrice": 899.99,
+            "salePrice": 729.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i5 - 8GB Memory - 128GB Solid State Drive - Silver",
+            "regularPrice": 899.99,
+            "salePrice": 759.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i5 - 8GB Memory - 128GB Solid State Drive - Space Gray",
+            "regularPrice": 899.99,
+            "salePrice": 729.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i5 - 8GB Memory - 256GB Solid State Drive - Silver",
+            "regularPrice": 949.99,
+            "salePrice": 809.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i5 - 8GB Memory - 256GB Solid State Drive - Space Gray",
+            "regularPrice": 949.99,
+            "salePrice": 809.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop - Intel Core i5 - 8GB Memory - 512GB Solid State Drive - Space Gray",
+            "regularPrice": 1249.99,
+            "salePrice": 1009.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Air 13.3\" Laptop- Intel Core i5 - 8GB Memory - 512GB Solid State Drive - Silver",
+            "regularPrice": 1249.99,
+            "salePrice": 999.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 1TB SSD - Silver",
+            "regularPrice": 1999.99,
+            "salePrice": 1669.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 1TB SSD - Space Gray",
+            "regularPrice": 1999.99,
+            "salePrice": 1674.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 512GB SSD - Silver",
+            "regularPrice": 1799.99,
+            "salePrice": 1399.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 512GB SSD - Space Gray",
+            "regularPrice": 1799.99,
+            "salePrice": 1399.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 128GB SSD - Silver",
+            "regularPrice": 1199.99,
+            "salePrice": 909.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 128GB SSD - Space Gray",
+            "regularPrice": 1199.99,
+            "salePrice": 914.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Silver",
+            "regularPrice": 1699.99,
+            "salePrice": 1199.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Silver",
+            "regularPrice": 1399.99,
+            "salePrice": 984.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Silver",
+            "regularPrice": 1249.99,
+            "salePrice": 969.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Silver",
+            "regularPrice": 1799.99,
+            "salePrice": 1439.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Space Gray",
+            "regularPrice": 1699.99,
+            "salePrice": 1049.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Space Gray",
+            "regularPrice": 1399.99,
+            "salePrice": 1019.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Space Gray",
+            "regularPrice": 1249.99,
+            "salePrice": 929.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD - Space Gray",
+            "regularPrice": 1799.99,
+            "salePrice": 1439.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD - Silver",
+            "regularPrice": 1899.99,
+            "salePrice": 1339.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD - Silver",
+            "regularPrice": 1449.99,
+            "salePrice": 1229.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD - Space Gray",
+            "regularPrice": 1899.99,
+            "salePrice": 1399.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD - Space Gray",
+            "regularPrice": 1449.99,
+            "salePrice": 999.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD - Space Gray",
+            "regularPrice": 1999.99,
+            "salePrice": 1599.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 16\" Display- Intel Core i7- 16GB Memory- AMD Radeon Pro 5300M - 512GB SSD - Silver",
+            "regularPrice": 2399.99,
+            "salePrice": 1818.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 16\" Display- Intel Core i7- 16GB Memory- AMD Radeon Pro 5300M - 512GB SSD - Space Gray",
+            "regularPrice": 2399.99,
+            "salePrice": 1999.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 16\" Display- Intel Core i9- 16GB Memory- AMD Radeon Pro 5500M - 1TB SSD - Silver",
+            "regularPrice": 2799.99,
+            "salePrice": 2129.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro - 16\" Display- Intel Core i9- 16GB Memory- AMD Radeon Pro 5500M - 1TB SSD - Space Gray",
+            "regularPrice": 2799.99,
+            "salePrice": 2399.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro 15\" Display Touch Bar Intel Core i9 32GB Memory AMD Radeon Pro 560X 1TB SSD - Space Gray",
+            "regularPrice": 3799.99,
+            "salePrice": 2934.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro 15.4\" Display- Intel Core i7- 16GB Memory- AMD Radeon Pro 555X - 256GB SSD - Space Gray",
+            "regularPrice": 2399.99,
+            "salePrice": 1699.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro 15.4\" Display- Intel Core i9- 16GB Memory- AMD Radeon Pro 560X - 512GB SSD - Space Gray",
+            "regularPrice": 2799.99,
+            "salePrice": 2009.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Geek Squad Certified Refurbished MacBook Pro® - 13\" Display - Intel Core i5 - 8 GB Memory - 256GB Flash Storage - Space Gray",
+            "regularPrice": 1499.99,
+            "salePrice": 1214.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - MacBook Air 13.3\" Intel Core i5 4GB Memory - 256GB SSD (MD761LL/B)  Early 2014 - Pre-Owned - Silver",
+            "regularPrice": 329.99,
+            "salePrice": 313.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - MacBook Air 13.3\" Intel Core i5 4GB Memory, 128GB SSD (MD231LL/A) Mid-2012 - Pre-Owned - Silver",
+            "regularPrice": 279.99,
+            "salePrice": 279.99,
+            "onSale": false
+        },
+        {
+            "name": "Apple - MacBook Air 13.3\" Laptop - Intel Core i5 - 16GB Memory - 512GB Solid State Drive - Silver",
+            "regularPrice": 1699.99,
+            "salePrice": 1359.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - MacBook Air 13.3\" Laptop with Touch ID - Intel Core i3 - 8GB Memory - 256GB Solid State Drive - Silver",
+            "regularPrice": 949.99,
+            "salePrice": 569.99,
+            "onSale": true
+        },
+        {
+            "name": "Apple - Macbook Air With Retina True Tone Display - 13.3\" - CORE i5 - 16 GB RAM - 256 GB SSD",
+            "regularPrice": 1299,
+            "salePrice": 1299,
+            "onSale": false
+        },
+        {
+            "name": "Apple - Macbook Air With Retina True Tone Display - 13.3\" - Core i5 - 8 GB RAM - 256 GB SSD",
+            "regularPrice": 1099,
+            "salePrice": 1099,
+            "onSale": false
+        }
+    ],
+    "facets": {
+        "name": {
+            "apple - geek squad certified refurbished macbook pro - 13\" display with touch bar - intel core i5 - 8gb memory - 256gb ssd - silver": 4,
+            "apple - geek squad certified refurbished macbook pro - 13\" display with touch bar - intel core i5 - 8gb memory - 256gb ssd - space gray": 4,
+            "apple - geek squad certified refurbished macbook pro - 13\" display with touch bar - intel core i5 - 8gb memory - 512gb ssd - space gray": 3,
+            "dell - latitude 3000 14\" laptop - intel core i5 - 8 gb memory - 256 gb ssd - black": 3,
+            "dell - latitude 3000 15.6\" laptop - intel core i5 - 8 gb memory - 256 gb ssd - black": 3,
+            "hp - 14\" laptop - intel celeron - 4gb memory - 64gb emmc - jet black": 3,
+            "msi - summit e13 flip evo 13.4\" laptop - intel core i5 - 16 gb memory - 512 gb ssd - ink black": 3,
+            "acer - chromebook 311 11.6\" refurbished chromebook - intel celeron - 4gb memory - 32gb emmc - chrome os": 2,
+            "apple - geek squad certified refurbished macbook pro - 13\" display with touch bar - intel core i5 - 8gb memory - 512gb ssd - silver": 2,
+            "asus - 11.6\" laptop - intel celeron n4020 - 4gb memory - 64gb emmc - star black": 2
+        }
+    }
+}
