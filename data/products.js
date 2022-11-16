@@ -11,10 +11,10 @@ let exportedMethods = {
         return productList;
     },
     async addProduct(
-        name,
+        name, //
         category,
-        description,
-        price,
+        description, //
+        price, //
         release_date,
         picture,
         amazonurl,
@@ -82,6 +82,7 @@ let exportedMethods = {
         picture,
         amazonurl,
         bestbuyurl) {
+
 
     },
     async removeProduct(productId) {
