@@ -10,7 +10,7 @@ let exportedMethods = {
         if (!productList) throw 'No product in system!';
         return productList;
     },
-    async addProduct(
+    async addProductByAxios(
         sku,
         name,
         customerReviewAverage,
@@ -70,7 +70,12 @@ let exportedMethods = {
                 i--;
             }
         }
-
+        //Description
+        if (shortDescription === null) {
+            Description = longDescription
+        } else {
+            Description = shortDescription
+        }
         const productCollection = await products();
 
         let newProduct = {
@@ -83,8 +88,57 @@ let exportedMethods = {
             price,
             url,
             inStoreAvailability,
-            shortDescription,
-            longDescription,
+            Description,
+            pictures,
+            details,
+            reviews
+        };
+        const newInsertInformation = await productCollection.insertOne(newProduct);
+        if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
+        return await this.getUserById(newInsertInformation.insertedId.toString());
+    },
+    async addProduct(
+        sku,
+        name,
+        manufacturer,
+        startDate,
+        price,
+        url,
+        inStoreAvailability,
+        Description,
+        pictures,
+        details,
+    ) {
+        //validation start
+        sku = sku; // length 7 all numbers
+        name = name; // Name
+        manufacturer = manufacturer; // manufacturer
+        startDate = startDate;  // format 2022-04-06   
+        price = price // format 1399.00
+        url = url; //Check if url is valid
+        inStoreAvailability = inStoreAvailability; //True or False
+        Description = Description; // Description if null
+        pictures = pictures; // if null dont show
+        details = details; // array with objects
+        //validation end
+        //static
+        customerReviewAverage = 0
+        customerReviewCount = 0
+        reviews = []
+        pictures = []
+        const productCollection = await products();
+
+        let newProduct = {
+            sku,
+            name,
+            customerReviewAverage,
+            customerReviewCount,
+            manufacturer,
+            startDate,
+            price,
+            url,
+            inStoreAvailability,
+            Description,
             pictures,
             details,
             reviews
