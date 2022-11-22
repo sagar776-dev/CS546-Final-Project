@@ -11,47 +11,83 @@ let exportedMethods = {
         return productList;
     },
     async addProduct(
-        name, //
-        category,
-        description, //
-        price, //
-        release_date,
-        picture,
-        amazonurl,
-        bestbuyurl) {
+        sku,
+        name,
+        customerReviewAverage,
+        customerReviewCount,
+        manufacturer,
+        startDate,
+        regularPrice,
+        salePrice,
+        onSale,
+        url,
+        inStoreAvailability,
+        shortDescription,
+        longDescription,
+        image,
+        largeFrontImage,
+        mediumImage,
+        thumbnailImage,
+        angleImage,
+        backViewImage,
+        details
+    ) {
         //validation start
-        name = name;
-        category = category;
-        picture = picture;
-        amazonurl = amazonurl;
-        bestbuyurl = bestbuyurl;
+        sku = sku; // length 7 all numbers
+        name = name; // Name
+        customerReviewAverage = customerReviewAverage; // 4.56
+        customerReviewCount = customerReviewCount; // 6 full integer
+        manufacturer = manufacturer; // manufacturer
+        startDate = startDate;  // format 2022-04-06
+        regularPrice = regularPrice; // format 1499.00
+        salePrice = salePrice; // format 1499.00
+        onSale = onSale; //True or False
+        url = url; //Check if url is valid
+        inStoreAvailability = inStoreAvailability; //True or False
+        shortDescription = shortDescription; // Description if null
+        longDescription = longDescription; // Description if null
+        image = image; // if null dont show
+        largeFrontImage = largeFrontImage; // if null remove
+        mediumImage = mediumImage; // if null remove
+        thumbnailImage = thumbnailImage; // if null remove
+        angleImage = angleImage; // if null remove
+        backViewImage = backViewImage; // if null remove
+        details = details; // array with objects
         //validation end 
+        //static
+        reviews = []
+        //price 
+        if (onSale) {
+            price = salePrice;
+        } else {
+            price = regularPrice;
+        }
+        //pictures
+        pictures = [image, largeFrontImage, mediumImage, thumbnailImage, angleImage, backViewImage]
+        for (let i = 0; i < pictures.length; i++) {
+            if (pictures[i] === null) {
+                pictures.splice(i, 1);
+                i--;
+            }
+        }
 
         const productCollection = await products();
 
-        //unknown parameters
-        specifications = [];
-        reviews = [];
-        qna = [];
-        comments = [];
-        rating = 0;
-
         let newProduct = {
-            name: name,
-            category: category,
-            description: description,
-            price: price,
-
-            specifications: specifications,
-            rating: rating,
-            release_date: release_date,
-            reviews: reviews,
-            qna: qna,
-
-            comments: comments,
-            picture: picture,
-            amazonurl: amazonurl,
-            bestbuyurl: bestbuyurl
+            sku,
+            name,
+            customerReviewAverage,
+            customerReviewCount,
+            manufacturer,
+            startDate,
+            price,
+            url,
+            inStoreAvailability,
+            shortDescription,
+            longDescription,
+            pictures,
+            details,
+            reviews
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
@@ -73,15 +109,26 @@ let exportedMethods = {
 
     },
     async updateProduct(
-        productId,
+        sku,
         name,
-        category,
-        description,
-        price,
-        release_date,
-        picture,
-        amazonurl,
-        bestbuyurl) {
+        customerReviewAverage,
+        customerReviewCount,
+        manufacturer,
+        startDate,
+        regularPrice,
+        salePrice,
+        onSale,
+        url,
+        inStoreAvailability,
+        shortDescription,
+        longDescription,
+        image,
+        largeFrontImage,
+        mediumImage,
+        thumbnailImage,
+        angleImage,
+        backViewImage,
+        details) {
 
 
     },
