@@ -95,7 +95,7 @@ let exportedMethods = {
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
-        return await this.getUserById(newInsertInformation.insertedId.toString());
+        return await this.getProductsByID(newInsertInformation.insertedId.toString());
     },
     async addProduct(
         sku,
@@ -145,7 +145,7 @@ let exportedMethods = {
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
-        return await this.getUserById(newInsertInformation.insertedId.toString());
+        return await this.getProductsByID(newInsertInformation.insertedId.toString());
     },
     async getProductsByID(productId) {
         //validation start
@@ -201,3 +201,53 @@ let exportedMethods = {
 }
 
 module.exports = exportedMethods;
+
+const axios = require('axios');
+const fs = require('fs');
+
+const main = async () => {
+    let API_KEY = ""
+
+    const { data } = await axios.get(`https://api.bestbuy.com/v1/products((categoryPath.id=abcat0502000))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,image,largeFrontImage,mediumImage,thumbnailImage,angleImage,backViewImage,details.name&facet=regularPrice&pageSize=10&format=json`)
+        .catch((e) => {
+            throw 'URL is not found';
+        });
+
+    let temp = string = JSON.stringify(data.products)
+    console.log(temp)
+    fs.writeFile("laptops.json", temp, function (err) {
+        if (err) {
+            console.log("An error occured while writing JSON Object to File.");
+            return console.log(err);
+        }
+        console.log("JSON file has been saved.");
+    });
+
+    for (let i in data.products) {
+        exportedMethods.addProductByAxios(
+            data.products[i].sku,
+            data.products[i].name,
+            data.products[i].customerReviewAverage,
+            data.products[i].customerReviewCount,
+            data.products[i].manufacturer,
+            data.products[i].startDate,
+            data.products[i].regularPrice,
+            data.products[i].salePrice,
+            data.products[i].onSale,
+            data.products[i].url,
+            data.products[i].inStoreAvailability,
+            data.products[i].shortDescription,
+            data.products[i].longDescription,
+            data.products[i].image,
+            data.products[i].largeFrontImage,
+            data.products[i].mediumImage,
+            data.products[i].thumbnailImage,
+            data.products[i].angleImage,
+            data.products[i].backViewImage,
+            data.products[i].details
+        );
+    }
+    return "2";
+}
+
+//main()
