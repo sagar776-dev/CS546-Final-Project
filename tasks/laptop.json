@@ -7,7 +7,6 @@
     "queryTime": "0.025",
     "totalTime": "0.040",
     "partial": false,
-    "canonicalUrl": "/v1/products((categoryPath.id=abcat0502000))?show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,image,largeFrontImage,mediumImage,thumbnailImage,angleImage,backViewImage,details.name&sort=name&pageSize=11&format=json&facet=regularPrice,10&apiKey=qhqws47nyvgze2mq3qx4jadt",
     "products": [
         {
             "sku": 6504594,
