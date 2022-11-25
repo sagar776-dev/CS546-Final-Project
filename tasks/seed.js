@@ -9,19 +9,23 @@ const main = async () => {
     const db = await dbConnection.dbConnection();
     await db.dropDatabase();
     let API_KEY = ""
-
-    const data = await funcProducts.getProductsByAxios(API_KEY)
-
-    //save data in tasks
-    let temp = JSON.stringify(data)
-    //console.log(temp)
-    fs.writeFile(__dirname + "/../tasks/laptops.json", temp, function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.");
-            return console.log(err);
-        }
-        console.log("JSON file has been saved.");
-    });
+    let data;
+    if (API_KEY.length === 0) {
+        data = require('./laptops.json');
+        //console.log(data)
+    } else {
+        data = await funcProducts.getProductsByAxios(API_KEY)
+        //save data in tasks
+        let temp = JSON.stringify(data)
+        //console.log(temp)
+        fs.writeFile(__dirname + "/../tasks/laptops.json", temp, function (err) {
+            if (err) {
+                console.log("An error occured while writing JSON Object to File.");
+                return console.log(err);
+            }
+            console.log("JSON file has been saved.");
+        });
+    }
 
     try {
         for (let i in data) {
