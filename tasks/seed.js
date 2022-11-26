@@ -26,7 +26,7 @@ const main = async () => {
             console.log("JSON file has been saved.");
         });
     }
-
+    console.log("addProductByAxios")
     try {
         for (let i in data) {
             console.log(await funcProducts.addProductByAxios(
@@ -56,10 +56,13 @@ const main = async () => {
     } catch (e) {
         console.log(e)
     }
+    //addProduct 1111111
+    console.log()
+    console.log("addProduct")
     try {
         //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
         console.log(await funcProducts.addProduct(
-            111111,
+            1111111,
             "Yes",
             "Yes manufacturer",
             "Yes startDate",
@@ -118,6 +121,20 @@ const main = async () => {
     try {
         // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
         console.log(await funcProducts.removeProduct(6504594));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("compareProducts(111111)")
+    try {
+        console.log(await funcProducts.compareProducts(1111111));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("compareProducts(111111, 6504591, 5776917)")
+    try {
+        console.log(await funcProducts.compareProducts(111111, 6504591, 5776917));
     } catch (e) {
         console.log(e)
     }

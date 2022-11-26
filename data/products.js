@@ -2,8 +2,6 @@ const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
 
 const axios = require('axios');
-const fs = require('fs');
-const { ObjectId } = require('mongodb');
 const validation = require('../validation');
 
 let exportedMethods = {
@@ -86,6 +84,16 @@ let exportedMethods = {
         } else {
             Description = shortDescription
         }
+        //details
+        let fixDetails = [];
+        for (let i in details) {
+            let temp = {}
+            let nameFix = details[i].name
+            let valuesFix = details[i].values
+            temp[nameFix] = valuesFix
+            fixDetails.push(temp);
+        }
+        details = fixDetails;
         // fixes end
         const productCollection = await products();
         let newProduct = {
@@ -163,7 +171,7 @@ let exportedMethods = {
         //validation end
         const productCollection = await products();
         let product = await productCollection.findOne({ _id: skuId });
-        if (!product) throw 'Product not found';
+        if (!product) throw `Product ${skuId} not found`;
         return product;
     },
     async getProductsByManufacturer(manufacturer) {
@@ -178,6 +186,17 @@ let exportedMethods = {
             console.log(`${temp} - ${product[i].name}`)
         }
         return product;
+    },
+    async compareProducts(...productsListSKU) {
+        let temp = []
+        for (let i = 0; i < productsListSKU.length; i++) {
+            try {
+                temp.push(await this.getProductsByID(productsListSKU[i]))
+            } catch (e) {
+                temp.push({ Error: `Product id:${productsListSKU[i]} not found` })
+            }
+        }
+        return temp;
     },
     async updateProduct(
         sku,
