@@ -22,6 +22,21 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-const peopleData = data.people;
+const productData = data.products;
 // const validation = require('../helpers');
 const path = require('path');
+
+router
+    .route('/')
+    .get(async (req, res) => {
+        try {
+            let productList = await productData.getAllProducts();
+            res.json(productList);
+        } catch (e) {
+            return res.status(404).json({ error: e });
+        }
+    })
+    .post(async (req, res) => {
+
+    })
+module.exports = router;

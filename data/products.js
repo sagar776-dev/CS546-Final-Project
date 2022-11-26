@@ -88,9 +88,8 @@ let exportedMethods = {
         let fixDetails = [];
         for (let i in details) {
             let temp = {}
-            let nameFix = details[i].name
-            let valuesFix = details[i].values
-            temp[nameFix] = valuesFix
+            temp["name"] = details[i].name
+            temp["value"] = details[i].value
             fixDetails.push(temp);
         }
         details = fixDetails;
