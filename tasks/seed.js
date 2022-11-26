@@ -29,7 +29,7 @@ const main = async () => {
 
     try {
         for (let i in data) {
-            await funcProducts.addProductByAxios(
+            console.log(await funcProducts.addProductByAxios(
                 data[i].sku,
                 data[i].name,
                 data[i].customerReviewAverage,
@@ -49,13 +49,78 @@ const main = async () => {
                 data[i].thumbnailImage,
                 data[i].angleImage,
                 data[i].backViewImage,
-                data[i].details
-            );
+                data[i].details,
+                "laptop"
+            ));
         }
     } catch (e) {
         console.log(e)
     }
-
+    try {
+        //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
+        console.log(await funcProducts.addProduct(
+            111111,
+            "Yes",
+            "Yes manufacturer",
+            "Yes startDate",
+            "Yes price",
+            "Yes url",
+            "Yes inStoreAvailability",
+            "Yes Description",
+            "Yes pictures",
+            "Yes details",
+            "laptop"
+        ));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductsByID")
+    try {
+        console.log(await funcProducts.getProductsByID(111111));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductsByManufacturer")
+    try {
+        await funcProducts.getProductsByManufacturer("Acer");
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getAllProducts")
+    try {
+        await funcProducts.getAllProducts();
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("updateProduct")
+    try {
+        // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
+        console.log(await funcProducts.updateProduct(
+            111111,
+            "Best",
+            "Markovka",
+            "20-29-2022",
+            1234.99,
+            "utl",
+            true,
+            "Description",
+            [1, 2, 3],
+            [{ "0": 0 }, { "1": 1 }, { "2": 2 }]));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("removeProduct")
+    try {
+        // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
+        console.log(await funcProducts.removeProduct(6504594));
+    } catch (e) {
+        console.log(e)
+    }
     console.log('Done!');
     await dbConnection.closeConnection();
 };
