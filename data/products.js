@@ -130,6 +130,16 @@ let exportedMethods = {
     ) {
         //validation start
         sku = sku; // length 7 all numbers
+        try {
+            let a = 0
+            a = await this.getProductsByID(sku)
+            if (a !== 0) {
+                return `Product with id: ${sku} exists`
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
         name = name; // Name
         manufacturer = manufacturer; // manufacturer
         startDate = startDate;  // format 2022-04-06   
@@ -260,7 +270,6 @@ let exportedMethods = {
             });
         return data.products; // this will be the array of people objects
     }
-
 }
 
 module.exports = exportedMethods;

@@ -77,10 +77,31 @@ const main = async () => {
     } catch (e) {
         console.log(e)
     }
+    //addProduct 1111111 (error)
+    console.log()
+    console.log("addProduct")
+    try {
+        //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
+        console.log(await funcProducts.addProduct(
+            1111111,
+            "Yes",
+            "Yes manufacturer",
+            "Yes startDate",
+            "Yes price",
+            "Yes url",
+            "Yes inStoreAvailability",
+            "Yes Description",
+            "Yes pictures",
+            "Yes details",
+            "laptop"
+        ));
+    } catch (e) {
+        console.log(e)
+    }
     console.log()
     console.log("getProductsByID")
     try {
-        console.log(await funcProducts.getProductsByID(111111));
+        console.log(await funcProducts.getProductsByID(1111111));
     } catch (e) {
         console.log(e)
     }
