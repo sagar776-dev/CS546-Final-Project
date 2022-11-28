@@ -9,10 +9,6 @@ let exportedMethods = {
         const productCollection = await products();
         const productList = await productCollection.find({}).toArray();
         if (!productList) throw 'Product not found';
-        for (let i in productList) {
-            let temp = parseInt(i) + 1
-            console.log(`${temp} - ${productList[i].name}`)
-        }
         return productList;
     },
     async addProductByAxios(
@@ -29,12 +25,16 @@ let exportedMethods = {
         inStoreAvailability,
         shortDescription,
         longDescription,
-        image,
-        largeFrontImage,
-        mediumImage,
-        thumbnailImage,
+        accessoriesImage,
+        alternateViewsImage,
         angleImage,
         backViewImage,
+        energyGuideImage,
+        image,
+        leftViewImage,
+        remoteControlImage,
+        rightViewImage,
+        topViewImage,
         details,
         category
     ) {
@@ -52,12 +52,7 @@ let exportedMethods = {
         inStoreAvailability = inStoreAvailability; //True or False
         shortDescription = shortDescription; // Description if null
         longDescription = longDescription; // Description if null
-        image = image; // if null dont show
-        largeFrontImage = largeFrontImage; // if null remove
-        mediumImage = mediumImage; // if null remove
-        thumbnailImage = thumbnailImage; // if null remove
-        angleImage = angleImage; // if null remove
-        backViewImage = backViewImage; // if null remove
+
         details = details; // array with objects
         category = category // what is it (laptop)
         //validation end 
@@ -71,7 +66,17 @@ let exportedMethods = {
             price = regularPrice;
         }
         //pictures
-        pictures = [image, largeFrontImage, mediumImage, thumbnailImage, angleImage, backViewImage]
+        pictures = [
+            accessoriesImage,
+            alternateViewsImage,
+            angleImage,
+            backViewImage,
+            energyGuideImage,
+            image,
+            leftViewImage,
+            remoteControlImage,
+            rightViewImage,
+            topViewImage]
         for (let i = 0; i < pictures.length; i++) {
             if (pictures[i] === null) {
                 pictures.splice(i, 1);
@@ -190,13 +195,10 @@ let exportedMethods = {
         const productCollection = await products();
         let product = await productCollection.find({ manufacturer: manufacturer }).toArray()
         if (!product) throw 'Product not found';
-        for (let i in product) {
-            let temp = parseInt(i) + 1
-            console.log(`${temp} - ${product[i].name}`)
-        }
         return product;
     },
     async compareProducts(...productsListSKU) {
+        //productsListSKU = productsListSKU.split(",")
         let temp = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
@@ -262,12 +264,31 @@ let exportedMethods = {
         }
         return `${skuId} has been successfully deleted!`;
     },
-    async getProductsByAxios(API_KEY) {
-        const { data } = await axios.get(`https://api.bestbuy.com/v1/products((categoryPath.id=abcat0502000))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,image,largeFrontImage,mediumImage,thumbnailImage,angleImage,backViewImage,details.name&facet=regularPrice&pageSize=10&format=json`)
+
+    async getProductsByAxios1(page, key, API_KEY) {
+        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=${page}&format=json`)
             .catch((e) => {
                 throw 'URL is not found';
             });
-        return data.products; // this will be the array of people objects
+        return data.products;
+    },
+    async getProductsByAxios(key, API_KEY) {
+        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=1&format=json`)
+            .catch((e) => {
+                throw 'URL is not found';
+            });
+        let final = [];
+        console.log(data.totalPages)
+        if (data.totalPages > 1) {
+            for (let i = 1; i <= data.totalPages; i++) {
+                final = final.concat(await this.getProductsByAxios1(i, key, API_KEY))
+                console.log(final.length)
+            }
+        }
+        else {
+            final = data.products
+        }
+        return final; // this will be the array of people objects
     }
 }
 

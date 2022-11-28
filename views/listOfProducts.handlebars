@@ -1,6 +1,9 @@
 <article class="product-list">
-    {{#each productList}}
-    <li><a href="products/{{_id}}"">{{_id}}</a>{{name}}
-    </li>
-    {{/each}}
+    <ul>
+        {{#each productList}}
+        <li><a href="products/{{_id}}">{{_id}}</a>
+            {{name}}
+        </li>
+        {{/each}}
+    </ul>
 </article>

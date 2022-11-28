@@ -28,4 +28,6 @@ router.get('/:id', async (req, res) => {
         res.status(404).json({ error: 'Product not found' });
     }
 });
+
+//compareProducts
 module.exports = router;

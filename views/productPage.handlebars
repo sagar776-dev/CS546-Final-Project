@@ -1,10 +1,10 @@
-<style>
+{{!-- <style>
     table,
     th,
     td {
         border: 1px solid black;
     }
-</style>
+</style> --}}
 <article class="product-list">
     <p>id: {{product._id}}</p>
     <p>name: {{product.name}}</p>
@@ -16,13 +16,12 @@
     <p>url: {{product.url}}</p>
     <p>inStoreAvailability: {{product.inStoreAvailability}}</p>
     <p>Description: {{product.Description}}</p>
-    <p>pictures:
-        {{#each pictures}}
-        <li>{{ this }}</li>
-        {{/each}}
-    </p>
-    <p>details:
-    <table style="width:50%">
+    <p>picures:</p>
+    {{#each pictures}}
+    <img src={{ this }} alt={{this}} width="500" height="600">
+    {{/each}}
+    <p>details: </p>
+    <table>
         <tr>
             <th>Name</th>
             <th>Spec</th>
@@ -34,6 +33,5 @@
         </tr>
         {{/each}}
     </table>
-    </p>
     <p>reviews: {{product.reviews}}</p>
 </article>
