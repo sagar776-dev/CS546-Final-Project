@@ -52,7 +52,7 @@ const main = async () => {
         });
 
     }
-    console.log("addProductByAxios")
+    console.log("addProductByAxios laptops")
     try {
         for (let i in data_lap) {
             console.log(await funcProducts.addProductByAxios(
@@ -86,6 +86,7 @@ const main = async () => {
     } catch (e) {
         console.log(e)
     }
+    console.log("addProductByAxios tablets")
     try {
         for (let i in data_tab) {
             console.log(await funcProducts.addProductByAxios(
@@ -120,6 +121,7 @@ const main = async () => {
     catch (e) {
         console.log(e)
     }
+    console.log("addProductByAxios phones")
     try {
         for (let i in data_pho) {
             console.log(await funcProducts.addProductByAxios(
@@ -153,6 +155,8 @@ const main = async () => {
     } catch (e) {
         console.log(e)
     }
+
+    //test cases
     //addProduct 1111111
     console.log()
     console.log("addProduct")
@@ -253,6 +257,27 @@ const main = async () => {
     console.log("compareProducts(111111, 6447818, 6502184)")
     try {
         console.log(await funcProducts.compareProducts(1111111, 6447818, 6502184));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductsByManufacturer(HP)")
+    try {
+        console.log(await funcProducts.getProductsByManufacturer("HP"));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getManufacturersOfProducts()")
+    try {
+        console.log(await funcProducts.getManufacturersOfProducts());
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductByName(HP)")
+    try {
+        console.log(await funcProducts.getProductByName("HP"));
     } catch (e) {
         console.log(e)
     }

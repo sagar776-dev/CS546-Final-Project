@@ -10,13 +10,23 @@ router
     .get(async (req, res) => {
         try {
             let productList = await productData.getAllProducts();
-            res.render('listOfProducts', { productList: productList })
+            let manufactortList = await productData.getManufacturersOfProducts();
+            let categoryList = await productData.getCategoryOfProducts();
+            res.render('listOfProducts', { productList: productList, manufactortList: manufactortList, categoryList: categoryList })
         } catch (e) {
             return res.status(404).json({ error: e });
         }
     })
     .post(async (req, res) => {
-
+        let name = req.body.ProductName;
+        //validation start
+        //validation end
+        try {
+            let productList = await productData.getProductByName(name);
+            res.render('name', { productList: productList });
+        } catch (e) {
+            return res.status(404).json({ error: e });
+        }
     })
 
 router.get('/:id', async (req, res) => {
