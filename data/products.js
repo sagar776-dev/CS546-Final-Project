@@ -139,11 +139,13 @@ let exportedMethods = {
     //user
     async getProductByName(Name) {
         //validation start
-        Name = Name
+        Name = Name.split(" ")
+        Name = Name.join("|")
         console.log(Name);
         //validation end
         const productCollection = await products();
-        let product = await productCollection.find({ name: new RegExp(Name) }).toArray()
+        //let product = await productCollection.find({ name: { $in: new RegExp(Name) } }).toArray()
+        let product = await productCollection.find({ name: { $regex: Name, "$options": "i" } }).toArray()
         if (!product) throw 'Product not found';
         return product;
     },
