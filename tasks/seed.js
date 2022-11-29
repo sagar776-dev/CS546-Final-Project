@@ -80,7 +80,7 @@ const main = async () => {
                 data_lap[i].rightViewImage,
                 data_lap[i].topViewImage,
                 data_lap[i].details,
-                "laptop"
+                "laptops"
             ));
         }
     } catch (e) {
@@ -278,6 +278,13 @@ const main = async () => {
     console.log("getProductByName(HP)")
     try {
         console.log(await funcProducts.getProductByName("HP"));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductsByCategory(laptops)")
+    try {
+        console.log(await funcProducts.getProductsByCategory("laptops"));
     } catch (e) {
         console.log(e)
     }

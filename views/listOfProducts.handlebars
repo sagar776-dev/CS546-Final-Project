@@ -5,17 +5,23 @@
             <a href="products/{{this}}">{{this}}</a>
         </li>
         {{/each}}
-        <br>
         {{#each manufactortList}}
         <li>
             <a href="products/{{this}}">{{this}}</a>
         </li>
         {{/each}}
-        <br>
-        {{#each productList}}
-        <li><a href="products/{{_id}}">{{_id}}</a>
-            {{name}}
-        </li>
-        {{/each}}
     </ul>
+    <table>
+        {{#each productList}}
+        <tr>
+            <td>
+                <img src={{ pictures.[0] }} alt={{pictures.[0]}} width="100" height="100">
+            </td>
+            <td>
+                <a href="products/{{category}}/{{_id}}">{{_id}}</a>
+                {{name}}
+            </td>
+        </tr>
+        {{/each}}
+    </table>
 </article>

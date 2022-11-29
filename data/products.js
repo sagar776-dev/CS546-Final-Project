@@ -5,12 +5,6 @@ const axios = require('axios');
 const validation = require('../validation');
 
 let exportedMethods = {
-    async getAllProducts() {
-        const productCollection = await products();
-        const productList = await productCollection.find({}).toArray();
-        if (!productList) throw 'Product not found';
-        return productList;
-    },
     //admin
     async addProduct(
         sku,
@@ -137,6 +131,13 @@ let exportedMethods = {
         return `Product ${sku} been updated`;
     },
     //user
+    async getAllProducts() {
+        const productCollection = await products();
+        const productList = await productCollection.find({}).toArray();
+        if (!productList) throw 'Product not found';
+        return productList;
+    },
+    //user need fixes
     async getProductByName(Name) {
         //validation start
         Name = Name.split(" ")
@@ -150,16 +151,12 @@ let exportedMethods = {
         return product;
     },
     async getCategoryOfProducts() {
-        //validation start
-        //validation end
         const productCollection = await products();
         let product = await productCollection.distinct("category")
         if (!product) throw 'Product not found';
         return product;
     },
     async getManufacturersOfProducts() {
-        //validation start
-        //validation end
         const productCollection = await products();
         let product = await productCollection.distinct("manufacturer")
         if (!product) throw 'Product not found';
@@ -171,6 +168,15 @@ let exportedMethods = {
         //validation end
         const productCollection = await products();
         let product = await productCollection.find({ manufacturer: manufacturer }).toArray()
+        if (!product) throw 'Product not found';
+        return product;
+    },
+    async getProductsByCategory(category) {
+        //validation start
+        category = category;
+        //validation end
+        const productCollection = await products();
+        let product = await productCollection.find({ category: category }).toArray()
         if (!product) throw 'Product not found';
         return product;
     },
