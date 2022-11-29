@@ -43,7 +43,12 @@ let exportedMethods = {
         //static
         customerReviewAverage = 0
         customerReviewCount = 0
-        reviews = []
+        reviews = [];
+
+        let visitedTimes = 0;
+        let comments = [];
+        let QandA = [];
+
         const productCollection = await products();
 
         let newProduct = {
@@ -59,7 +64,10 @@ let exportedMethods = {
             Description,
             pictures,
             details,
-            reviews
+            reviews,
+            visitedTimes,
+            comments,
+            QandA
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
@@ -137,7 +145,7 @@ let exportedMethods = {
         if (!productList) throw 'Product not found';
         return productList;
     },
-    //user need fixes
+    //user getProductByName fixes
     async getProductByName(Name) {
         //validation start
         Name = Name.split(" ")
@@ -194,8 +202,10 @@ let exportedMethods = {
         return temp;
     },
     //show by price
+    //db.marks.find({ "score": { "$gt": 75, '$lt': 100} })
+
     //sort by name
-    //sort by reviews
+    //sort by average reviews
 
     //admin API_KEY
     async getProductsByAxios1(page, key, API_KEY) {
@@ -311,6 +321,10 @@ let exportedMethods = {
         }
         details = fixDetails;
         // fixes end
+        let visitedTimes = 0;
+        let comments = [];
+        let QandA = [];
+
         const productCollection = await products();
         let newProduct = {
             _id: sku,
@@ -326,7 +340,10 @@ let exportedMethods = {
             pictures,
             details,
             category,
-            reviews
+            reviews,
+            visitedTimes,
+            comments,
+            QandA
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';

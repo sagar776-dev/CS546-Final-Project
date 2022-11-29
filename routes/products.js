@@ -30,6 +30,7 @@ router
         }
     })
 
+//laptops
 router.get('/laptops', async (req, res) => {
     try {
         let product_List = await productData.getProductsByCategory("laptops");
@@ -58,7 +59,7 @@ router.get('/laptops/:id', async (req, res) => {
         res.status(404).json({ error: 'Product not found' });
     }
 });
-
+//phones
 router.get('/phones', async (req, res) => {
     try {
         let product_List = await productData.getProductsByCategory("phones");
@@ -85,7 +86,7 @@ router.get('/phones/:id', async (req, res) => {
         res.status(404).json({ error: 'Product not found' });
     }
 });
-
+//tablets
 router.get('/tablets', async (req, res) => {
     try {
         let product_List = await productData.getProductsByCategory("tablets");
@@ -100,18 +101,17 @@ router.get('/tablets/:id', async (req, res) => {
         //validation start
         sku = sku
         //validation end
+        let product = await productData.getProductsByID(sku);
 
-        if (product.category !== "phones") {
+        if (product.category !== "tablets") {
             res.status(404).json({ error: 'Product not found' });
             return;
         }
-
-        let product = await productData.getProductsByID(sku);
         res.render('productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
         res.status(404).json({ error: 'Product not found' });
     }
 });
 
-//compareProducts
+//compareProducts not finished
 module.exports = router;

@@ -50,7 +50,6 @@ const main = async () => {
             }
             console.log("JSON file has been saved.");
         });
-
     }
     console.log("addProductByAxios laptops")
     try {
