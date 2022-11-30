@@ -145,7 +145,6 @@ let exportedMethods = {
         if (!productList) throw 'Product not found';
         return productList;
     },
-    //user getProductByName fixes
     async getProductByName(Name) {
         //validation start
 
@@ -173,9 +172,12 @@ let exportedMethods = {
         if (!product) throw 'Product not found';
         return product;
     },
-    async getManufacturersOfProducts() {
+    async getManufacturersOfProductsByCategory(category) {
+        //validation start 
+        category = category
+        //validation end
         const productCollection = await products();
-        let product = await productCollection.distinct("manufacturer")
+        let product = await productCollection.distinct("manufacturer", { category: category })
         if (!product) throw 'Product not found';
         return product;
     },
@@ -185,6 +187,17 @@ let exportedMethods = {
         //validation end
         const productCollection = await products();
         let product = await productCollection.find({ manufacturer: manufacturer }).toArray()
+        if (!product) throw 'Product not found';
+        return product;
+    },
+    async getProductsByCategoryAndManufacturer(category, manufacturer) {
+        //validation start
+        category = category
+        manufacturer = manufacturer
+        //validation end
+        const productCollection = await products();
+        //let product = await productCollection.distinct("_id", { category: category, manufacturer: manufacturer })
+        let product = await productCollection.find({ category: category, manufacturer: manufacturer }).toArray()
         if (!product) throw 'Product not found';
         return product;
     },
@@ -211,7 +224,7 @@ let exportedMethods = {
         return temp;
     },
     //show by price
-    //db.marks.find({ "score": { "$gt": 75, '$lt': 100} })
+    //db.marks.find({ "price": { "$gt": low, '$lt': high} })
 
     //sort by name
     //sort by average reviews

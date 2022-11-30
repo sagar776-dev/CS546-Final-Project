@@ -241,7 +241,7 @@ const main = async () => {
     console.log("removeProduct")
     try {
         // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
-        console.log(await funcProducts.removeProduct(6478306));
+        console.log(await funcProducts.removeProduct(1111111));
     } catch (e) {
         console.log(e)
     }
@@ -284,6 +284,13 @@ const main = async () => {
     console.log("getProductsByCategory(laptops)")
     try {
         console.log(await funcProducts.getProductsByCategory("laptops"));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductsByCategoryAndManufacturer(laptops, manufacturer)")
+    try {
+        console.log(await funcProducts.getProductsByCategoryAndManufacturer("laptops", "Acer"));
     } catch (e) {
         console.log(e)
     }
