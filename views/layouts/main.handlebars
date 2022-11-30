@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello</title>
+    {{!--
+    <link rel="stylesheet" href="/public/main-styles.css"> --}}
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/reviews">Reviews</a></li>
+        </ul>
+    </header>
+    <main>
+        <form action="/products" method="POST">
+            <label for="search_product">
+                Enter Product Name:
+                <input id="search_product" type="text" name="ProductName" placeholder="Search Product Name"
+                    class="full-width-input" />
+            </label>
+            <button type="submit">Click Me!</button>
+        </form>
+        {{{body}}}
+    </main>
+</body>
+
+</html>
