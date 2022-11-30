@@ -12,7 +12,7 @@ router
             let productList = await productData.getAllProducts();
             let manufactortList = await productData.getManufacturersOfProducts();
             let categoryList = await productData.getCategoryOfProducts();
-            res.render('listOfProducts', { productList: productList, manufactortList: manufactortList, categoryList: categoryList })
+            res.render('products/listOfProducts', { productList: productList, manufactortList: manufactortList, categoryList: categoryList })
         } catch (e) {
             return res.status(404).json({ error: e });
         }
@@ -24,7 +24,7 @@ router
         //validation end
         try {
             let productList = await productData.getProductByName(name);
-            res.render('name', { productList: productList });
+            res.render('products/name', { productList: productList });
         } catch (e) {
             return res.status(404).json({ error: e });
         }
@@ -34,8 +34,7 @@ router
 router.get('/laptops', async (req, res) => {
     try {
         let product_List = await productData.getProductsByCategory("laptops");
-        console.log(product_List)
-        res.render('category', { product_List: product_List })
+        res.render('products/category', { product_List: product_List })
     } catch (e) {
         res.status(404).json({ error: 'Laptops not found' });
     }
@@ -54,7 +53,7 @@ router.get('/laptops/:id', async (req, res) => {
             return;
         }
         // end
-        res.render('productPage', { product: product, pictures: product.pictures, details: product.details })
+        res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
         res.status(404).json({ error: 'Product not found' });
     }
@@ -63,7 +62,7 @@ router.get('/laptops/:id', async (req, res) => {
 router.get('/phones', async (req, res) => {
     try {
         let product_List = await productData.getProductsByCategory("phones");
-        res.render('category', { product_List: product_List })
+        res.render('products/category', { product_List: product_List })
     } catch (e) {
         res.status(404).json({ error: 'Phones not found' });
     }
@@ -81,7 +80,7 @@ router.get('/phones/:id', async (req, res) => {
             return;
         }
 
-        res.render('productPage', { product: product, pictures: product.pictures, details: product.details })
+        res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
         res.status(404).json({ error: 'Product not found' });
     }
@@ -90,7 +89,7 @@ router.get('/phones/:id', async (req, res) => {
 router.get('/tablets', async (req, res) => {
     try {
         let product_List = await productData.getProductsByCategory("tablets");
-        res.render('category', { product_List: product_List })
+        res.render('products/category', { product_List: product_List })
     } catch (e) {
         res.status(404).json({ error: 'Tablets not found' });
     }
@@ -107,7 +106,7 @@ router.get('/tablets/:id', async (req, res) => {
             res.status(404).json({ error: 'Product not found' });
             return;
         }
-        res.render('productPage', { product: product, pictures: product.pictures, details: product.details })
+        res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
         res.status(404).json({ error: 'Product not found' });
     }

@@ -148,14 +148,23 @@ let exportedMethods = {
     //user getProductByName fixes
     async getProductByName(Name) {
         //validation start
+
+        //validation end
         Name = Name.split(" ")
-        Name = Name.join("|")
-        console.log(Name);
+        if (Name.length > 1) {
+            Name = "\"" + Name.join("\" \"") + "\"";
+        }
+        else {
+            Name = "\"" + Name + "\"";
+        }
+        //console.log(Name);
         //validation end
         const productCollection = await products();
-        //let product = await productCollection.find({ name: { $in: new RegExp(Name) } }).toArray()
-        let product = await productCollection.find({ name: { $regex: Name, "$options": "i" } }).toArray()
+        //search - need create index and search by index
+        let createIndex = await productCollection.createIndex({ "name": "text" })
+        let product = await productCollection.find({ $text: { $search: Name } }).toArray()
         if (!product) throw 'Product not found';
+        if (product.length === 0) throw 'Incorrect name'
         return product;
     },
     async getCategoryOfProducts() {
