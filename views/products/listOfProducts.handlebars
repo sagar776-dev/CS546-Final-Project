@@ -1,4 +1,5 @@
 <article class="product-list">
+    {{#if error}}<p>{{error}}</p>{{/if}}
     <ul>
         {{#each categoryList}}
         <li>
@@ -14,6 +15,8 @@
             </td>
             <td>
                 <a href="products/{{category}}/{{_id}}">{{name}}</a>
+                <p>Price: {{price}}</p>
+                <p>Review: {{customerReviewAverage}}</p>
             </td>
         </tr>
         {{/each}}

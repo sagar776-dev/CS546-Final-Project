@@ -6,6 +6,7 @@
     }
 </style> --}}
 <article class="product-page">
+    {{#if error}}<p>{{error}}</p>{{/if}}
     <p>id: {{product._id}}</p>
     <p>name: {{product.name}}</p>
     <p>customerReviewAverage: {{product.customerReviewAverage}}</p>

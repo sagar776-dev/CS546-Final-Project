@@ -210,15 +210,44 @@ let exportedMethods = {
         if (!product) throw 'Product not found';
         return product;
     },
+    //sort by reviews 
+    async sortProductsByReviews() {
+
+    },
+    //sort by prices 
+    async sortProductsByPrices() {
+
+    },
     //user fixes
-    async compareProducts(...productsListSKU) {
-        //productsListSKU = productsListSKU.split(",")
+    async comparelaptops(...productsListSKU) {
         let temp = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
-                temp.push(await this.getProductsByID(productsListSKU[i]))
+                let a = await this.getProductsByID(productsListSKU[i])
+
+                //{"category":"laptops"}
+
+                //{"details.name":"Processor Model"}
+                //{"details.name":"System Memory (RAM)"}
+                //{"details.name":"Graphics"}
+                //{"details.name":"Screen Resolution"}
+                //{"details.name":"Storage Type"}
+                //{"details.name":"Total Storage Capacity"}
+                //{"details.name":"Screen Size"}
+
+                //{"details.name":"Touch Screen"}
+                //{"details.name":"Processor Model Number"}
+                //{"details.name":"Operating System"}
+                //{"details.name":"Battery Type"}
+                //{"details.name":"Backlit Keyboard"}
+                //{"details.name":"Brand"}
+                //{"details.name":"Model Number"}
+                //{"details.name":"Year of Release"}
+                //{"details.name":"Color Category"}
+
+                temp.push(a)
             } catch (e) {
-                temp.push({ Error: `Product id:${productsListSKU[i]} not found` })
+                temp.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
         return temp;
