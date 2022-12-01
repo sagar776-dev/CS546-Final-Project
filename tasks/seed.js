@@ -68,6 +68,7 @@ const main = async () => {
                 data_lap[i].inStoreAvailability,
                 data_lap[i].shortDescription,
                 data_lap[i].longDescription,
+                data_lap[i].largeFrontImage,
                 data_lap[i].accessoriesImage,
                 data_lap[i].alternateViewsImage,
                 data_lap[i].angleImage,
@@ -102,6 +103,7 @@ const main = async () => {
                 data_tab[i].inStoreAvailability,
                 data_tab[i].shortDescription,
                 data_tab[i].longDescription,
+                data_tab[i].largeFrontImage,
                 data_tab[i].accessoriesImage,
                 data_tab[i].alternateViewsImage,
                 data_tab[i].angleImage,
@@ -137,6 +139,7 @@ const main = async () => {
                 data_pho[i].inStoreAvailability,
                 data_pho[i].shortDescription,
                 data_pho[i].longDescription,
+                data_pho[i].largeFrontImage,
                 data_pho[i].accessoriesImage,
                 data_pho[i].alternateViewsImage,
                 data_pho[i].angleImage,
@@ -241,7 +244,7 @@ const main = async () => {
     console.log("removeProduct")
     try {
         // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
-        console.log(await funcProducts.removeProduct(6478306));
+        console.log(await funcProducts.removeProduct(1111111));
     } catch (e) {
         console.log(e)
     }
@@ -284,6 +287,13 @@ const main = async () => {
     console.log("getProductsByCategory(laptops)")
     try {
         console.log(await funcProducts.getProductsByCategory("laptops"));
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("getProductsByCategoryAndManufacturer(laptops, manufacturer)")
+    try {
+        console.log(await funcProducts.getProductsByCategoryAndManufacturer("laptops", "Acer"));
     } catch (e) {
         console.log(e)
     }

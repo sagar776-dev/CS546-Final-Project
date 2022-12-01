@@ -145,17 +145,25 @@ let exportedMethods = {
         if (!productList) throw 'Product not found';
         return productList;
     },
-    //user getProductByName fixes
     async getProductByName(Name) {
         //validation start
+
+        //validation end
         Name = Name.split(" ")
-        Name = Name.join("|")
-        console.log(Name);
+        if (Name.length > 1) {
+            Name = "\"" + Name.join("\" \"") + "\"";
+        }
+        else {
+            Name = "\"" + Name + "\"";
+        }
+        //console.log(Name);
         //validation end
         const productCollection = await products();
-        //let product = await productCollection.find({ name: { $in: new RegExp(Name) } }).toArray()
-        let product = await productCollection.find({ name: { $regex: Name, "$options": "i" } }).toArray()
+        //search - need create index and search by index
+        let createIndex = await productCollection.createIndex({ "name": "text" })
+        let product = await productCollection.find({ $text: { $search: Name } }).toArray()
         if (!product) throw 'Product not found';
+        if (product.length === 0) throw 'Incorrect name'
         return product;
     },
     async getCategoryOfProducts() {
@@ -164,9 +172,12 @@ let exportedMethods = {
         if (!product) throw 'Product not found';
         return product;
     },
-    async getManufacturersOfProducts() {
+    async getManufacturersOfProductsByCategory(category) {
+        //validation start 
+        category = category
+        //validation end
         const productCollection = await products();
-        let product = await productCollection.distinct("manufacturer")
+        let product = await productCollection.distinct("manufacturer", { category: category })
         if (!product) throw 'Product not found';
         return product;
     },
@@ -176,6 +187,17 @@ let exportedMethods = {
         //validation end
         const productCollection = await products();
         let product = await productCollection.find({ manufacturer: manufacturer }).toArray()
+        if (!product) throw 'Product not found';
+        return product;
+    },
+    async getProductsByCategoryAndManufacturer(category, manufacturer) {
+        //validation start
+        category = category
+        manufacturer = manufacturer
+        //validation end
+        const productCollection = await products();
+        //let product = await productCollection.distinct("_id", { category: category, manufacturer: manufacturer })
+        let product = await productCollection.find({ category: category, manufacturer: manufacturer }).toArray()
         if (!product) throw 'Product not found';
         return product;
     },
@@ -202,21 +224,21 @@ let exportedMethods = {
         return temp;
     },
     //show by price
-    //db.marks.find({ "score": { "$gt": 75, '$lt': 100} })
+    //db.marks.find({ "price": { "$gt": low, '$lt': high} })
 
     //sort by name
     //sort by average reviews
 
     //admin API_KEY
     async getProductsByAxios1(page, key, API_KEY) {
-        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=${page}&format=json`)
+        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,largeFrontImage,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=${page}&format=json`)
             .catch((e) => {
                 throw 'URL is not found';
             });
         return data.products;
     },
     async getProductsByAxios(key, API_KEY) {
-        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=1&format=json`)
+        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,largeFrontImage,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=1&format=json`)
             .catch((e) => {
                 throw 'URL is not found';
             });
@@ -247,6 +269,7 @@ let exportedMethods = {
         inStoreAvailability,
         shortDescription,
         longDescription,
+        largeFrontImage,
         accessoriesImage,
         alternateViewsImage,
         angleImage,
@@ -289,6 +312,7 @@ let exportedMethods = {
         }
         //pictures
         pictures = [
+            largeFrontImage,
             accessoriesImage,
             alternateViewsImage,
             angleImage,
