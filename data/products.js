@@ -231,14 +231,14 @@ let exportedMethods = {
 
     //admin API_KEY
     async getProductsByAxios1(page, key, API_KEY) {
-        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=${page}&format=json`)
+        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,largeFrontImage,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=${page}&format=json`)
             .catch((e) => {
                 throw 'URL is not found';
             });
         return data.products;
     },
     async getProductsByAxios(key, API_KEY) {
-        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=1&format=json`)
+        const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,largeFrontImage,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=1&format=json`)
             .catch((e) => {
                 throw 'URL is not found';
             });
@@ -269,6 +269,7 @@ let exportedMethods = {
         inStoreAvailability,
         shortDescription,
         longDescription,
+        largeFrontImage,
         accessoriesImage,
         alternateViewsImage,
         angleImage,
@@ -311,6 +312,7 @@ let exportedMethods = {
         }
         //pictures
         pictures = [
+            largeFrontImage,
             accessoriesImage,
             alternateViewsImage,
             angleImage,
