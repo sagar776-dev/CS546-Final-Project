@@ -235,96 +235,154 @@ let exportedMethods = {
         let errors = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
-                let product = await this.getProductsByID(productsListSKU[i])
+                let laptop = await this.getProductsByID(productsListSKU[i])
                 //object
                 //we want to check if this object contains some of the details
-                let Processor_Model = product.find(temp => temp.name === product.name)
-
                 //check if category is laptop (if not ask to remove it)
-
-                //{"category":"laptops"}
-
-                //{"details.name":"Processor Model"}
-                //{"details.name":"System Memory (RAM)"}
-                //{"details.name":"Graphics"}
-                //{"details.name":"Screen Resolution"}
-                //{"details.name":"Storage Type"}
-                //{"details.name":"Total Storage Capacity"}
-                //{"details.name":"Screen Size"}
-
-                //{"details.name":"Touch Screen"}
-                //{"details.name":"Processor Model Number"}
-                //{"details.name":"Operating System"}
-                //{"details.name":"Battery Type"}
-                //{"details.name":"Backlit Keyboard"}
-                //{"details.name":"Brand"}
-                //{"details.name":"Model Number"}
-                //{"details.name":"Year of Release"}
-                //{"details.name":"Color Category"}
-
-                comapreList.push(a)
+                if (laptop.category === "laptops") {
+                    let details = laptop.details
+                    let product = {
+                        "sku": laptop._id,
+                        "name": laptop.name,
+                        "url": laptop.url,
+                        "Processor Model": "",
+                        "System Memory (RAM)": "",
+                        "Graphics": "",
+                        "Screen Resolution": "",
+                        "Storage Type": "",
+                        "Total Storage Capacity": "",
+                        "Screen Size": "",
+                        "Touch Screen": "",
+                        "Processor Model Number": "",
+                        "Operating System": "",
+                        "Battery Type": "",
+                        "Backlit Keyboard": "",
+                        "Brand": "",
+                        "Model Number": "",
+                        "Year of Release": "",
+                        "Color Category": "",
+                    }
+                    let list = ["Processor Model", "System Memory (RAM)", "Graphics", "Screen Resolution", "Storage Type", "Total Storage Capacity", "Screen Size", "Touch Screen", "Processor Model Number", "Operating System", "Battery Type", "Backlit Keyboard", "Brand", "Model Number", "Year of Release", "Color Category"]
+                    for (let i = 0; i < list.length; i++) {
+                        let temp = details.find(temp => temp.name === list[i])
+                        if (temp === undefined) {
+                            product[list[i]] = "null";
+                        } else {
+                            product[list[i]] = temp.value
+                        }
+                    }
+                    comapreList.push(product)
+                } else {
+                    errors.push({ error: `Product:${productsListSKU[i]} not a laptop, you need to use ${laptop.category} category` })
+                }
             } catch (e) {
                 errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
-        return comapreList, error;
+        return [comapreList, errors];
     },
     //user fixes
     async comparePhones(productsListSKU) {
-        let temp = []
+        // validation of SKU list
+        // total 5 products
+        productsListSKU = productsListSKU
+        // validation end
+        // productsListSKU array of SKU 
+        let comapreList = []
+        let errors = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
+                let phone = await this.getProductsByID(productsListSKU[i])
+                //object
+                //we want to check if this object contains some of the details
                 //check if category is laptop (if not ask to remove it)
-
-                //{"category":"phones"}
-
-                //{"details.name":"Screen Size"}
-                //{"details.name":"Screen Resolution"}
-                //{"details.name":"Total Storage Capacity"}
-                //{"details.name":"System Memory (RAM)"}
-                //{"details.name":"Processor Model"}
-                //{"details.name":"Operating System"}
-                //{"details.name":"Wireless Connectivity"}
-                //{"details.name":"Battery Type"}
-                //{"details.name":"Year of Release"}
-                //{"details.name":"Color"}
-
-
+                if (phone.category === "phones") {
+                    let details = phone.details
+                    let product = {
+                        "sku": phone._id,
+                        "name": phone.name,
+                        "url": phone.url,
+                        "Screen Size": "",
+                        "Screen Resolution": "",
+                        "Total Storage Capacity": "",
+                        "System Memory (RAM)": "",
+                        "Processor Model": "",
+                        "Operating System": "",
+                        "Wireless Connectivity": "",
+                        "Battery Type": "",
+                        "Year of Release": "",
+                        "Color": ""
+                    }
+                    let list = ["Screen Size", "Screen Resolution", "Total Storage Capacity", "System Memory (RAM)", "Processor Model", "Operating System", "Wireless Connectivity", "Battery Type", "Year of Release", "Color"]
+                    for (let i = 0; i < list.length; i++) {
+                        let temp = details.find(temp => temp.name === list[i])
+                        if (temp === undefined) {
+                            product[list[i]] = "null";
+                        } else {
+                            product[list[i]] = temp.value
+                        }
+                    }
+                    comapreList.push(product)
+                } else {
+                    errors.push({ error: `Product:${productsListSKU[i]} not a phone, you need to use ${laptop.category} category` })
+                }
             } catch (e) {
-                temp.push({ error: `Product id:${productsListSKU[i]} not found` })
+                errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
-        return temp;
+        return [comapreList, errors];
     },
     //user fixes
     async compareTablets(productsListSKU) {
-        let temp = []
+        // validation of SKU list
+        // total 5 products
+        productsListSKU = productsListSKU
+        // validation end
+        // productsListSKU array of SKU 
+        let comapreList = []
+        let errors = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
-                //check if category is laptop (if not ask to remove it)
-
-                //{"category":"phomes"}
-
-                //{"details.name":"Carrier"}
-                //{"details.name":"Wireless Technology"}
-                //{"details.name":"Operating System"}
-                //{"details.name":"Screen Size"}
-                //{"details.name":"Screen Resolution"}
-                //{"details.name":"Processor Model"}
-                //{"details.name":"Voice Assistant Built-in"}
-                //{"details.name":"Rear-Facing Camera"} 
-                //{"details.name":"Product Name"}
-
-                //{"details.name":"Brand"}
-                //{"details.name":"Color"}
-                //{"details.name":"Bluetooth Enabled"}
-                //{"details.name":"Keyboard Type"}
-                //{"details.name":"Wireless Compatibility"}
+                let tablet = await this.getProductsByID(productsListSKU[i])
+                if (tablet.category === "tablets") {
+                    let details = tablet.details
+                    let product = {
+                        "sku": tablet._id,
+                        "name": tablet.name,
+                        "url": tablet.url,
+                        "Carrier": "",
+                        "Wireless Technology": "",
+                        "Operating System": "",
+                        "Screen Size": "",
+                        "Screen Resolution": "",
+                        "Processor Model": "",
+                        "Voice Assistant Built-in": "",
+                        "Rear-Facing Camera": "",
+                        "Product Name": "",
+                        "Brand": "",
+                        "Color": "",
+                        "Bluetooth Enabled": "",
+                        "Keyboard Type": "",
+                        "Wireless Compatibility": ""
+                    }
+                    let list = ["Carrier", "Wireless Technology", "Operating System", "Screen Size", "Screen Resolution", "Processor Model", "Voice Assistant Built-in", "Rear-Facing Camera", "Product Name", "Brand", "Color", "Bluetooth Enabled", "Keyboard Type", "Wireless Compatibility"]
+                    for (let i = 0; i < list.length; i++) {
+                        let temp = details.find(temp => temp.name === list[i])
+                        if (temp === undefined) {
+                            product[list[i]] = "null";
+                        } else {
+                            product[list[i]] = temp.value
+                        }
+                    }
+                    comapreList.push(product)
+                } else {
+                    errors.push({ error: `Product:${productsListSKU[i]} not a tablet, you need to use ${laptop.category} category` })
+                }
             } catch (e) {
-                temp.push({ error: `Product id:${productsListSKU[i]} not found` })
+                errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
-        return temp;
+        return [comapreList, errors];
     },
 
     //admin API_KEY
