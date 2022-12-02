@@ -11,7 +11,33 @@ router
         try {
             let productList = await productData.getAllProducts();
             let categoryList = await productData.getCategoryOfProducts();
-            res.render('products/listOfProducts', { productList: productList, categoryList: categoryList })
+            //pagination start
+            //const page = req.query.page
+            //const limit = req.query.limit
+            const page = 1
+            const limit = 10
+
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+
+            const resultsProducts = {}
+
+            if (endIndex < productList.length) {
+                resultsProducts.next = {
+                    page: page + 1,
+                    limit: limit
+                }
+            }
+            if (startIndex > 0) {
+                resultsProducts.previous = {
+                    page: page - 1,
+                    limit: limit
+                }
+            }
+            resultsProducts.results = productList.slice(startIndex, endIndex)
+            //res.json(resultsProducts)
+            //pagination end
+            res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList })
         } catch (e) {
             return res.status(404).json('products/listOfProducts', { error: e });
         }
@@ -158,6 +184,5 @@ router.get('/tablets/:id', async (req, res) => {
 router.get('/compare', async (req, res) => {
 
 })
-
 //compareProducts not finished
 module.exports = router;

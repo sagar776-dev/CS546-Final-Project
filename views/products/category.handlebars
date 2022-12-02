@@ -6,7 +6,6 @@
             <form method="POST">
                 <input type="submit" name="ManufacturerOfCategoryName" value="{{this}}" />
             </form>
-
         </li>
         {{/each}}
     </ul>
@@ -14,7 +13,7 @@
         {{#each product_List}}
         <tr>
             <td>
-                <img src={{ pictures.[0] }} alt={{pictures.[0]}} width="100" height="100">
+                <img src={{ pictures.[0] }} alt={{name}} width="100" height="100">
             </td>
             <td>
                 <a href="{{category}}/{{_id}}">{{name}}</a>

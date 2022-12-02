@@ -5,7 +5,7 @@ const axios = require('axios');
 const validation = require('../validation');
 
 let exportedMethods = {
-    //admin
+    //admin need to fix
     async addProduct(
         sku,
         name,
@@ -217,13 +217,30 @@ let exportedMethods = {
     //sort by prices 
     async sortProductsByPrices() {
 
+
+
+
     },
+    //show by price
+    //db.marks.find({ "price": { "$gt": low, '$lt': high} })
+
     //user fixes
-    async comparelaptops(...productsListSKU) {
-        let temp = []
+    async compareLaptops(productsListSKU) {
+        // validation of SKU list
+        // total 5 products
+        productsListSKU = productsListSKU
+        // validation end
+        // productsListSKU array of SKU 
+        let comapreList = []
+        let errors = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
-                let a = await this.getProductsByID(productsListSKU[i])
+                let product = await this.getProductsByID(productsListSKU[i])
+                //object
+                //we want to check if this object contains some of the details
+                let Processor_Model = product.find(temp => temp.name === product.name)
+
+                //check if category is laptop (if not ask to remove it)
 
                 //{"category":"laptops"}
 
@@ -245,18 +262,70 @@ let exportedMethods = {
                 //{"details.name":"Year of Release"}
                 //{"details.name":"Color Category"}
 
-                temp.push(a)
+                comapreList.push(a)
+            } catch (e) {
+                errors.push({ error: `Product id:${productsListSKU[i]} not found` })
+            }
+        }
+        return comapreList, error;
+    },
+    //user fixes
+    async comparePhones(productsListSKU) {
+        let temp = []
+        for (let i = 0; i < productsListSKU.length; i++) {
+            try {
+                //check if category is laptop (if not ask to remove it)
+
+                //{"category":"phones"}
+
+                //{"details.name":"Screen Size"}
+                //{"details.name":"Screen Resolution"}
+                //{"details.name":"Total Storage Capacity"}
+                //{"details.name":"System Memory (RAM)"}
+                //{"details.name":"Processor Model"}
+                //{"details.name":"Operating System"}
+                //{"details.name":"Wireless Connectivity"}
+                //{"details.name":"Battery Type"}
+                //{"details.name":"Year of Release"}
+                //{"details.name":"Color"}
+
+
             } catch (e) {
                 temp.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
         return temp;
     },
-    //show by price
-    //db.marks.find({ "price": { "$gt": low, '$lt': high} })
+    //user fixes
+    async compareTablets(productsListSKU) {
+        let temp = []
+        for (let i = 0; i < productsListSKU.length; i++) {
+            try {
+                //check if category is laptop (if not ask to remove it)
 
-    //sort by name
-    //sort by average reviews
+                //{"category":"phomes"}
+
+                //{"details.name":"Carrier"}
+                //{"details.name":"Wireless Technology"}
+                //{"details.name":"Operating System"}
+                //{"details.name":"Screen Size"}
+                //{"details.name":"Screen Resolution"}
+                //{"details.name":"Processor Model"}
+                //{"details.name":"Voice Assistant Built-in"}
+                //{"details.name":"Rear-Facing Camera"} 
+                //{"details.name":"Product Name"}
+
+                //{"details.name":"Brand"}
+                //{"details.name":"Color"}
+                //{"details.name":"Bluetooth Enabled"}
+                //{"details.name":"Keyboard Type"}
+                //{"details.name":"Wireless Compatibility"}
+            } catch (e) {
+                temp.push({ error: `Product id:${productsListSKU[i]} not found` })
+            }
+        }
+        return temp;
+    },
 
     //admin API_KEY
     async getProductsByAxios1(page, key, API_KEY) {
