@@ -3,8 +3,6 @@ const app = express();
 const session = require('express-session');
 const configRoutes = require("./routes");
 const static = express.static(__dirname + '/public');
-
-const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 
 app.use('/public', static);

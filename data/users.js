@@ -15,8 +15,8 @@ const registerUser = async (user) => {
   userType = userValidate.validateUsertype(user.usertype);
 
   let usersCollection = await mongoCollection.users();
-  let user = await usersCollection.findOne({ username: username });
-  if (user) throw "Error: User already exists";
+  let tempUser = await usersCollection.findOne({ username: username });
+  if (tempUser) throw "Error: User already exists";
 
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.saltRounds);
   user = {
