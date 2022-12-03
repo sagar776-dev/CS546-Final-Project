@@ -1,0 +1,105 @@
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello</title>
+    {{!
+    <link rel="stylesheet" href="/public/main-styles.css"> }}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <header>
+      {{! <ul>
+        <li><a href="/admin">Admin</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+      </ul> }}
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">LookUpDevice</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+          >Search</button>
+        </form>
+
+        <img
+          src="../../public//images/account-image.png"
+          class="ml-auto"
+          width="30"
+          height="30"
+          alt="user profile"
+          href="#"
+        />
+        <a class="nav-link disabled ml_auto" href="#">Sagar Chakravarthy</a>
+      </nav>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin">Admin
+                <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Users</a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+
+    </header>
+    <main>
+      <form action="/products" method="POST">
+        <label for="search_product">
+          Enter Product Name:
+          <input
+            id="search_product"
+            type="text"
+            name="ProductName"
+            placeholder="Search Product Name"
+            class="full-width-input"
+          />
+        </label>
+        <button type="submit">Click Me!</button>
+      </form>
+      {{{body}}}
+    </main>
+  </body>
+
+</html>
