@@ -13,6 +13,12 @@
     <nav aria-label="...">
         <ul class="pagination">
             {{#if product_List.page.previous}}
+            {{#if manufacturer}}
+            <p>{{manufacturer}}</p>
+            {{/if}}
+            {{#else}}
+            <p>manufacturer</p>
+            {{/else}}
             <li class="page-item">
                 <a class="page-link" href="?page={{product_List.page.previous}}">Previous</a>
             </li>

@@ -78,14 +78,18 @@ router
     .route('/laptops')
     .get(async (req, res) => {
         try {
-            // if () {
-            let product_List = await productData.getProductsByCategory("laptops");
-            // } else {
-            //     let product_List = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
-            // }
-            let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
-            //pagination start
+            let manufacturer = req.query.manufacturer
             const page = parseInt(req.query.page)
+            console.log(manufacturer)
+            let product_List = 0;
+            if (!manufacturer) {
+                product_List = await productData.getProductsByCategory("laptops");
+            } else {
+                product_List = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
+            }
+            let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
+            console.log(manufactort_List)
+            //pagination start
             //const limit = req.query.limit
             //const page = 1
             const limit = 10
@@ -104,7 +108,7 @@ router
             }
             resultsProducts.results = product_List.slice(startIndex, endIndex)
             //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List })
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List, manufacturer: manufacturer })
         } catch (e) {
             return res.status(404).render('products/category', { error: 'Laptops not found' });
         }
