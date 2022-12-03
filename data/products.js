@@ -334,6 +334,7 @@ let exportedMethods = {
     },
     //user fixes
     async compareTablets(productsListSKU) {
+
         // validation of SKU list
         // total 5 products
         productsListSKU = productsListSKU
