@@ -6,6 +6,7 @@
     }
 </style> --}}
 <article class="product-page">
+    {{#if error}}<p>{{error}}</p>{{/if}}
     <p>id: {{product._id}}</p>
     <p>name: {{product.name}}</p>
     <p>customerReviewAverage: {{product.customerReviewAverage}}</p>
@@ -18,7 +19,8 @@
     <p>Description: {{product.Description}}</p>
     <p>picures:</p>
     {{#each pictures}}
-    <img src={{ this }} alt={{this}} width="500" height="600">
+    {{!-- Need to fix alt to name --}}
+    <img src={{ this }} alt={{ this }} width="300" height="250">
     {{/each}}
     <p>details: </p>
     <table>

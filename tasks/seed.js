@@ -297,6 +297,67 @@ const main = async () => {
     } catch (e) {
         console.log(e)
     }
+    console.log()
+    console.log("compareLaptops(productsListSKU)")
+    let compare = 0;
+    try {
+        compare = await funcProducts.compareLaptops([6447818, 6518252, 6477889, 6502230, 6509654])
+        console.log(compare[0]);
+        console.log(compare[1]);
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("different products compareLaptops(productsListSKU)")
+    compare = 0;
+    try {
+        compare = await funcProducts.compareLaptops([6447818, 6477100, 6477093, 6502230, 6487439]);
+        console.log(compare[0]);
+        console.log(compare[1]);
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("comparePhones(productsListSKU)")
+    compare = 0;
+    try {
+        compare = await funcProducts.comparePhones([6487439, 6487254, 6468291, 6520023, 6487356]);
+        console.log(compare[0]);
+        console.log(compare[1]);
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("different products comparePhones(productsListSKU)")
+    compare = 0;
+    try {
+        compare = await funcProducts.comparePhones([6447818, 6477100, 6477093, 6502230, 6487439]);
+        console.log(compare[0]);
+        console.log(compare[1]);
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("compareTablets(productsListSKU)")
+    compare = 0;
+    try {
+        compare = await funcProducts.compareTablets([6517642, 6492318, 6340608, 4263701, 6461942]);
+        console.log(compare[0]);
+        console.log(compare[1]);
+    } catch (e) {
+        console.log(e)
+    }
+    console.log()
+    console.log("different products compareTablets(productsListSKU)")
+    compare = 0;
+    try {
+        compare = await funcProducts.compareTablets([6461942, 6477100, 6477093, 6340498, 6487439]);
+        console.log(compare[0]);
+        console.log(compare[1]);
+    } catch (e) {
+        console.log(e)
+    }
+
     console.log('Done!');
     await dbConnection.closeConnection();
 };
