@@ -9,11 +9,38 @@
         </li>
         {{/each}}
     </ul>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            {{#if product_List.page.previous}}
+            <li class="page-item">
+                <a class="page-link" href="?page={{product_List.page.previous}}">Previous</a>
+            </li>
+            <li>
+                <a class="page-link" href="?page={{product_List.page.previous}}">{{product_List.page.previous}}</a>
+            </li>
+            {{/if}}
+            {{#if product_List.page.current}}
+            <li class="page-item disabled">
+                <a class="page-link" href="?page={{product_List.page.current}}">{{product_List.page.current}}</a>
+            </li>
+            {{/if}}
+            {{#if product_List.page.next}}
+            <li>
+                <a class="page-link" href="?page={{product_List.page.next}}">{{product_List.page.next}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{product_List.page.next}}">Next</a>
+            </li>
+            {{/if}}
+        </ul>
+    </nav>
+
     <table>
-        {{#each product_List}}
+        {{#each product_List.results}}
         <tr>
             <td>
-                <img src={{ pictures.[0] }} alt={{name}} width="100" height="100">
+                <img src={{ pictures.[0] }} alt={{name}} width="140" height="110">
             </td>
             <td>
                 <a href="{{category}}/{{_id}}">{{name}}</a>
@@ -23,4 +50,31 @@
         </tr>
         {{/each}}
     </table>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            {{#if product_List.page.previous}}
+            <li class="page-item">
+                <a class="page-link" href="?page={{product_List.page.previous}}">Previous</a>
+            </li>
+            <li>
+                <a class="page-link" href="?page={{product_List.page.previous}}">{{product_List.page.previous}}</a>
+            </li>
+            {{/if}}
+            {{#if product_List.page.current}}
+            <li class="page-item disabled">
+                <a class="page-link" href="?page={{product_List.page.current}}">{{product_List.page.current}}</a>
+            </li>
+            {{/if}}
+            {{#if product_List.page.next}}
+            <li>
+                <a class="page-link" href="?page={{product_List.page.next}}">{{product_List.page.next}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{product_List.page.next}}">Next</a>
+            </li>
+            {{/if}}
+        </ul>
+    </nav>
+
 </article>

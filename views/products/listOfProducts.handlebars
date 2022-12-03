@@ -1,17 +1,51 @@
 <article class="product-list">
     {{#if error}}<p>{{error}}</p>{{/if}}
-    <ul>
-        {{#each categoryList}}
-        <li>
-            <a href="products/{{this}}">{{this}}</a>
-        </li>
-        {{/each}}
-    </ul>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <ul class="dropdown-menu">
+            {{#each categoryList}}
+            <li>
+                <a class="dropdown-item" href="products/{{this}}?page=1">{{this}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            {{#if productList.page.previous}}
+            <li class="page-item">
+                <a class="page-link" href="?page={{productList.page.previous}}">Previous</a>
+            </li>
+            <li>
+                <a class="page-link" href="?page={{productList.page.previous}}">{{productList.page.previous}}</a>
+            </li>
+            {{/if}}
+            {{#if productList.page.current}}
+            <li class="page-item disabled">
+                <a class="page-link" href="?page={{productList.page.current}}">{{productList.page.current}}</a>
+            </li>
+            {{/if}}
+            {{#if productList.page.next}}
+            <li>
+                <a class="page-link" href="?page={{productList.page.next}}">{{productList.page.next}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{productList.page.next}}">Next</a>
+            </li>
+            {{/if}}
+        </ul>
+    </nav>
+
     <table>
         {{#each productList.results}}
         <tr>
             <td>
-                <img src={{ pictures.[0] }} alt="{{name}}" width="100" height="100">
+                <img src={{ pictures.[0] }} alt="{{name}}" width="140" height="110">
             </td>
             <td>
                 <a href="products/{{category}}/{{_id}}">{{name}}</a>
@@ -21,4 +55,30 @@
         </tr>
         {{/each}}
     </table>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            {{#if productList.page.previous}}
+            <li class="page-item">
+                <a class="page-link" href="?page={{productList.page.previous}}">Previous</a>
+            </li>
+            <li>
+                <a class="page-link" href="?page={{productList.page.previous}}">{{productList.page.previous}}</a>
+            </li>
+            {{/if}}
+            {{#if productList.page.current}}
+            <li class="page-item disabled">
+                <a class="page-link" href="?page={{productList.page.current}}">{{productList.page.current}}</a>
+            </li>
+            {{/if}}
+            {{#if productList.page.next}}
+            <li>
+                <a class="page-link" href="?page={{productList.page.next}}">{{productList.page.next}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{productList.page.next}}">Next</a>
+            </li>
+            {{/if}}
+        </ul>
+    </nav>
 </article>

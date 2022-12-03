@@ -12,32 +12,28 @@ router
             let productList = await productData.getAllProducts();
             let categoryList = await productData.getCategoryOfProducts();
             //pagination start
-            //const page = req.query.page
+            const page = parseInt(req.query.page)
             //const limit = req.query.limit
-            const page = 1
+            //const page = 1
             const limit = 10
-
             const startIndex = (page - 1) * limit
             const endIndex = page * limit
-
             const resultsProducts = {}
-
-            if (endIndex < productList.length) {
-                resultsProducts.next = {
-                    page: page + 1,
-                    limit: limit
-                }
-            }
-            if (startIndex > 0) {
-                resultsProducts.previous = {
-                    page: page - 1,
-                    limit: limit
-                }
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
-            //res.json(resultsProducts)
             //pagination end
+
             res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList })
+
         } catch (e) {
             return res.status(404).json('products/listOfProducts', { error: e });
         }
@@ -49,6 +45,28 @@ router
         //validation end
         try {
             let productList = await productData.getProductByName(name);
+
+            //pagination start
+            const page = parseInt(req.query.page)
+            //const limit = req.query.limit
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = productList.slice(startIndex, endIndex)
+            //pagination end
+
             res.render('products/name', { productList: productList });
         } catch (e) {
             return res.status(404).render('products/name', { error: e });
@@ -60,9 +78,33 @@ router
     .route('/laptops')
     .get(async (req, res) => {
         try {
+            // if () {
             let product_List = await productData.getProductsByCategory("laptops");
+            // } else {
+            //     let product_List = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
+            // }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
-            res.render('products/category', { product_List: product_List, manufactort_List: manufactort_List })
+            //pagination start
+            const page = parseInt(req.query.page)
+            //const limit = req.query.limit
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            //pagination end
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List })
         } catch (e) {
             return res.status(404).render('products/category', { error: 'Laptops not found' });
         }
@@ -71,11 +113,30 @@ router
         let manufacturer = req.body.ManufacturerOfCategoryName;
         //validation start
         manufacturer = manufacturer
+        const page = parseInt(req.query.page)
         //validation end
         try {
             let product_List = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
-            res.render('products/category', { product_List: product_List, manufactort_List: manufactort_List });
+            //pagination start
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            //pagination end
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
         } catch (e) {
             return res.status(404).render('products/category', { errors: e });
         }
@@ -105,7 +166,27 @@ router
         try {
             let product_List = await productData.getProductsByCategory("phones");
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("phones");
-            res.render('products/category', { product_List: product_List, manufactort_List: manufactort_List })
+            //pagination start
+            const page = parseInt(req.query.page)
+            //const limit = req.query.limit
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            //pagination end
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
         } catch (e) {
             return res.status(404).render('products/category', { error: 'Phones not found' });
         }
@@ -118,7 +199,27 @@ router
         try {
             let product_List = await productData.getProductsByCategoryAndManufacturer("phones", manufacturer);
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("phones");
-            res.render('products/category', { product_List: product_List, manufactort_List: manufactort_List });
+            //pagination start
+            const page = parseInt(req.query.page)
+            //const limit = req.query.limit
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            //pagination end
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
         } catch (e) {
             return res.status(404).render('products/category', { error: e });
         }
@@ -145,7 +246,27 @@ router
         try {
             let product_List = await productData.getProductsByCategory("tablets");
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("tablets");
-            res.render('products/category', { product_List: product_List, manufactort_List: manufactort_List })
+            //pagination start
+            const page = parseInt(req.query.page)
+            //const limit = req.query.limit
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            //pagination end
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
         } catch (e) {
             return res.status(404).render({ error: 'Tablets not found' });
         }
@@ -158,7 +279,27 @@ router
         try {
             let product_List = await productData.getProductsByCategoryAndManufacturer("tablets", manufacturer);
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("tablets");
-            res.render('products/category', { product_List: product_List, manufactort_List: manufactort_List });
+            //pagination start
+            const page = parseInt(req.query.page)
+            //const limit = req.query.limit
+            //const page = 1
+            const limit = 10
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+            const resultsProducts = {}
+            //fix later
+            current = page
+            pageNext = (page + 1)
+            pagePrevious = (page - 1)
+            resultsProducts.page = {
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit
+            }
+            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            //pagination end
+            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
         } catch (e) {
             return res.status(404).render('products/category', { errors: e });
         }
