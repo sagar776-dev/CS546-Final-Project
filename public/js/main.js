@@ -1,64 +1,35 @@
-// let searchBar = document.getElementById("searchbar");
-// let searchBtn = document.getElementById("searchbtn");
-// let errorDiv = document.getElementById("error");
-
-// let searchedDevices = [];
-
-// if(searchBtn){
-//     searchBtn.addEventListener('click', (event) => {
-//         try {
-//             event.preventDefault();
-//             //TODO: Validate the Input using Validation functions
-//             let input = searchBar.value.trim();
-//             if(!input) throw "Error: Invalid Input";
-            
-//             //TODO: After Validation route the event to getProductByName route
-
-//             //Keeping track of no.of hits on a product
-            
-//             if(!searchedDevices.find(device => device.name==input)){
-//                 searchedDevices.push({
-//                     name: input,
-//                     hit: 1
-//                 });
-//             }
-//             else{
-//                 searchedDevices.find(device => device.name==input).hit++;
-//             }
-//             errorDiv.hidden = true;
-//         } catch (error) {
-//             errorDiv.hidden = false;
-//             errorDiv.innerHTML = error;
-//         }
-//     });
-// }
-
 (function ($){
     let searchBar = $("#searchbar");
     let searchBtn = $("#searchbtn");
     let errorDiv = $("#error");
-    let searchResult = $("#search-result");
 
     searchBtn.on('click', (event) => {
         try {
+            let productList = $("#product-list");
             event.preventDefault();
             let input = searchBar.val().trim();
             //validation
+            if(!input) throw "Error: Enter name to search";
 
             let requestConfig = {
                 method: 'POST',
                 url: '/products',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    productName: input
+                    ProductName: input
                 })
             };
 
             $.ajax(requestConfig).then((responseMessage) => {
+                var newElement = $(responseMessage);
                 console.log(responseMessage);
+                productList.html(newElement.find("#product-list").html());
             });
+            errorDiv.hidden = true;
         } catch (error) {
             console.log(error);
+            errorDiv.hidden = false;
+            $("#error-p").html(error);
         }
     });
 })(window.jQuery);
