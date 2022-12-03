@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LookUpDevice</title>
-    <link rel="stylesheet" href="../public/css/main.css" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-      crossorigin="anonymous"
-    />
-  </head>
 
-  <body>
+<head>
+    <meta charset="utf-8">
+    <title>Hello</title>
+    {{!--
+    <link rel="stylesheet" href="/public/main-styles.css"> --}}
+</head>
+
+<body>
     <header>
-      <h1>LookUpDevice</h1>
+        <ul>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/reviews">Reviews</a></li>
+        </ul>
     </header>
     <main>
+        <form action="/products" method="POST">
+            <label for="search_product">
+                Enter Product Name:
+                <input id="search_product" type="text" name="ProductName" placeholder="Search Product Name"
+                    class="full-width-input" />
+            </label>
+            <button type="submit">Click Me!</button>
+        </form>
         {{{body}}}
     </main>
-  </body>
+</body>
+
 </html>

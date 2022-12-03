@@ -1,7 +1,10 @@
 const userData = require('./users');
 const productData = require('./products');
 
+
 module.exports = {
-  users: userData,
-  products: productData
+    users: require('./users'),
+    users: require('./admin'),
+    products: require('./products'),
+    reviews: require('./reviews')
 };
