@@ -10,7 +10,6 @@ router
     .get(async (req, res) => {
         const page = parseInt(req.query.page)
         let search = req.query.search
-
         let error;
         try {
             let productList = 0;
@@ -25,24 +24,31 @@ router
             }
             let categoryList = await productData.getCategoryOfProducts();
             //const page = 1
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
-            //fix later
             current = page
             if (current < 1) {
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+            }
+            if (current > parseInt(productList.length / 10) + 1) {
+                current = parseInt(productList.length / 10)
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
             }
             else {
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
             }
-            if (pageNext > 1 + parseInt(productList.length / 10)) {
+            if (pageNext > parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
+            const limit = 10
+            const startIndex = (current - 1) * limit
+            const endIndex = current * limit
+            const resultsProducts = {}
+
             resultsProducts.page = {
                 "search": search,
                 current: current,
@@ -52,12 +58,13 @@ router
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-
             res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList, error: error })
-
         } catch (e) {
             return res.status(404).json('products/listOfProducts', { error: e });
         }
+    })
+    .post(async (req, res) => {
+
     })
 //laptops
 router
@@ -65,6 +72,7 @@ router
     .get(async (req, res) => {
         let manufacturer = req.query.manufacturer
         const page = parseInt(req.query.page)
+        let error;
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -74,16 +82,19 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
             //pagination start
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
             //fix later
             current = page
             if (current < 1) {
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+            }
+            if (current > parseInt(productList.length / 10) + 1) {
+                current = parseInt(productList.length / 10) + 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
             }
             else {
                 pageNext = (current + 1)
@@ -92,6 +103,10 @@ router
             if (pageNext > 1 + parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
+            const limit = 10
+            const startIndex = (current - 1) * limit
+            const endIndex = current * limit
+            const resultsProducts = {}
             resultsProducts.page = {
                 "manufacturer": manufacturer,
                 current: current,
@@ -101,7 +116,7 @@ router
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List })
+            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List, error: error })
         } catch (e) {
             return res.status(404).render('products/listOfProducts', { error: 'Laptops not found' });
         }
@@ -130,6 +145,7 @@ router
     .get(async (req, res) => {
         let manufacturer = req.query.manufacturer
         const page = parseInt(req.query.page)
+        let error;
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -139,16 +155,19 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("phones");
             //pagination start
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
             //fix later
             current = page
             if (current < 1) {
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+            }
+            if (current > parseInt(productList.length / 10) + 1) {
+                current = parseInt(productList.length / 10) + 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
             }
             else {
                 pageNext = (current + 1)
@@ -157,6 +176,10 @@ router
             if (pageNext > 1 + parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
+            const limit = 10
+            const startIndex = (current - 1) * limit
+            const endIndex = current * limit
+            const resultsProducts = {}
             resultsProducts.page = {
                 "manufacturer": manufacturer,
                 current: current,
@@ -166,7 +189,7 @@ router
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List })
+            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List, error: error })
         } catch (e) {
             return res.status(404).render('products/listOfProducts', { error: 'Phones not found' });
         }
@@ -192,6 +215,7 @@ router
     .get(async (req, res) => {
         let manufacturer = req.query.manufacturer
         const page = parseInt(req.query.page)
+        let error;
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -201,16 +225,19 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("tablets");
             //pagination start
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
             //fix later
             current = page
             if (current < 1) {
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+            }
+            if (current > parseInt(productList.length / 10) + 1) {
+                current = parseInt(productList.length / 10) + 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
             }
             else {
                 pageNext = (current + 1)
@@ -219,7 +246,10 @@ router
             if (pageNext > 1 + parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
-
+            const limit = 10
+            const startIndex = (current - 1) * limit
+            const endIndex = current * limit
+            const resultsProducts = {}
             resultsProducts.page = {
                 "manufacturer": manufacturer,
                 current: current,
@@ -230,7 +260,7 @@ router
 
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List })
+            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List, error: error })
         } catch (e) {
             return res.status(404).render({ error: 'Tablets not found' });
         }
