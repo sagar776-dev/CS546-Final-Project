@@ -3,7 +3,6 @@ const router = express.Router();
 const data = require('../data');
 const productData = data.products;
 // const validation = require('../helpers');
-const path = require('path');
 
 router
     .route('/')
