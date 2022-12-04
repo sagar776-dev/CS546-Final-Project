@@ -163,7 +163,6 @@ let exportedMethods = {
         let createIndex = await productCollection.createIndex({ "name": "text" })
         let product = await productCollection.find({ $text: { $search: Name } }).toArray()
         if (!product) throw 'Product not found';
-        if (product.length === 0) throw 'Incorrect name'
         return product;
     },
     async getCategoryOfProducts() {

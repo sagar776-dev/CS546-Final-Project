@@ -8,12 +8,22 @@ const path = require('path');
 router
     .route('/')
     .get(async (req, res) => {
+        const page = parseInt(req.query.page)
+        let search = req.query.search
+
+        let error;
         try {
-            let productList = await productData.getAllProducts();
+            let productList = 0;
+            if (!search) {
+                productList = await productData.getAllProducts();
+            } else {
+                productList = await productData.getProductByName(search);
+                if (productList.length === 0) {
+                    productList = await productData.getAllProducts();
+                    error = `Product with a name of "${search}" Not Found`
+                }
+            }
             let categoryList = await productData.getCategoryOfProducts();
-            //pagination start
-            const page = parseInt(req.query.page)
-            //const limit = req.query.limit
             //const page = 1
             const limit = 10
             const startIndex = (page - 1) * limit
@@ -21,9 +31,20 @@ router
             const resultsProducts = {}
             //fix later
             current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
+            if (current < 1) {
+                current = 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            else {
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            if (pageNext > 1 + parseInt(productList.length / 10)) {
+                pageNext = NaN
+            }
             resultsProducts.page = {
+                "search": search,
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
@@ -32,33 +53,47 @@ router
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
 
-            res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList })
+            res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList, error: error })
 
         } catch (e) {
             return res.status(404).json('products/listOfProducts', { error: e });
         }
     })
-    .post(async (req, res) => {
-        let name = req.body.ProductName;
-        //validation start
-        name = name
-        //validation end
+//laptops
+router
+    .route('/laptops')
+    .get(async (req, res) => {
+        let manufacturer = req.query.manufacturer
+        const page = parseInt(req.query.page)
         try {
-            let productList = await productData.getProductByName(name);
-
+            let productList = 0;
+            if (!manufacturer) {
+                productList = await productData.getProductsByCategory("laptops");
+            } else {
+                productList = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
+            }
+            let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
             //pagination start
-            const page = parseInt(req.query.page)
-            //const limit = req.query.limit
-            //const page = 1
             const limit = 10
             const startIndex = (page - 1) * limit
             const endIndex = page * limit
             const resultsProducts = {}
             //fix later
             current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
+            if (current < 1) {
+                current = 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            else {
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            if (pageNext > 1 + parseInt(productList.length / 10)) {
+                pageNext = NaN
+            }
             resultsProducts.page = {
+                "manufacturer": manufacturer,
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
@@ -66,83 +101,9 @@ router
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-
-            res.render('products/name', { productList: productList });
+            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List })
         } catch (e) {
-            return res.status(404).render('products/name', { error: e });
-        }
-    })
-
-//laptops
-router
-    .route('/laptops')
-    .get(async (req, res) => {
-        try {
-            let manufacturer = req.query.manufacturer
-            const page = parseInt(req.query.page)
-            console.log(manufacturer)
-            let product_List = 0;
-            if (!manufacturer) {
-                product_List = await productData.getProductsByCategory("laptops");
-            } else {
-                product_List = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
-            }
-            let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
-            console.log(manufactort_List)
-            //pagination start
-            //const limit = req.query.limit
-            //const page = 1
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
-            //fix later
-            current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
-            resultsProducts.page = {
-                current: current,
-                next: pageNext,
-                previous: pagePrevious,
-                limit: limit
-            }
-            resultsProducts.results = product_List.slice(startIndex, endIndex)
-            //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List, manufacturer: manufacturer })
-        } catch (e) {
-            return res.status(404).render('products/category', { error: 'Laptops not found' });
-        }
-    })
-    .post(async (req, res) => {
-        let manufacturer = req.body.ManufacturerOfCategoryName;
-        //validation start
-        manufacturer = manufacturer
-        const page = parseInt(req.query.page)
-        //validation end
-        try {
-            let product_List = await productData.getProductsByCategoryAndManufacturer("laptops", manufacturer);
-            let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
-            //pagination start
-            //const page = 1
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
-            //fix later
-            current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
-            resultsProducts.page = {
-                current: current,
-                next: pageNext,
-                previous: pagePrevious,
-                limit: limit
-            }
-            resultsProducts.results = product_List.slice(startIndex, endIndex)
-            //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
-        } catch (e) {
-            return res.status(404).render('products/category', { errors: e });
+            return res.status(404).render('products/listOfProducts', { error: 'Laptops not found' });
         }
     })
 router.get('/laptops/:id', async (req, res) => {
@@ -167,65 +128,47 @@ router.get('/laptops/:id', async (req, res) => {
 router
     .route('/phones')
     .get(async (req, res) => {
+        let manufacturer = req.query.manufacturer
+        const page = parseInt(req.query.page)
         try {
-            let product_List = await productData.getProductsByCategory("phones");
+            let productList = 0;
+            if (!manufacturer) {
+                productList = await productData.getProductsByCategory("phones");
+            } else {
+                productList = await productData.getProductsByCategoryAndManufacturer("phones", manufacturer);
+            }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("phones");
             //pagination start
-            const page = parseInt(req.query.page)
-            //const limit = req.query.limit
-            //const page = 1
             const limit = 10
             const startIndex = (page - 1) * limit
             const endIndex = page * limit
             const resultsProducts = {}
             //fix later
             current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
+            if (current < 1) {
+                current = 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            else {
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            if (pageNext > 1 + parseInt(productList.length / 10)) {
+                pageNext = NaN
+            }
             resultsProducts.page = {
+                "manufacturer": manufacturer,
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
                 limit: limit
             }
-            resultsProducts.results = product_List.slice(startIndex, endIndex)
+            resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
+            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List })
         } catch (e) {
-            return res.status(404).render('products/category', { error: 'Phones not found' });
-        }
-    })
-    .post(async (req, res) => {
-        let manufacturer = req.body.ManufacturerOfCategoryName;
-        //validation start
-        manufacturer = manufacturer
-        //validation end
-        try {
-            let product_List = await productData.getProductsByCategoryAndManufacturer("phones", manufacturer);
-            let manufactort_List = await productData.getManufacturersOfProductsByCategory("phones");
-            //pagination start
-            const page = parseInt(req.query.page)
-            //const limit = req.query.limit
-            //const page = 1
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
-            //fix later
-            current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
-            resultsProducts.page = {
-                current: current,
-                next: pageNext,
-                previous: pagePrevious,
-                limit: limit
-            }
-            resultsProducts.results = product_List.slice(startIndex, endIndex)
-            //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
-        } catch (e) {
-            return res.status(404).render('products/category', { error: e });
+            return res.status(404).render('products/listOfProducts', { error: 'Phones not found' });
         }
     })
 router.get('/phones/:id', async (req, res) => {
@@ -247,65 +190,49 @@ router.get('/phones/:id', async (req, res) => {
 router
     .route('/tablets')
     .get(async (req, res) => {
+        let manufacturer = req.query.manufacturer
+        const page = parseInt(req.query.page)
         try {
-            let product_List = await productData.getProductsByCategory("tablets");
+            let productList = 0;
+            if (!manufacturer) {
+                productList = await productData.getProductsByCategory("tablets");
+            } else {
+                productList = await productData.getProductsByCategoryAndManufacturer("tablets", manufacturer);
+            }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("tablets");
             //pagination start
-            const page = parseInt(req.query.page)
-            //const limit = req.query.limit
-            //const page = 1
             const limit = 10
             const startIndex = (page - 1) * limit
             const endIndex = page * limit
             const resultsProducts = {}
             //fix later
             current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
+            if (current < 1) {
+                current = 1
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            else {
+                pageNext = (current + 1)
+                pagePrevious = (current - 1)
+            }
+            if (pageNext > 1 + parseInt(productList.length / 10)) {
+                pageNext = NaN
+            }
+
             resultsProducts.page = {
+                "manufacturer": manufacturer,
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
                 limit: limit
             }
-            resultsProducts.results = product_List.slice(startIndex, endIndex)
+
+            resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
+            res.render('products/listOfProducts', { productList: resultsProducts, manufactort_List: manufactort_List })
         } catch (e) {
             return res.status(404).render({ error: 'Tablets not found' });
-        }
-    })
-    .post(async (req, res) => {
-        let manufacturer = req.body.ManufacturerOfCategoryName;
-        //validation start
-        manufacturer = manufacturer
-        //validation end
-        try {
-            let product_List = await productData.getProductsByCategoryAndManufacturer("tablets", manufacturer);
-            let manufactort_List = await productData.getManufacturersOfProductsByCategory("tablets");
-            //pagination start
-            const page = parseInt(req.query.page)
-            //const limit = req.query.limit
-            //const page = 1
-            const limit = 10
-            const startIndex = (page - 1) * limit
-            const endIndex = page * limit
-            const resultsProducts = {}
-            //fix later
-            current = page
-            pageNext = (page + 1)
-            pagePrevious = (page - 1)
-            resultsProducts.page = {
-                current: current,
-                next: pageNext,
-                previous: pagePrevious,
-                limit: limit
-            }
-            resultsProducts.results = product_List.slice(startIndex, endIndex)
-            //pagination end
-            res.render('products/category', { product_List: resultsProducts, manufactort_List: manufactort_List });
-        } catch (e) {
-            return res.status(404).render('products/category', { errors: e });
         }
     })
 router.get('/tablets/:id', async (req, res) => {
