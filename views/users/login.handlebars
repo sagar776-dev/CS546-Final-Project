@@ -1,0 +1,44 @@
+<div class="signup-page">
+  <div class="container text-center">
+    <h3>Login</h3>
+    <form id="registration-form" action="/users/login" method="POST">
+
+      <div class="form-group">
+        <label for="userid">Email ID/Username
+          <input
+            class="form-control"
+            type="text"
+            id="userid"
+            value="{{userid}}"
+            name="userid"
+          />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password
+          <input
+            class="form-control"
+            class="form-control"
+            type="password"
+            id="password"
+            value="{{password}}"
+            name="password"
+          />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">Login</button>
+      </div>
+    </form>
+
+    <div class="error">
+      {{error}}
+    </div>
+
+    <div>
+      <a href="/users/signup">Create an account</a>
+    </div>
+  </div>
+</div>

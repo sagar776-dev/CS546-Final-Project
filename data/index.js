@@ -4,7 +4,7 @@ const productData = require('./products');
 
 module.exports = {
     users: require('./users'),
-    users: require('./admin'),
+    admin: require('./admin'),
     products: require('./products'),
     reviews: require('./reviews')
 };
