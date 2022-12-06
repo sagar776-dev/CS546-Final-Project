@@ -28,7 +28,7 @@
 
 <body>
     <header>
-        <ul>
+        <ul id="nav_list">
             <li><a href="/admin">Admin</a></li>
             <li><a href="/products?page=1">Products</a></li>
             <li><a href="/users">Users</a></li>
@@ -36,10 +36,10 @@
         </ul>
     </header>
     <main>
-        <form>
-            <label for="search_product">
+        <form id="searchForm">
+            <label>
                 Enter Product Name:
-                <input type="text" id="searchBox" name="search" class="full-width-input" />
+                <input type="text" id="searchInput" name="search" class="full-width-input" />
             </label>
             <button type="submit">Global Search</button>
         </form>

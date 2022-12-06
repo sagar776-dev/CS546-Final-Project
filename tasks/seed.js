@@ -351,7 +351,7 @@ const main = async () => {
     console.log("different products compareTablets(productsListSKU)")
     compare = 0;
     try {
-        compare = await funcProducts.compareTablets([6461942, 6477100, 6477093, 6340498, 6487439]);
+        compare = await funcProducts.compareTablets([6461942, null, 6477093, 6340498, 6487439]);
         console.log(compare[0]);
         console.log(compare[1]);
     } catch (e) {

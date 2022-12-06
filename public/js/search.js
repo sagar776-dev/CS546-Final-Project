@@ -4,3 +4,4 @@ $(document).ready(function () {
         searchString = (encodeURIComponent(searchString));
     });
 });
+
