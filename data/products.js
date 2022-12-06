@@ -147,7 +147,7 @@ let exportedMethods = {
     },
     async getProductByName(Name) {
         //validation start
-
+        Name = Name;
         //validation end
         Name = Name.split(" ")
         if (Name.length > 1) {
@@ -156,7 +156,6 @@ let exportedMethods = {
         else {
             Name = "\"" + Name + "\"";
         }
-        //console.log(Name);
         //validation end
         const productCollection = await products();
         //search - need create index and search by index
@@ -211,14 +210,9 @@ let exportedMethods = {
     },
     //sort by reviews 
     async sortProductsByReviews() {
-
     },
     //sort by prices 
     async sortProductsByPrices() {
-
-
-
-
     },
     //show by price
     //db.marks.find({ "price": { "$gt": low, '$lt': high} })

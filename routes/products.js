@@ -78,24 +78,26 @@ router
             return res.status(404).json('products/listOfProducts', { error: e });
         }
     })
-    .post(async (req, res) => {
-        let name = req.body.ProductName;
-        //validation start
-        name = name
-        //validation end
-        try {
-            let productList = await productData.getProductByName(name);
-            res.render('products/listOfProducts', { productList: productList });
-        } catch (e) {
-            return res.status(404).render('products/listOfProducts', { error: e });
-        }
-    })
+// .post(async (req, res) => {
+//     //need a jquary 
+//     let name = req.body.ProductName;
+//     //validation start
+//     name = name
+//     //validation end
+//     try {
+//         let productList = {}
+//         productList.results = await productData.getProductByName(name);
+//         res.render('products/listOfProducts', { productList: productList });
+//     } catch (e) {
+//         return res.status(404).render('products/listOfProducts', { error: e });
+//     }
+// })
 //laptops
 router
     .route('/laptops')
     .get(async (req, res) => {
-        let url_query = req.query
         //move to validation - object to lowercase
+        let url_query = req.query
         let key, keys = Object.keys(url_query);
         let n = keys.length;
         let newobj = {}
@@ -104,6 +106,10 @@ router
             newobj[key.toLowerCase()] = url_query[key];
         }
         //
+        let search = newobj.search
+        if (search != undefined) {
+            return res.redirect(`http://localhost:3000/products?search=${search}`)
+        }
         //validation start
         let page = parseInt(newobj.page)
         if (!page) {
@@ -161,6 +167,21 @@ router
     })
 router.get('/laptops/:id', async (req, res) => {
     try {
+        //move to validation - object to lowercase
+        let url_query = req.query
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        let search = newobj.search
+        if (search != undefined) {
+            return res.redirect(`http://localhost:3000/products?search=${search}`)
+        }
+        //move to validation
         let sku = parseInt(req.params.id)
         //validation start
         sku = sku
@@ -181,8 +202,8 @@ router.get('/laptops/:id', async (req, res) => {
 router
     .route('/phones')
     .get(async (req, res) => {
-        let url_query = req.query
         //move to validation - object to lowercase
+        let url_query = req.query
         let key, keys = Object.keys(url_query);
         let n = keys.length;
         let newobj = {}
@@ -191,6 +212,11 @@ router
             newobj[key.toLowerCase()] = url_query[key];
         }
         //
+        let search = newobj.search
+        if (search != undefined) {
+            return res.redirect(`http://localhost:3000/products?search=${search}`)
+        }
+        //move to validation
         //validation start
         let page = parseInt(newobj.page)
         if (!page) {
@@ -248,6 +274,21 @@ router
     })
 router.get('/phones/:id', async (req, res) => {
     try {
+        //move to validation - object to lowercase
+        let url_query = req.query
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        let search = newobj.search
+        if (search != undefined) {
+            return res.redirect(`http://localhost:3000/products?search=${search}`)
+        }
+        //move to validation
         let sku = parseInt(req.params.id)
         //validation start
         sku = sku
@@ -265,8 +306,8 @@ router.get('/phones/:id', async (req, res) => {
 router
     .route('/tablets')
     .get(async (req, res) => {
-        let url_query = req.query
         //move to validation - object to lowercase
+        let url_query = req.query
         let key, keys = Object.keys(url_query);
         let n = keys.length;
         let newobj = {}
@@ -275,6 +316,11 @@ router
             newobj[key.toLowerCase()] = url_query[key];
         }
         //
+        let search = newobj.search
+        if (search != undefined) {
+            return res.redirect(`http://localhost:3000/products?search=${search}`)
+        }
+        //move to validation
         //validation start
         let page = parseInt(newobj.page)
         if (!page) {
@@ -333,6 +379,21 @@ router
     })
 router.get('/tablets/:id', async (req, res) => {
     try {
+        //move to validation - object to lowercase
+        let url_query = req.query
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        let search = newobj.search
+        if (search != undefined) {
+            return res.redirect(`http://localhost:3000/products?search=${search}`)
+        }
+        //move to validation
         let sku = parseInt(req.params.id)
         //validation start
         sku = sku
