@@ -8,9 +8,24 @@ const path = require('path');
 router
     .route('/')
     .get(async (req, res) => {
-        const page = parseInt(req.query.page)
-        let search = req.query.search
-        let error;
+        let url_query = req.query
+        //move to validation - object to lowercase
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        //validation start
+        let page = parseInt(newobj.page)
+        if (!page) {
+            page = 1;
+        }
+        let search = newobj.search
+        //validation end
+        let error = [];
         try {
             let productList = 0;
             if (!search) {
@@ -19,7 +34,7 @@ router
                 productList = await productData.getProductByName(search);
                 if (productList.length === 0) {
                     productList = await productData.getAllProducts();
-                    error = `Product with a name of "${search}" Not Found`
+                    error.push(`Product with a name of "${search}" Not Found`)
                 }
             }
             let categoryList = await productData.getCategoryOfProducts();
@@ -29,13 +44,13 @@ router
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
                 current = parseInt(productList.length / 10)
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
             }
             else {
                 pageNext = (current + 1)
@@ -64,15 +79,38 @@ router
         }
     })
     .post(async (req, res) => {
-
+        let name = req.body.ProductName;
+        //validation start
+        name = name
+        //validation end
+        try {
+            let productList = await productData.getProductByName(name);
+            res.render('products/listOfProducts', { productList: productList });
+        } catch (e) {
+            return res.status(404).render('products/listOfProducts', { error: e });
+        }
     })
 //laptops
 router
     .route('/laptops')
     .get(async (req, res) => {
-        let manufacturer = req.query.manufacturer
-        const page = parseInt(req.query.page)
-        let error;
+        let url_query = req.query
+        //move to validation - object to lowercase
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        //validation start
+        let page = parseInt(newobj.page)
+        if (!page) {
+            page = 1;
+        }
+        let manufacturer = newobj.manufacturer
+        let error = [];
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -88,13 +126,13 @@ router
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
                 current = parseInt(productList.length / 10) + 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
             }
             else {
                 pageNext = (current + 1)
@@ -143,9 +181,23 @@ router.get('/laptops/:id', async (req, res) => {
 router
     .route('/phones')
     .get(async (req, res) => {
-        let manufacturer = req.query.manufacturer
-        const page = parseInt(req.query.page)
-        let error;
+        let url_query = req.query
+        //move to validation - object to lowercase
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        //validation start
+        let page = parseInt(newobj.page)
+        if (!page) {
+            page = 1;
+        }
+        let manufacturer = newobj.manufacturer
+        let error = [];
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -161,13 +213,13 @@ router
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
                 current = parseInt(productList.length / 10) + 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
             }
             else {
                 pageNext = (current + 1)
@@ -213,9 +265,23 @@ router.get('/phones/:id', async (req, res) => {
 router
     .route('/tablets')
     .get(async (req, res) => {
-        let manufacturer = req.query.manufacturer
-        const page = parseInt(req.query.page)
-        let error;
+        let url_query = req.query
+        //move to validation - object to lowercase
+        let key, keys = Object.keys(url_query);
+        let n = keys.length;
+        let newobj = {}
+        while (n--) {
+            key = keys[n];
+            newobj[key.toLowerCase()] = url_query[key];
+        }
+        //
+        //validation start
+        let page = parseInt(newobj.page)
+        if (!page) {
+            page = 1;
+        }
+        let manufacturer = newobj.manufacturer
+        let error = [];
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -231,13 +297,13 @@ router
                 current = 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the first page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
                 current = parseInt(productList.length / 10) + 1
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
-                error = `If you using a URL, you exceeded a page size. So we move you to the last page of products.`
+                error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
             }
             else {
                 pageNext = (current + 1)

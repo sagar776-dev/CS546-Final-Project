@@ -1,5 +1,9 @@
 <article class="product-list">
-    {{#if error}}<p>{{error}}</p>{{/if}}
+    {{#if error}}
+    {{#each error}}
+    <p>{{this}}</p>
+    {{/each}}
+    {{/if}}
 
     {{#if categoryList}}
     <div class="dropdown">
@@ -132,8 +136,6 @@
         </tr>
         {{/each}}
     </table>
-    {{else}}
-    <p>Products not Found for {{productList.page.manufacturer}}</p>
     {{/if}}
 
     {{#if productList.page}}
