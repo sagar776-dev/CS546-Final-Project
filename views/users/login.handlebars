@@ -1,16 +1,16 @@
 <div class="signup-page">
   <div class="container text-center">
     <h3>Login</h3>
-    <form id="registration-form" action="/users/login" method="POST">
+    <form id="login-form" method="POST">
 
       <div class="form-group">
-        <label for="userid">Email ID/Username
+        <label for="username">Email ID/Username
           <input
             class="form-control"
             type="text"
-            id="userid"
-            value="{{userid}}"
-            name="userid"
+            id="username"
+            value="{{username}}"
+            name="username"
           />
         </label>
       </div>
@@ -33,12 +33,15 @@
       </div>
     </form>
 
-    <div class="error">
-      {{error}}
+    <div id="errorDiv" class="error hidden">
+      <ul id="errorlist">
+      </ul>
     </div>
 
     <div>
       <a href="/users/signup">Create an account</a>
     </div>
   </div>
+
+  <script src="../../public/js/registration.js"></script>
 </div>

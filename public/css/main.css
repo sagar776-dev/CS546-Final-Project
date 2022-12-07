@@ -10,3 +10,7 @@
 .signup-page .form-group .form-control {
   width: 100%;
 }
+
+.signup-page .error {
+  background-color: rgb(249, 111, 111);
+}
