@@ -324,7 +324,7 @@ let exportedMethods = {
     },
     async removeProduct(skuId) {
         //validation start
-        skuId = skuId;
+        skuId = ParseInt(skuId);
         //validation end
         const productCollection = await products();
         const product = await productCollection.findOne({ _id: skuId });

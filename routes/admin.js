@@ -14,33 +14,31 @@ router
             return res.status(404).json({ error: e });
         }
     })
-router
-    .route('/addProduct')
-    .post(async (req, res) => {
+    .put(async (req, res) => {
+        //add
         try {
             res.render('admin/admin_main')
         } catch (e) {
             return res.status(404).json({ error: e });
         }
     })
-router
-    .route('/updateProduct')
     .post(async (req, res) => {
+        //update
         try {
             res.render('admin/admin_main')
         } catch (e) {
             return res.status(404).json({ error: e });
         }
     })
-router
-    .route('/removeProduct')
     .delete(async (req, res) => {
+        //remove
         try {
             //validation start
-            req.params.productId = req.params.productId;
+            req.body.productIdToDelete = ParseInt(req.body.productIdToDelete);
+            console.log(req.body.productIdToDelete)
             //validation end
         } catch (e) {
-            return res.status(404).json({ error: e });
+            return res.status(400).json({ error: e });
         }
         try {
             let a = await productData.getProductsByID(req.params.productId)
