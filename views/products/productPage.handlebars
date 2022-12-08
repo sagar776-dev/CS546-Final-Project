@@ -9,6 +9,11 @@
     {{#if error}}<p>{{error}}</p>{{/if}}
     <p>id: {{product._id}}</p>
     <p>name: {{product.name}}</p>
+    <p>picures:</p>
+    {{#each pictures}}
+    {{!-- Need to fix alt to name --}}
+    <img src={{ this }} alt={{ this }} width="300" height="250">
+    {{/each}}
     <p>customerReviewAverage: {{product.customerReviewAverage}}</p>
     <p>customerReviewCount: {{product.customerReviewCount}}</p>
     <p>manufacturer: {{product.manufacturer}}</p>
@@ -17,11 +22,6 @@
     <p>url: <a href={{product.url}}>{{product.url}}</a></p>
     <p>inStoreAvailability: {{product.inStoreAvailability}}</p>
     <p>Description: {{product.Description}}</p>
-    <p>picures:</p>
-    {{#each pictures}}
-    {{!-- Need to fix alt to name --}}
-    <img src={{ this }} alt={{ this }} width="300" height="250">
-    {{/each}}
     <p>details: </p>
     <table>
         <tr>

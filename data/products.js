@@ -1,90 +1,10 @@
 const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
-
 const axios = require('axios');
 const validation = require('../validation');
 
 let exportedMethods = {
-    //admin need to fix
-    async addProduct(
-        sku,
-        name,
-        manufacturer,
-        startDate,
-        price,
-        url,
-        inStoreAvailability,
-        Description,
-        pictures,
-        details,
-    ) {
-        //validation start
-        sku = sku; // length 7 all numbers
-        try {
-            let a = 0
-            a = await this.getProductsByID(sku)
-            if (a !== 0) {
-                return `Product with id: ${sku} exists`
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
-        name = name; // Name
-        manufacturer = manufacturer; // manufacturer
-        startDate = startDate;  // format 2022-04-06   
-        price = price // format 1399.00
-        url = url; //Check if url is valid
-        inStoreAvailability = inStoreAvailability; //True or False
-        Description = Description; // Description if null
-        pictures = pictures; // if null dont show
-        details = details; // array with objects
-        //validation end
-        //static
-        customerReviewAverage = 0
-        customerReviewCount = 0
-        reviews = [];
-
-        let visitedTimes = 0;
-        let comments = [];
-        let QandA = [];
-
-        const productCollection = await products();
-
-        let newProduct = {
-            _id: sku,
-            name,
-            customerReviewAverage,
-            customerReviewCount,
-            manufacturer,
-            startDate,
-            price,
-            url,
-            inStoreAvailability,
-            Description,
-            pictures,
-            details,
-            reviews,
-            visitedTimes,
-            comments,
-            QandA
-        };
-        const newInsertInformation = await productCollection.insertOne(newProduct);
-        if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
-        return `Product been added with id: ${sku}`;
-    },
-    async removeProduct(skuId) {
-        //validation start
-        skuId = skuId;
-        //validation end
-        const productCollection = await products();
-        const product = await productCollection.findOne({ _id: skuId });
-        const deletionInfo = await productCollection.deleteOne({ _id: skuId });
-        if (deletionInfo.deletedCount === 0) {
-            throw `Could not delete product with id of ${skuId}`;
-        }
-        return `${skuId} has been successfully deleted!`;
-    },
+    //user
     async getProductsByID(skuId) {
         //validation start
         skuId = skuId;
@@ -94,51 +14,6 @@ let exportedMethods = {
         if (!product) throw `Product ${skuId} not found`;
         return product;
     },
-    //admin fix (pictures, details)
-    async updateProduct(
-        sku,
-        name,
-        manufacturer,
-        startDate,
-        price,
-        url,
-        inStoreAvailability,
-        Description,
-        pictures,
-        details
-    ) {
-        sku = sku; // length 7 all numbers
-        name = name; // Name
-        manufacturer = manufacturer; // manufacturer
-        startDate = startDate;  // format 2022-04-06   
-        price = price // format 1399.00
-        url = url; //Check if url is valid
-        inStoreAvailability = inStoreAvailability; //True or False
-        Description = Description; // Description if null
-        pictures = pictures; // if null dont show
-        details = details; // array with objects
-
-        let productUpdateInfo = {
-            name,
-            manufacturer,
-            startDate,
-            price,
-            url,
-            inStoreAvailability,
-            Description,
-            pictures,
-            details
-        }
-        const productCollection = await products();
-        const updateInfo = await productCollection.updateOne(
-            { _id: sku },
-            { $set: productUpdateInfo }
-        );
-        if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
-            throw 'Update failed';
-        return `Product ${sku} been updated`;
-    },
-    //user
     async getAllProducts() {
         const productCollection = await products();
         const productList = await productCollection.find({}).toArray();
@@ -147,7 +22,7 @@ let exportedMethods = {
     },
     async getProductByName(Name) {
         //validation start
-
+        Name = Name;
         //validation end
         Name = Name.split(" ")
         if (Name.length > 1) {
@@ -156,14 +31,12 @@ let exportedMethods = {
         else {
             Name = "\"" + Name + "\"";
         }
-        //console.log(Name);
         //validation end
         const productCollection = await products();
         //search - need create index and search by index
         let createIndex = await productCollection.createIndex({ "name": "text" })
         let product = await productCollection.find({ $text: { $search: Name } }).toArray()
         if (!product) throw 'Product not found';
-        if (product.length === 0) throw 'Incorrect name'
         return product;
     },
     async getCategoryOfProducts() {
@@ -212,18 +85,12 @@ let exportedMethods = {
     },
     //sort by reviews 
     async sortProductsByReviews() {
-
     },
     //sort by prices 
     async sortProductsByPrices() {
-
-
-
-
     },
     //show by price
     //db.marks.find({ "price": { "$gt": low, '$lt': high} })
-
     //user fixes
     async compareLaptops(productsListSKU) {
         // validation of SKU list
@@ -386,6 +253,129 @@ let exportedMethods = {
         return [comapreList, errors];
     },
 
+    //admin
+    async addProduct(
+        sku,
+        name,
+        manufacturer,
+        startDate,
+        price,
+        url,
+        inStoreAvailability,
+        Description,
+        pictures,
+        details,
+    ) {
+        //validation start
+        sku = sku; // length 7 all numbers
+        try {
+            let a = 0
+            a = await this.getProductsByID(sku)
+            if (a !== 0) {
+                return `Product with id: ${sku} exists`
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+        name = name; // Name
+        manufacturer = manufacturer; // manufacturer
+        startDate = startDate;  // format 2022-04-06   
+        price = price // format 1399.00
+        url = url; //Check if url is valid
+        inStoreAvailability = inStoreAvailability; //True or False
+        Description = Description; // Description if null
+        pictures = pictures; // if null dont show
+        details = details; // array with objects
+        //validation end
+        //static
+        customerReviewAverage = 0
+        customerReviewCount = 0
+        reviews = [];
+
+        let visitedTimes = 0;
+        let comments = [];
+        let QandA = [];
+
+        const productCollection = await products();
+
+        let newProduct = {
+            _id: sku,
+            name,
+            customerReviewAverage,
+            customerReviewCount,
+            manufacturer,
+            startDate,
+            price,
+            url,
+            inStoreAvailability,
+            Description,
+            pictures,
+            details,
+            reviews,
+            visitedTimes,
+            comments,
+            QandA
+        };
+        const newInsertInformation = await productCollection.insertOne(newProduct);
+        if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
+        return `Product been added with id: ${sku}`;
+    },
+    async removeProduct(skuId) {
+        //validation start
+        skuId = ParseInt(skuId);
+        //validation end
+        const productCollection = await products();
+        const product = await productCollection.findOne({ _id: skuId });
+        const deletionInfo = await productCollection.deleteOne({ _id: skuId });
+        if (deletionInfo.deletedCount === 0) {
+            throw `Could not delete product with id of ${skuId}`;
+        }
+        return `${skuId} has been successfully deleted!`;
+    },
+    async updateProduct(
+        sku,
+        name,
+        manufacturer,
+        startDate,
+        price,
+        url,
+        inStoreAvailability,
+        Description,
+        pictures,
+        details
+    ) {
+        sku = sku; // length 7 all numbers
+        name = name; // Name
+        manufacturer = manufacturer; // manufacturer
+        startDate = startDate;  // format 2022-04-06   
+        price = price // format 1399.00
+        url = url; //Check if url is valid
+        inStoreAvailability = inStoreAvailability; //True or False
+        Description = Description; // Description if null
+        pictures = pictures; // if null dont show
+        details = details; // array with objects
+
+        let productUpdateInfo = {
+            name,
+            manufacturer,
+            startDate,
+            price,
+            url,
+            inStoreAvailability,
+            Description,
+            pictures,
+            details
+        }
+        const productCollection = await products();
+        const updateInfo = await productCollection.updateOne(
+            { _id: sku },
+            { $set: productUpdateInfo }
+        );
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+            throw 'Update failed';
+        return `Product ${sku} been updated`;
+    },
     //admin API_KEY
     async getProductsByAxios1(page, key, API_KEY) {
         const { data } = await axios.get(`https://api.bestbuy.com/v1/products(releaseDate>=2021-01-01&releaseDate<=today&(categoryPath.id=${key}))?apiKey=${API_KEY}&sort=name.asc&show=sku,name,customerReviewAverage,customerReviewCount,color,manufacturer,startDate,regularPrice,salePrice,onSale,url,inStoreAvailability,shortDescription,longDescription,largeFrontImage,accessoriesImage,alternateViewsImage,angleImage,backViewImage,energyGuideImage,image,leftViewImage,remoteControlImage,rightViewImage,topViewImage,details.name&facet=manufacturer&pageSize=100&page=${page}&format=json`)
@@ -529,7 +519,7 @@ let exportedMethods = {
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
         return `Product been added with id: ${sku}`;
-    }
+    },
 }
 
 module.exports = exportedMethods;
