@@ -83,8 +83,9 @@
         if (responseMessage.error) {
           errorDiv.removeClass("hidden");
           errorLi.append($("<li>").text(responseMessage.error));
-        } else{
+        } else {
           //Redirect to home page
+          window.location.href = "/api/products";
         }
       });
     } else {
