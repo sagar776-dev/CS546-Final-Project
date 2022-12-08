@@ -1,12 +1,10 @@
 const mongoCollections = require('../config/mongoCollections');
-const products = mongoCollections.products;
-const data = require('../data');
-const productData = data.products;
+const productData = require('./products');
 const helper = ('../helper/userValidation.js');
 const validation = require('../validation');
-const { ObjectId } = require('mongodb');
+//const { ObjectId } = require('mongodb');
 
-const getDate = () =>{
+const getDate = () => {
     let date = new Date();
     let month = date.getMonth();
     let day = date.getDate();
@@ -43,7 +41,7 @@ const createQuestion = async (
     newQuestion.username = username;
     newQuestion.date = getDate();
 
-    const productCollections = await products();
+    const productCollections = await mongoCollections.products();
     let insertInfo = await productCollections.updateOne({
         "_id": mongo.ObjectId(product_id)
     },
@@ -77,6 +75,8 @@ const addAnswer = async (product_id, question_id, username, answer) => {
     newAnswer.answer = answer;
     newAnswer.author = username;
     newAnswer.date = getDate();
+    
+    const productCollections = await mongoCollections.products();
 
     let insertInfo = await productCollections.updateOne(
         {
@@ -95,12 +95,24 @@ const addAnswer = async (product_id, question_id, username, answer) => {
     )
 
     if (!insertInfo.acknowledged || !insertInfo.modifiedCount)
-    throw 'Could not add answer to question';
+        throw 'Could not add answer to question';
     return newAnswer;
+};
+
+const getQna = async (product_id)=>{
+    try{
+        let product = await productData.getProductsByID(product_id);
+        let qna = product.qna;
+        return qna;
+    }
+    catch(e){
+        console.log(e);
+    }
 }
 
 
 module.exports = {
     createQuestion,
-    addAnswer
+    addAnswer,
+    getQna
 };
