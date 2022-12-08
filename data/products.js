@@ -306,7 +306,7 @@ let exportedMethods = {
 
         let visitedTimes = 0;
         let comments = [];
-        let QandA = [];
+        let qna = [];
 
         const productCollection = await products();
 
@@ -326,7 +326,7 @@ let exportedMethods = {
             reviews,
             visitedTimes,
             comments,
-            QandA
+            qna
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
@@ -505,7 +505,7 @@ let exportedMethods = {
         // fixes end
         let visitedTimes = 0;
         let comments = [];
-        let QandA = [];
+        let qna = [];
 
         const productCollection = await products();
         let newProduct = {
@@ -525,7 +525,7 @@ let exportedMethods = {
             reviews,
             visitedTimes,
             comments,
-            QandA
+            qna
         };
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';

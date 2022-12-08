@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const data = require("../data");
-const path = require("path");
 const data = require('../data');
 // const productData = data.products;
 const userData = data.users;
 const validation = require('../helper/userValidation');
 const path = require('path');
-
-const userValidate = require("../helper/userValidation");
-const userData = data.users;
 
 router
   .route("/signup")
