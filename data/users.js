@@ -54,9 +54,16 @@ const checkUser = async (username, password) => {
   }
 };
 
+const userProfile = async (username) => {
+  let usersCollection = await mongoCollection.users();
+  let user = await usersCollection.findOne({ username: username });
+  if (!tempUser) throw "Error: User does not exists";
+  return user;
+}
 
 
 module.exports = {
   registerUser,
-  checkUser
+  checkUser,
+  userProfile
 };

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-const productData = data.products;
-// const validation = require('../helpers');
+// const productData = data.products;
+const userData = data.users;
+const validation = require('../helper/userValidation');
 const path = require('path');
 
 router
@@ -23,4 +24,24 @@ router
 
     })
 
+
+    router
+  .route('/userProfile/:username')
+  .get(async (req, res) => {
+    //code here for GET
+    try {
+      req.params.username = validation.validateUsername(req.params.username);
+    } catch (e) {
+      return res.status(400).json({ error: e.message, e });
+    }
+    try {
+      const user = await userData.userProfile(req.params.username);
+      if (!user)
+        res.status(404).json({ error: "user doesn't exist" });
+      else
+        res.json(user);
+    } catch (e) {
+      res.status(404).json({ error: e.message, e });
+    }
+  })
 module.exports = router;
