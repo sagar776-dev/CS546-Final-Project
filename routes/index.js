@@ -5,9 +5,9 @@ const usersRoutes = require('./users');
 
 
 const constructorMethod = (app) => {
-    app.use('/admin', adminRoutes);
-    app.use('/products', productsRoutes);
-    app.use('/reviews', reviewsRoutes);
+    app.use('/api/admin', adminRoutes);
+    app.use('/api/products', productsRoutes);
+    app.use('/api/reviews', reviewsRoutes);
     app.use('/users', usersRoutes);
 
     app.use('/', async (req, res) => {
