@@ -1,0 +1,54 @@
+<article>
+    <table>
+        <tr>
+            <th>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Add Product
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            enter skuid: <input type="text" name="add" value="Hello" />
+                        </li>
+                        {{!-- When entered correct SKU return specific field --}}
+                    </ul>
+                </div>
+            </th>
+            <th>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Update Product
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            Enter SKU: <input type="text" name="update" value="Hello" />
+                        </li>
+                        {{!-- When entered correct SKU return specific field --}}
+                    </ul>
+                </div>
+            </th>
+            <th>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Remove Product
+                    </button>
+                    <ul class="dropdown-menu">
+                        <form id="delete_form" method="delete">
+                            <li>
+                                enter skuid: <input type="text" id="productIdToDelete" name="delete" value="Hello" />
+                            </li>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                        {{!-- When entered correct SKU return specific field --}}
+                    </ul>
+                </div>
+            </th>
+        </tr>
+    </table>
+</article>
+
+
+<script src="/public/js/admin.js"></script>
