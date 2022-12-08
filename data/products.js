@@ -83,6 +83,17 @@ let exportedMethods = {
         if (!product) throw 'Product not found';
         return product;
     },
+    //get product by release date andcategory
+    async getProductsByReleaseDateandCategory(releaseDate,category) {
+        //validation start
+        category = category;
+        //validation end
+        const productCollection = await products();
+        let product = await productCollection.find({ category: category,
+        releaseDate:releaseDate }).toArray()
+        if (!product) throw 'Product not found';
+        return product;
+    },
     //sort by reviews 
     async sortProductsByReviews() {
     },
