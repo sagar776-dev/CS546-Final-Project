@@ -4,7 +4,7 @@ const data = require('../data');
 // const productData = data.products;
 const userData = data.users;
 const validation = require('../helper/userValidation');
-const path = require('path');
+
 
 router
   .route("/signup")

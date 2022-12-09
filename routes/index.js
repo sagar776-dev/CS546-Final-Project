@@ -2,7 +2,7 @@ const adminRoutes = require('./admin');
 const productsRoutes = require('./products');
 const reviewsRoutes = require('./reviews');
 const usersRoutes = require('./users');
-
+const homeRoutes = require('./home');
 
 const constructorMethod = (app) => {
     app.use('/api/admin', adminRoutes);
@@ -10,14 +10,7 @@ const constructorMethod = (app) => {
     app.use('/api/reviews', reviewsRoutes);
     app.use('/users', usersRoutes);
 
-    // app.use('/', async (req, res) => {
-    //     if(req.session.user){
-    //      return res.render('products/homepage');
-    //     }
-    //     else{
-    //         return res.render('users/signup');
-    //     }
-    // });
+    app.use('/api', homeRoutes);
 
     app.use('*', (req, res) => {
         res.sendStatus(404);

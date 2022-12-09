@@ -14,6 +14,20 @@ let exportedMethods = {
         if (!product) throw `Product ${skuId} not found`;
         return product;
     },
+    async updateProductVisitedCounter(skuId) {
+        //validation start
+        skuId = skuId;
+        //validation end
+        let product = await this.getProductsByID(skuId);
+
+        const productCollection = await products();
+        product.visitedTimes++;
+        const updatedInfo = await productCollection.updateOne({_id: skuId}, {$set: {visitedTimes: product.visitedTimes}});
+        if(updatedInfo.modifiedCount === 0) throw "Could not update the product with the counter";
+
+        let updatedProduct = this.getProductsByID(skuId);
+        return updatedProduct;
+    },
     async getAllProducts() {
         const productCollection = await products();
         const productList = await productCollection.find({}).toArray();
@@ -412,6 +426,30 @@ let exportedMethods = {
             final = data.products
         }
         return final; // this will be the array of people objects
+    },
+    //Will return the Top 5 popular products in each category
+    async getPopularProducts(){
+        const productCollection = await products();
+
+        const popularLaptops = await productCollection.find({category:"laptops"})
+                                                        .sort({visitedTimes:-1}).limit(5).toArray();
+        if(!popularLaptops) throw "Error: Could not fetch popular Laptops from DB";
+
+        const popularPhones = await productCollection.find({category:"phones"})
+                                                        .sort({visitedTimes:-1}).limit(5).toArray();
+        if(!popularPhones) throw "Error: Could not fetch popular phones from DB";
+
+        const popularTablets = await productCollection.find({category:"tablets"})
+                                                        .sort({visitedTimes:-1}).limit(5).toArray();
+        if(!popularTablets) throw "Error: Could not fetch popular tablets from DB";
+
+        const popularProducts = {
+            laptops: popularLaptops,
+            phones: popularPhones,
+            tablets: popularTablets
+        };
+
+        return popularProducts;
     },
     async addProductByAxios(
         sku,
