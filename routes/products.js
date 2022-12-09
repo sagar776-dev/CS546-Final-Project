@@ -209,7 +209,8 @@ const qnaData = data.qna;
                 return res.status(404).render('products/productPage', { error: 'Product not found' });
             }
             // end
-            res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details, qna: qna })
+            let updatedProduct = await productData.updateProductVisitedCounter(sku);
+            res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
             return res.status(404).render('products/error', { error: 'Product not found' });
         }
@@ -314,7 +315,8 @@ const qnaData = data.qna;
             if (product.category !== "phones") {
                 return res.status(404).render('products/productPage', { error: 'Product not found' });
             }
-            res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details, qna: qna })
+            let updatedProduct = await productData.updateProductVisitedCounter(sku);
+            res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
             return res.status(404).render('products/error', { error: 'Product not found' });
         }
@@ -422,7 +424,8 @@ const qnaData = data.qna;
                 res.status(404).render('products/productPage', { error: 'Product not found' });
                 return;
             }
-            res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details, qna: qna })
+            let updatedProduct = await productData.updateProductVisitedCounter(sku);
+            res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
             res.status(404).render('products/error', { error: 'Product not found' });
         }
@@ -432,4 +435,10 @@ const qnaData = data.qna;
 
     })
     //compareProducts not finished
+    //Api to fetch the Popular products in each category
+    router
+        .route('/popular')
+        .get(async(req, res) => {
+
+        });
     module.exports = router;
