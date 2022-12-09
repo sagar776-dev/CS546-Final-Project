@@ -14,7 +14,7 @@
         <ul class="dropdown-menu">
             {{#each categoryList}}
             <li>
-                <a class="dropdown-item" href="products/{{this}}?page=1">{{this}}</a>
+                <a class="dropdown-item" href="/api/products/{{this}}?page=1">{{this}}</a>
             </li>
             {{/each}}
         </ul>
@@ -129,7 +129,7 @@
                 <img src={{ pictures.[0] }} alt="{{name}}" width="140" height="110">
             </td>
             <td>
-                <a href="/products/{{category}}/{{_id}}">{{name}}</a>
+                <a href="/api/products/{{category}}/{{_id}}">{{name}}</a>
                 <p>Price: {{price}}</p>
                 <p>Review: {{customerReviewAverage}}</p>
             </td>

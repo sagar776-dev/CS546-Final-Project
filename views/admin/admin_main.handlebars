@@ -8,9 +8,12 @@
                         Add Product
                     </button>
                     <ul class="dropdown-menu">
-                        <li>
-                            enter skuid: <input type="text" name="add" value="Hello" />
-                        </li>
+                        <form id="add_form">
+                            <li>
+                                enter skuid: <input type="text" id="productIdToAdd" value="Hello" />
+                            </li>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
                         {{!-- When entered correct SKU return specific field --}}
                     </ul>
                 </div>
@@ -22,9 +25,12 @@
                         Update Product
                     </button>
                     <ul class="dropdown-menu">
-                        <li>
-                            Enter SKU: <input type="text" name="update" value="Hello" />
-                        </li>
+                        <form id="update_form">
+                            <li>
+                                enter skuid: <input type="text" id="productIdToUpdate" value="Hello" />
+                            </li>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
                         {{!-- When entered correct SKU return specific field --}}
                     </ul>
                 </div>
@@ -36,9 +42,9 @@
                         Remove Product
                     </button>
                     <ul class="dropdown-menu">
-                        <form id="delete_form" method="delete">
+                        <form id="delete_form">
                             <li>
-                                enter skuid: <input type="text" id="productIdToDelete" name="delete" value="Hello" />
+                                enter skuid: <input type="text" id="productIdToDelete" value="Hello" />
                             </li>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
@@ -51,4 +57,5 @@
 </article>
 
 
-<script src="/public/js/admin.js"></script>
+{{!--
+<script src="/public/js/admin.js"></script> --}}

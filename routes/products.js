@@ -108,7 +108,7 @@ router
         //
         let search = newobj.search
         if (search != undefined) {
-            return res.redirect(`http://localhost:3000/products?search=${search}`)
+            return res.redirect(`/api/products?search=${search}`)
         }
         //validation start
         let page = parseInt(newobj.page)
@@ -179,7 +179,7 @@ router.get('/laptops/:id', async (req, res) => {
         //
         let search = newobj.search
         if (search != undefined) {
-            return res.redirect(`http://localhost:3000/products?search=${search}`)
+            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         let sku = parseInt(req.params.id)
@@ -214,7 +214,7 @@ router
         //
         let search = newobj.search
         if (search != undefined) {
-            return res.redirect(`http://localhost:3000/products?search=${search}`)
+            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         //validation start
@@ -286,7 +286,7 @@ router.get('/phones/:id', async (req, res) => {
         //
         let search = newobj.search
         if (search != undefined) {
-            return res.redirect(`http://localhost:3000/products?search=${search}`)
+            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         let sku = parseInt(req.params.id)
@@ -318,7 +318,7 @@ router
         //
         let search = newobj.search
         if (search != undefined) {
-            return res.redirect(`http://localhost:3000/products?search=${search}`)
+            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         //validation start
@@ -391,7 +391,7 @@ router.get('/tablets/:id', async (req, res) => {
         //
         let search = newobj.search
         if (search != undefined) {
-            return res.redirect(`http://localhost:3000/products?search=${search}`)
+            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         let sku = parseInt(req.params.id)
