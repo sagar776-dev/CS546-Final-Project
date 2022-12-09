@@ -1,4 +1,7 @@
 {
+    "bcrypt": {
+        "saltRounds": 7
+    },
   "mongoConfig": {
     "serverUrl": "mongodb://localhost:27017/",
     "database": "LookUpDevice"

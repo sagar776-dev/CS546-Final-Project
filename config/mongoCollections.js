@@ -10,12 +10,12 @@ const getCollectionFn = (collection) => {
       const db = await dbConnection.dbConnection();
       _col = await db.collection(collection);
     }
-
     return _col;
   };
 };
 
 /* Now, you can list your collections here: */
 module.exports = {
-  products: getCollectionFn('products')
+  products: getCollectionFn('products'),
+  users: getCollectionFn('users')
 };

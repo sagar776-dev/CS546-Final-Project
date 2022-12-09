@@ -1,6 +1,5 @@
 const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
-
 const axios = require('axios');
 const validation = require('../validation');
 
@@ -520,7 +519,7 @@ let exportedMethods = {
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
         return `Product been added with id: ${sku}`;
-    }
+    },
 }
 
 module.exports = exportedMethods;
