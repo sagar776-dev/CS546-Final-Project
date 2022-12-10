@@ -36,5 +36,14 @@ module.exports = {
         if (arrayInvalidFlag)
             throw `One or more elements in ${varName} array is not a string or is an empty string`;
         return arr;
+    },
+
+    checkQuestion(question){
+        if (!question) throw 'You must provide a question?';
+        if (typeof question !== 'string') throw 'question must be a string';
+        if (question.trim().length === 0)
+          throw 'question cannot be an empty string or string with just spaces';
+          question = question.trim();
     }
+    
 };
