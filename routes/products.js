@@ -78,21 +78,6 @@ router
             return res.status(404).json('products/listOfProducts', { error: e });
         }
     })
-// .post(async (req, res) => {
-//     //need a jquary 
-//     let name = req.body.ProductName;
-//     //validation start
-//     name = name
-//     //validation end
-//     try {
-//         let productList = {}
-//         productList.results = await productData.getProductByName(name);
-//         res.render('products/listOfProducts', { productList: productList });
-//     } catch (e) {
-//         return res.status(404).render('products/listOfProducts', { error: e });
-//     }
-// })
-//laptops
 router
     .route('/laptops')
     .get(async (req, res) => {

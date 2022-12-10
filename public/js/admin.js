@@ -1,4 +1,4 @@
 // hide header
-// $(document).ready(function () {
-//     $("#searchForm").remove();
-// });
+$(document).ready(function () {
+    $("#searchForm").remove();
+});
