@@ -1,5 +1,29 @@
-<article class="product-list">
-    <table>
+<article class="product-compare-list">
 
-    </table>
+  <div class="header text-center">
+    <h3>Compare products</h3>
+  </div>
+
+  {{!-- {{#if !errorFlag}} --}}
+    <div class="container result-container">
+      {{#each products}}
+        <div class="row row-striped">
+          {{#each this}}
+            <div class="col">
+              {{this}}
+            </div>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  {{!-- {{/if}} --}}
+
+
+  {{#if errorFlag}}
+    <div class="error">
+      {{error}}
+    </div>
+  {{/if}}
+
+  <link rel="stylesheet" href="../../public/css/compareproducts.css" />
 </article>

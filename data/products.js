@@ -112,6 +112,8 @@ let exportedMethods = {
                         "sku": laptop._id,
                         "name": laptop.name,
                         "url": laptop.url,
+                        "Price":'$'+laptop.price,
+                        "Rating": laptop.customerReviewAverage,
                         "Processor Model": "",
                         "System Memory (RAM)": "",
                         "Graphics": "",
