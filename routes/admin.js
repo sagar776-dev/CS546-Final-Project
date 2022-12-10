@@ -33,12 +33,10 @@ router
         } catch (e) {
             return res.status(400).render('admin/admin_main', { error: e });
         }
-
-        console.log(product)
         try {
-            res.render('admin/admin_main', { product: product, pictures: product.pictures, details: product.details })
+            res.render('admin/update_product', { product: product, pictures: product.pictures, details: product.details })
         } catch (e) {
-            return res.status(404).render('admin/admin_main', { error: e });
+            return res.status(404).render('admin/update_product', { error: e });
         }
     })
     .post(async (req, res) => {
