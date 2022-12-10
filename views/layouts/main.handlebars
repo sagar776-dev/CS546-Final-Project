@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -30,8 +31,26 @@
   <body>
     <header>
 
-      {{! <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-          <a class="navbar-brand" href="/">LookUpDevice</a>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">LookUpDevice</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          >
           <button
             class="navbar-toggler"
             type="button"
@@ -56,16 +75,16 @@
             >Search</button>
           </form>
 
-          <img
-            src="../../public//images/account-image.png"
-            class="ml-auto"
-            width="30"
-            height="30"
-            alt="user profile"
-            href="#"
-          />
-          <p class="nav-link ml_auto" href="#">Sagar Chakravarthy</p>
-        </nav>
+        <img
+          src="../../public//images/account-image.png"
+          class="ml-auto"
+          width="30"
+          height="30"
+          alt="user profile"
+          href="#"
+        >
+        <p class="nav-link ml_auto" href="#">Sagar Chakravarthy</p>
+      </nav>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
@@ -125,7 +144,22 @@
       </nav>
 
     </header>
-    <main class="main-body">
+    <main>
+      {{!-- <form action="/products" method="POST">
+       <form action="/products" method="POST">
+        <label for="search_product">
+          Enter Product Name:
+          <input
+            id="search_product"
+            type="text"
+            name="ProductName"
+            placeholder="Search Product Name"
+            class="full-width-input"
+          />
+        </label>
+        <button type="submit">Click Me!</button>
+      </form>
+      </form>  --}}
       {{{body}}}
     </main>
     <script src="/public/js/basic_ajax_with_jquery.js"></script>

@@ -184,6 +184,13 @@ const getHistoryForUser = async (username) => {
   return wishlistProducts;
 };
 
+const userProfile = async (username) => {
+  let usersCollection = await mongoCollection.users();
+  let user = await usersCollection.findOne({ username: username });
+  if (!tempUser) throw "Error: User does not exists";
+  return user;
+}
+
 // addProductToWishlist(6478315, "sagar776");
 // getWishlistForUser("sagar776");
 
@@ -196,4 +203,5 @@ module.exports = {
   addProductToHistory,
   removeProductFromHistory,
   getHistoryForUser,
+  userProfile
 };
