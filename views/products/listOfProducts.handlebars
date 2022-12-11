@@ -121,22 +121,53 @@
     </nav>
     {{/if}}
 
-    {{#if productList.results}}
     <table class="table table-bordered">
-        {{#each productList.results}}
         <tr>
             <td>
-                <img src={{ pictures.[0] }} alt="{{name}}" width="140" height="110">
+                <p>Price</p>
+                <table>
+                    <tr>
+                        <td>
+                            <form id="priceForm" method="get">
+                                <label>
+                                    <a class="dropdown-item" href="/api/products?price=ascending">ascending</a>
+                                    <a class="dropdown-item" href="&price=descending">descending</a>
+                                    <input type="text" placeholder="min" pattern="[0-9]+" id="minPrice" name="min">
+                                    <input type="text" placeholder="max" pattern="[0-9]+" id="maxPrice" name="max">
+                                    <input type="checkbox" id="onSale" name="onSale" value="onsale">
+                                    <label for="vehicle1">onSale</label>
+                                    <input type="checkbox" id="Deals" name="Deals" value="Deals">
+                                    <label for="vehicle1">Current Deals</label>
+                                    <input type="checkbox" id="Rating" name="Rating" value="Rating">
+                                    <label for="vehicle1">Customer Rating</label>
+                                </label>
+                                <button type="submit">Price Range</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </td>
+
             <td>
-                <a href="/api/products/{{category}}/{{_id}}">{{name}}</a>
-                <p>Price: {{price}}</p>
-                <p>Review: {{customerReviewAverage}}</p>
+                {{#if productList.results}}
+                <table class="table table-bordered">
+                    {{#each productList.results}}
+                    <tr>
+                        <td>
+                            <img src={{ pictures.[0] }} alt="{{name}}" width="140" height="110">
+                        </td>
+                        <td>
+                            <a href="/api/products/{{category}}/{{_id}}">{{name}}</a>
+                            <p>Price: {{price}}</p>
+                            <p>Review: {{customerReviewAverage}}</p>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+                {{/if}}
             </td>
         </tr>
-        {{/each}}
     </table>
-    {{/if}}
 
     {{#if productList.page}}
     <nav aria-label="...">

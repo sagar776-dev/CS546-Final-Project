@@ -24,6 +24,24 @@ router
             page = 1;
         }
         let search = newobj.search
+
+        let price = ""
+        if (Array.isArray(price) === true) {
+            temp = newobj.price
+            price = `${temp[0]}`
+            console.log(price)
+        }
+        else {
+            price = newobj.price
+        }
+        if (price !== undefined) {
+            price = price.toLowerCase().trim()
+        }
+        console.log(price)
+        let minimum = newobj.min
+        let maximum = newobj.max
+        let onsale = newobj.onsale
+
         //validation end
         let error = [];
         try {
@@ -71,6 +89,54 @@ router
                 previous: pagePrevious,
                 limit: limit
             }
+
+
+            //min max
+
+            //min max
+
+            //current deal
+
+
+            let query_list = ``
+            if (parseInt(newobj.page) !== undefined) {
+                query_list = `?`
+            }
+            else {
+                query_list = `&`
+            }
+
+            //Ascending
+            if (price === "ascending") {
+                productList.sort((a, b) => {
+                    return a.price - b.price
+                })
+                query_list += `&price=${price}`
+            }
+            //Descending
+            if (price === "descending") {
+                productList.sort((a, b) => {
+                    return b.price - a.price
+                })
+                query_list += `&price=${price}`
+            }
+
+            minimum = parseInt(minimum)
+            maximum = parseInt(maximum)
+            price = price
+            if (minimum > 0 && minimum < maximum) {
+                query_list += `min=${minimum}&`
+            }
+            if (maximum > 0 && maximum > minimum) {
+                query_list += `max=${maximum}&`
+            }
+            if (onsale !== undefined) {
+                query_list += `onsale=${onsale}&`
+            }
+
+            console.log(url_query)
+            console.log(query_list)
+
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
             res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList, error: error })
