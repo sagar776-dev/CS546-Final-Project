@@ -25,21 +25,6 @@ router
             page = 1;
         }
         let search = newobj.search
-
-        let price = ""
-        if (Array.isArray(price) === true) {
-            temp = newobj.price
-            price = `${temp[0]}`
-            console.log(price)
-        }
-        else {
-            price = newobj.price
-        }
-        if (price !== undefined) {
-            price = price.toLowerCase().trim()
-        }
-
-
         //validation end
         try {
             let productList = 0;
@@ -53,7 +38,127 @@ router
                 }
             }
             let categoryList = await productData.getCategoryOfProducts();
-            //const page = 1
+            const resultsProducts = {}
+
+            //filter start 
+            let minimum = newobj.min
+            let maximum = newobj.max
+            let instoreavailability = newobj.instoreavailability
+            let rating = newobj.rating
+            let customerreviewcount = newobj.customerreviewcount
+            let visitedtimes = newobj.visitedtimes
+
+            //start of url query
+            let query_list = ``
+            //price start
+            let price = ""
+            if (Array.isArray(price) === true) {
+                temp = newobj.price
+                price = `${temp[0]}`
+                console.log(price)
+            }
+            else {
+                price = newobj.price
+            }
+            if (price !== undefined) {
+                price = price.toLowerCase().trim()
+            }
+            //Ascending order
+            if (price === "ascending") {
+                productList.sort((a, b) => {
+                    return a.price - b.price
+                })
+                query_list += `&price=${price}`
+            }
+            //Descending order 
+            if (price === "descending") {
+                productList.sort((a, b) => {
+                    return b.price - a.price
+                })
+                query_list += `&price=${price}`
+            }
+            //price end
+            //end of order
+
+            //current deal
+
+            //min max
+            if (isNaN(minimum)) {
+                minimum = 0
+                error.push("Minimum is empty or containing letters")
+            }
+            if (isNaN(maximum)) {
+                maximum = 10000
+                error.push("Maximum is empty or containing letters")
+            }
+            minimum = parseInt(minimum)
+            maximum = parseInt(maximum)
+            if (minimum >= maximum) {
+                error.push("Minimum more or equal to Maximum")
+            }
+            else {
+                if (minimum > 0) {
+                    query_list += `&min=${minimum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price >= minimum
+                    })
+                }
+                if (maximum > 0 && maximum < 10000) {
+                    query_list += `&max=${maximum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price <= maximum
+                    })
+                }
+            }
+            //min max
+            //sale rating
+            if (rating === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewAverage - a.customerReviewAverage
+                })
+                query_list += `&rating=${rating}`
+            }
+            //sale rating
+            //inStoreAvailability
+            if (instoreavailability === "true") {
+                productList = productList.filter((object) => {
+                    return object.inStoreAvailability === false
+                })
+                query_list += `&inStoreAvailability=${instoreavailability}`
+                //console.log(productList)
+            }
+
+            if (customerreviewcount === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewCount - a.customerReviewCount
+                })
+                query_list += `&customerReviewCount=${customerreviewcount}`
+                //console.log(productList)
+            }
+            if (visitedtimes === "true") {
+                productList = productList.sort((a, b) => {
+                    return a.visitedTimes - b.visitedTimes
+                })
+                query_list += `&visitedTimes=${visitedtimes}`
+                //console.log(productList)
+            }
+            //
+            console.log(url_query)
+            console.log(query_list)
+            resultsProducts.features = {
+                price: price,
+                minimum: minimum,
+                maximum: maximum,
+                inStoreAvailability: instoreavailability,
+                rating: rating,
+                query_list: query_list
+            }
+
+            //filter end 
+
+            //page start
             current = page
             if (current < 1) {
                 current = 1
@@ -77,62 +182,7 @@ router
             const limit = 10
             const startIndex = (current - 1) * limit
             const endIndex = current * limit
-            const resultsProducts = {}
-
-            //filter start 
-            let minimum = newobj.min
-            let maximum = newobj.max
-            let onsale = newobj.onsale
-            let rating = newobj.rating
-            //start of url query
-            let query_list = ``
-            //min max start
-
-            //min max end
-
-            //current deal
-            //Ascending order
-            if (price === "ascending") {
-                productList.sort((a, b) => {
-                    return a.price - b.price
-                })
-                query_list += `&price=${price}`
-            }
-            //Descending order 
-            if (price === "descending") {
-                productList.sort((a, b) => {
-                    return b.price - a.price
-                })
-                query_list += `&price=${price}`
-            }
-            //end of order
-
-            minimum = parseInt(minimum)
-            maximum = parseInt(maximum)
-            price = price
-            if (minimum > 0 && minimum < maximum) {
-                query_list += `&min=${minimum}`
-            }
-            if (maximum > 0 && maximum > minimum) {
-                query_list += `&max=${maximum}`
-            }
-            if (onsale === "true") {
-                query_list += `&onsale=${onsale}`
-            }
-            if (rating === "true") {
-                query_list += `&rating=${rating}`
-            }
-            console.log(url_query)
-            console.log(query_list)
-            //filter end 
-            resultsProducts.features = {
-                price: price,
-                minimum: minimum,
-                maximum: maximum,
-                onsale: onsale,
-                rating: rating,
-                query_list: query_list
-            }
+            //page end
 
             resultsProducts.page = {
                 "search": search,

@@ -136,10 +136,10 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <label for="price">Choose order:</label>
                                             <select id="price" name="price" size="2">
-                                                <option value="ascending">ascending</option>
-                                                <option value="descending">descending</option>
+                                                <option value="ascending">Low to High</option>
+                                                <option value="descending">High to Low</option>
+                                                {{!--if statement put "select" inside--}}
                                             </select>
                                         </td>
                                     </tr>
@@ -153,14 +153,20 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" id="onSale" name="onSale" value="true">
-                                            <label for="onSale">Products on Sale</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
                                             <input type="checkbox" id="Rating" name="Rating" value="true">
                                             <label for="Rating">Top Customer Rating</label>
+                                            {{!--if statement put "checked" inside--}}
+                                            <br>
+                                            <input type="checkbox" id="inStoreAvailability" name="inStoreAvailability"
+                                                value="true">
+                                            <label for="inStoreAvailability">In Store Availability</label>
+                                            <br>
+                                            <input type="checkbox" id="customerReviewCount" name="customerReviewCount"
+                                                value="true">
+                                            <label for="customerReviewCount">Most Customer Review Count</label>
+                                            <br>
+                                            <input type="checkbox" id="visitedTimes" name="visitedTimes" value="true">
+                                            <label for="visitedTimes">Most Visited Products</label>
                                         </td>
                                     </tr>
                                 </table>
@@ -200,19 +206,32 @@
             {{#if productList.page.manufacturer}}
             <li class="page-item">
                 <a class="page-link"
-                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}">Previous</a>
+                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}{{productList.page.query_list}}">Previous</a>
             </li>
             <li>
                 <a class="page-link"
-                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}">{{productList.page.previous}}</a>
+                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}{{productList.page.query_list}}">{{productList.page.previous}}</a>
+            </li>
+            {{else}}
+            {{#if productList.page.search}}
+            <li class="page-item">
+                <a class="page-link"
+                    href="?page={{productList.page.previous}}&search={{productList.page.search}}{{productList.page.query_list}}">Previous</a>
+            </li>
+            <li>
+                <a class="page-link"
+                    href="?page={{productList.page.previous}}&search={{productList.page.search}}{{productList.page.query_list}}">{{productList.page.previous}}</a>
             </li>
             {{else}}
             <li class="page-item">
-                <a class="page-link" href="?page={{productList.page.previous}}">Previous</a>
+                <a class="page-link"
+                    href="?page={{productList.page.previous}}{{productList.page.query_list}}">Previous</a>
             </li>
             <li>
-                <a class="page-link" href="?page={{productList.page.previous}}">{{productList.page.previous}}</a>
+                <a class="page-link"
+                    href="?page={{productList.page.previous}}{{productList.page.query_list}}">{{productList.page.previous}}</a>
             </li>
+            {{/if}}
             {{/if}}
             {{else}}
             <li class="page-item disabled">
@@ -237,12 +256,23 @@
                     href="?page={{productList.page.next}}&manufacturer={{productList.page.manufacturer}}">Next</a>
             </li>
             {{else}}
+            {{#if productList.page.search}}
             <li>
-                <a class="page-link" href="?page={{productList.page.next}}">{{productList.page.next}}</a>
+                <a class="page-link"
+                    href="?page={{productList.page.next}}&search={{productList.page.search}}">{{productList.page.next}}</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{productList.page.next}}">Next</a>
+                <a class="page-link" href="?page={{productList.page.next}}&search={{productList.page.search}}">Next</a>
             </li>
+            {{else}}
+            <li>
+                <a class="page-link"
+                    href="?page={{productList.page.next}}{{productList.page.query_list}}">{{productList.page.next}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{productList.page.next}}{{productList.page.query_list}}">Next</a>
+            </li>
+            {{/if}}
             {{/if}}
             {{else}}
             <li class="page-item disabled">
