@@ -47,28 +47,30 @@
             {{#if productList.page.manufacturer}}
             <li class="page-item">
                 <a class="page-link"
-                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}">Previous</a>
+                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}{{productList.page.query_list}}">Previous</a>
             </li>
             <li>
                 <a class="page-link"
-                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}">{{productList.page.previous}}</a>
+                    href="?page={{productList.page.previous}}&manufacturer={{productList.page.manufacturer}}{{productList.page.query_list}}">{{productList.page.previous}}</a>
             </li>
             {{else}}
             {{#if productList.page.search}}
             <li class="page-item">
                 <a class="page-link"
-                    href="?page={{productList.page.previous}}&search={{productList.page.search}}">Previous</a>
+                    href="?page={{productList.page.previous}}&search={{productList.page.search}}{{productList.page.query_list}}">Previous</a>
             </li>
             <li>
                 <a class="page-link"
-                    href="?page={{productList.page.previous}}&search={{productList.page.search}}">{{productList.page.previous}}</a>
+                    href="?page={{productList.page.previous}}&search={{productList.page.search}}{{productList.page.query_list}}">{{productList.page.previous}}</a>
             </li>
             {{else}}
             <li class="page-item">
-                <a class="page-link" href="?page={{productList.page.previous}}">Previous</a>
+                <a class="page-link"
+                    href="?page={{productList.page.previous}}{{productList.page.query_list}}">Previous</a>
             </li>
             <li>
-                <a class="page-link" href="?page={{productList.page.previous}}">{{productList.page.previous}}</a>
+                <a class="page-link"
+                    href="?page={{productList.page.previous}}{{productList.page.query_list}}">{{productList.page.previous}}</a>
             </li>
             {{/if}}
             {{/if}}
@@ -105,10 +107,11 @@
             </li>
             {{else}}
             <li>
-                <a class="page-link" href="?page={{productList.page.next}}">{{productList.page.next}}</a>
+                <a class="page-link"
+                    href="?page={{productList.page.next}}{{productList.page.query_list}}">{{productList.page.next}}</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{productList.page.next}}">Next</a>
+                <a class="page-link" href="?page={{productList.page.next}}{{productList.page.query_list}}">Next</a>
             </li>
             {{/if}}
             {{/if}}
@@ -121,6 +124,7 @@
     </nav>
     {{/if}}
 
+    {{#if productList}}
     <table class="table table-bordered">
         <tr>
             <td>
@@ -129,19 +133,38 @@
                     <tr>
                         <td>
                             <form id="priceForm" method="get">
-                                <label>
-                                    <a class="dropdown-item" href="/api/products?price=ascending">ascending</a>
-                                    <a class="dropdown-item" href="&price=descending">descending</a>
-                                    <input type="text" placeholder="min" pattern="[0-9]+" id="minPrice" name="min">
-                                    <input type="text" placeholder="max" pattern="[0-9]+" id="maxPrice" name="max">
-                                    <input type="checkbox" id="onSale" name="onSale" value="onsale">
-                                    <label for="vehicle1">onSale</label>
-                                    <input type="checkbox" id="Deals" name="Deals" value="Deals">
-                                    <label for="vehicle1">Current Deals</label>
-                                    <input type="checkbox" id="Rating" name="Rating" value="Rating">
-                                    <label for="vehicle1">Customer Rating</label>
-                                </label>
-                                <button type="submit">Price Range</button>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label for="price">Choose order:</label>
+                                            <select id="price" name="price" size="2">
+                                                <option value="ascending">ascending</option>
+                                                <option value="descending">descending</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" placeholder="min" pattern="[0-9]+" id="minPrice"
+                                                name="min">
+                                            <input type="text" placeholder="max" pattern="[0-9]+" id="maxPrice"
+                                                name="max">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" id="onSale" name="onSale" value="true">
+                                            <label for="onSale">Products on Sale</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" id="Rating" name="Rating" value="true">
+                                            <label for="Rating">Top Customer Rating</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <button type="submit">Submit Filter</button>
                             </form>
                         </td>
                     </tr>
@@ -168,6 +191,7 @@
             </td>
         </tr>
     </table>
+    {{/if}}
 
     {{#if productList.page}}
     <nav aria-label="...">

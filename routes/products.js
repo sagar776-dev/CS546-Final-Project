@@ -9,6 +9,7 @@ router
     .route('/')
     .get(async (req, res) => {
         let url_query = req.query
+        let error = [];
         //move to validation - object to lowercase
         let key, keys = Object.keys(url_query);
         let n = keys.length;
@@ -37,13 +38,9 @@ router
         if (price !== undefined) {
             price = price.toLowerCase().trim()
         }
-        console.log(price)
-        let minimum = newobj.min
-        let maximum = newobj.max
-        let onsale = newobj.onsale
+
 
         //validation end
-        let error = [];
         try {
             let productList = 0;
             if (!search) {
@@ -82,60 +79,69 @@ router
             const endIndex = current * limit
             const resultsProducts = {}
 
-            resultsProducts.page = {
-                "search": search,
-                current: current,
-                next: pageNext,
-                previous: pagePrevious,
-                limit: limit
-            }
+            //filter start 
+            let minimum = newobj.min
+            let maximum = newobj.max
+            let onsale = newobj.onsale
+            let rating = newobj.rating
+            //start of url query
+            let query_list = ``
+            //min max start
 
-
-            //min max
-
-            //min max
+            //min max end
 
             //current deal
-
-
-            let query_list = ``
-            if (parseInt(newobj.page) !== undefined) {
-                query_list = `?`
-            }
-            else {
-                query_list = `&`
-            }
-
-            //Ascending
+            //Ascending order
             if (price === "ascending") {
                 productList.sort((a, b) => {
                     return a.price - b.price
                 })
                 query_list += `&price=${price}`
             }
-            //Descending
+            //Descending order 
             if (price === "descending") {
                 productList.sort((a, b) => {
                     return b.price - a.price
                 })
                 query_list += `&price=${price}`
             }
+            //end of order
 
             minimum = parseInt(minimum)
             maximum = parseInt(maximum)
             price = price
             if (minimum > 0 && minimum < maximum) {
-                query_list += `min=${minimum}&`
+                query_list += `&min=${minimum}`
             }
             if (maximum > 0 && maximum > minimum) {
-                query_list += `max=${maximum}&`
+                query_list += `&max=${maximum}`
             }
-            if (onsale !== undefined) {
-                query_list += `onsale=${onsale}&`
+            if (onsale === "true") {
+                query_list += `&onsale=${onsale}`
             }
-
+            if (rating === "true") {
+                query_list += `&rating=${rating}`
+            }
             console.log(url_query)
             console.log(query_list)
+            //filter end 
+            resultsProducts.features = {
+                price: price,
+                minimum: minimum,
+                maximum: maximum,
+                onsale: onsale,
+                rating: rating,
+                query_list: query_list
+            }
+
+            resultsProducts.page = {
+                "search": search,
+                current: current,
+                next: pageNext,
+                previous: pagePrevious,
+                limit: limit,
+                query_list: query_list
+            }
 
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
