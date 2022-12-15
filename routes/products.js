@@ -25,33 +25,38 @@ router
             page = 1;
         }
         let search = newobj.search
+        let minimum = newobj.min
+        let maximum = newobj.max
+        let instoreavailability = newobj.instoreavailability
+        let rating = newobj.rating
+        let customerreviewcount = newobj.customerreviewcount
+        let visitedtimes = newobj.visitedtimes
         //validation end
         try {
             let productList = 0;
-            if (!search) {
-                productList = await productData.getAllProducts();
-            } else {
-                productList = await productData.getProductByName(search);
-                if (productList.length === 0) {
-                    productList = await productData.getAllProducts();
-                    error.push(`Product with a name of "${search}" Not Found`)
-                }
-            }
             let categoryList = await productData.getCategoryOfProducts();
             const resultsProducts = {}
 
             //filter start 
-            let minimum = newobj.min
-            let maximum = newobj.max
-            let instoreavailability = newobj.instoreavailability
-            let rating = newobj.rating
-            let customerreviewcount = newobj.customerreviewcount
-            let visitedtimes = newobj.visitedtimes
-
             //start of url query
             let query_list = ``
             //price start
             let price = ""
+            if (!search) {
+                productList = await productData.getAllProducts();
+            } else {
+                if (Array.isArray(search)) {
+                    productList = await productData.getProductByName(search[0]);
+                    search = search[0]
+                }
+                else {
+                    productList = await productData.getProductByName(search);
+                    if (productList.length === 0) {
+                        productList = await productData.getAllProducts();
+                        error.push(`Product with a name of "${search}" Not Found`)
+                    }
+                }
+            }
             if (Array.isArray(price) === true) {
                 temp = newobj.price
                 price = `${temp[0]}`
@@ -77,20 +82,14 @@ router
                 })
                 query_list += `&price=${price}`
             }
-            //price end
-            //end of order
-
-            //current deal
-
-            //min max
             if (isNaN(minimum)) {
                 minimum = 0
-                error.push("Minimum is empty or containing letters")
             }
             if (isNaN(maximum)) {
                 maximum = 10000
-                error.push("Maximum is empty or containing letters")
             }
+            // error.push("Minimum is empty or containing letters")
+            // error.push("Maximum is empty or containing letters")
             minimum = parseInt(minimum)
             maximum = parseInt(maximum)
             if (minimum >= maximum) {
@@ -112,16 +111,12 @@ router
                     })
                 }
             }
-            //min max
-            //sale rating
             if (rating === "true") {
                 productList = productList.sort((a, b) => {
                     return b.customerReviewAverage - a.customerReviewAverage
                 })
                 query_list += `&rating=${rating}`
             }
-            //sale rating
-            //inStoreAvailability
             if (instoreavailability === "true") {
                 productList = productList.filter((object) => {
                     return object.inStoreAvailability === false
@@ -129,7 +124,6 @@ router
                 query_list += `&inStoreAvailability=${instoreavailability}`
                 //console.log(productList)
             }
-
             if (customerreviewcount === "true") {
                 productList = productList.sort((a, b) => {
                     return b.customerReviewCount - a.customerReviewCount
@@ -144,9 +138,6 @@ router
                 query_list += `&visitedTimes=${visitedtimes}`
                 //console.log(productList)
             }
-            //
-            console.log(url_query)
-            console.log(query_list)
             resultsProducts.features = {
                 price: price,
                 minimum: minimum,
@@ -155,9 +146,15 @@ router
                 rating: rating,
                 query_list: query_list
             }
-
             //filter end 
-
+            if (productList.length === 0) {
+                productList = await productData.getAllProducts();
+                error.push("Could not find products with this filter")
+            }
+            // console.log(productList.length)
+            // console.log(error)
+            // console.log(url_query)
+            // console.log(query_list)
             //page start
             current = page
             if (current < 1) {
@@ -182,8 +179,6 @@ router
             const limit = 10
             const startIndex = (current - 1) * limit
             const endIndex = current * limit
-            //page end
-
             resultsProducts.page = {
                 "search": search,
                 current: current,
@@ -192,9 +187,10 @@ router
                 limit: limit,
                 query_list: query_list
             }
-
+            //page end
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
+
             res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList, error: error })
         } catch (e) {
             return res.status(404).json('products/listOfProducts', { error: e });
@@ -233,6 +229,9 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
             //pagination start
+
+
+
             //fix later
             current = page
             if (current < 1) {
