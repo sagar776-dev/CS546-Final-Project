@@ -1,14 +1,6 @@
-{{! <style>
-    table,
-    th,
-    td {
-        border: 1px solid black;
-    }
-</style> }}
-
 <div class="product-page">
 
-  <div>
+ 
     {{#if error}}<p>{{error}}</p>{{/if}}
     <p id="id_field" value="{{product._id}}">id: {{product._id}}</p>
     <p id="name_field" value="{{product.name}}">name: {{product.name}}</p>

@@ -111,9 +111,6 @@ let exportedMethods = {
     //sort by reviews 
     async sortProductsByReviews() {
     },
-    //sort by prices 
-    async sortProductsByPrices() {
-    },
     //show by price
     //db.marks.find({ "price": { "$gt": low, '$lt': high} })
     //user fixes
