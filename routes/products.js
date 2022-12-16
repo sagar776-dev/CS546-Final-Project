@@ -397,6 +397,7 @@ router.get('/laptops/:id', async (req, res) => {
     }
 });
 //phones
+
 router
     .route('/phones')
     .get(async (req, res) => {
