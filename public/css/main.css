@@ -5,6 +5,7 @@
 .signup-page .container {
   background-color: rgb(238, 238, 238);
   max-width: 40%;
+  padding: 10px;
 }
 
 .signup-page .form-group .form-control {
@@ -14,3 +15,27 @@
 .signup-page .error {
   background-color: rgb(249, 111, 111);
 }
+
+.popular-prod-div-row {
+  overflow-x: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  max-height: min-content;
+}
+
+.popular-prod-div-col {
+  padding: 10px;
+  height: 400px;
+}
+
+.compareDiv {
+  background-color: rgb(182, 182, 182);
+}
+
+.compareDivRow {
+  width: min-content;
+}
+
+/* .product-compare-list .container{
+  background-color: antiquewhite;
+} */

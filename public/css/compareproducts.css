@@ -1,0 +1,14 @@
+.row-striped:nth-of-type(odd) {
+  background-color: #efefef;
+  margin: 10px;
+}
+
+.row-striped:nth-of-type(even) {
+  background-color: #ffffff;
+  margin: 10px;
+}
+
+.container {
+  /* background-color: aquamarine; */
+  width: 95%;
+}
