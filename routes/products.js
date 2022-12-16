@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const productData = data.products;
+const usersData = data.users;
 const qnaData = data.qna;
 // const validation = require('../helpers');
 
@@ -18,6 +19,7 @@ const qnaData = data.qna;
 // });
 
 router.route("/").get(async (req, res) => {
+  console.log("product route");
   let url_query = req.query;
   //move to validation - object to lowercase
   let key,
@@ -229,13 +231,20 @@ router.get("/laptops/:id", async (req, res) => {
     }
     // end
     let updatedProduct = await productData.updateProductVisitedCounter(sku);
+    let isWishlisted = await usersData.addProductToHistory(
+      sku,
+      req.session.username
+    );
+    //let isInUserWishlist = usersData.checkIfWishlisted(sku, req.session.username);
     res.render("products/productPage", {
       product: updatedProduct,
       pictures: updatedProduct.pictures,
       details: updatedProduct.details,
       qna: qna,
+      isWishlisted: isWishlisted,
     });
   } catch (e) {
+    console.log(e);
     return res
       .status(404)
       .render("products/error", { error: "Product not found" });
@@ -357,13 +366,20 @@ router.get("/phones/:id", async (req, res) => {
         .render("products/productPage", { error: "Product not found" });
     }
     let updatedProduct = await productData.updateProductVisitedCounter(sku);
+    let isWishlisted = await usersData.addProductToHistory(
+      sku,
+      req.session.username
+    );
+    //let isInUserWishlist = usersData.checkIfWishlisted(sku, req.session.username);
     res.render("products/productPage", {
       product: updatedProduct,
       pictures: updatedProduct.pictures,
       details: updatedProduct.details,
       qna: qna,
+      isWishlisted: isWishlisted,
     });
   } catch (e) {
+    console.log(e);
     return res
       .status(404)
       .render("products/error", { error: "Product not found" });
@@ -486,18 +502,162 @@ router.get("/tablets/:id", async (req, res) => {
       return;
     }
     let updatedProduct = await productData.updateProductVisitedCounter(sku);
+    let isWishlisted = await usersData.addProductToHistory(
+      sku,
+      req.session.username
+    );
+    //let isInUserWishlist = usersData.checkIfWishlisted(sku, req.session.username);
     res.render("products/productPage", {
       product: updatedProduct,
       pictures: updatedProduct.pictures,
       details: updatedProduct.details,
       qna: qna,
+      isWishlisted: isWishlisted,
     });
   } catch (e) {
+    console.log(e);
     res.status(404).render("products/error", { error: "Product not found" });
   }
 });
 
-router.get("/compare", async (req, res) => {});
+router
+  .get("/compare", async (req, res) => {
+    let products = [
+      {
+        sku: 6447818,
+        name: "Acer - Chromebook Spin 514 Laptop– Convertible-14” Full HD Touch –Ryzen 3 3250C– GB DDR4 Memory–64GB eMMC Flash Memory",
+        url: "https://api.bestbuy.com/click/-/6447818/pdp",
+        "Processor Model": "AMD Ryzen 3 3000 Series",
+        "System Memory (RAM)": "4 gigabytes",
+        Graphics: "AMD Radeon",
+        "Screen Resolution": "1920 x 1080 (Full HD)",
+        "Storage Type": "eMMC",
+        "Total Storage Capacity": "64 gigabytes",
+        "Screen Size": "14 inches",
+        "Touch Screen": "Yes",
+        "Processor Model Number": "3250C",
+        "Operating System": "Chrome OS",
+        "Battery Type": "Lithium-ion",
+        "Backlit Keyboard": "Yes",
+        Brand: "Acer",
+        "Model Number": "CP514-1H-R4HQ",
+        "Year of Release": "2020",
+        "Color Category": "Silver",
+      },
+      {
+        sku: 6518252,
+        name: 'Dell - XPS 13 Plus 13.4" OLED Touch-Screen Laptop – 12th Gen Intel Evo i7 - 16GB Memory - 512GB SSD - Silver',
+        url: "https://api.bestbuy.com/click/-/6518252/pdp",
+        "Processor Model": "Intel 12th Generation Core i7 Evo Platform",
+        "System Memory (RAM)": "16 gigabytes",
+        Graphics: "Intel Iris Xe Graphics",
+        "Screen Resolution": "3456 x 2160",
+        "Storage Type": "SSD",
+        "Total Storage Capacity": "512 gigabytes",
+        "Screen Size": "13.4 inches",
+        "Touch Screen": "Yes",
+        "Processor Model Number": "1260P",
+        "Operating System": "Windows 11 Home",
+        "Battery Type": "Lithium-ion",
+        "Backlit Keyboard": "Yes",
+        Brand: "Dell",
+        "Model Number": "BBY-K2PKKFX",
+        "Year of Release": "2022",
+        "Color Category": "Silver",
+      },
+    ];
+    let headers = Object.keys(products[0]);
+    let comparisonArray = [];
+    for (let header of headers) {
+      if (header.trim().toLowerCase() !== "sku") {
+        let arr = [header.charAt(0).toUpperCase() + header.slice(1)];
+        for (let product of products) {
+          arr.push(product[header]);
+        }
+        comparisonArray.push(arr);
+      }
+    }
+    res.render("products/compareproducts", {
+      products: comparisonArray,
+    });
+  })
+  .post("/compare", async (req, res) => {
+    let errorMessage = "";
+    console.log("Request body ", req.body);
+    let products = req.body.compareList;
+    products = JSON.parse(products);
+    if (!products) errorMessage = "Error: No products to compare";
+    else if (products.length === 0)
+      errorMessage = "Error: No products to compare";
+    else if (products.length === 1)
+      errorMessage = "Error: Only one product in the compare list";
+
+    if (errorMessage.length > 0) {
+      throw errorMessage;
+    }
+    console.log("Products ", JSON.parse(products));
+    products = JSON.parse(products);
+    let prods = [];
+    let categories = ["laptops", "phones", "tablets"];
+
+    try {
+      //Check for same category
+      console.log("Compare list ", products, products.length);
+      for (let prod of products) {
+        if (!prods.includes(prod.type.toLowerCase())) {
+          prods.push(prod.type.toLowerCase());
+        }
+      }
+      if (prods.length !== 1)
+        throw "Error: cannot compare products of different category";
+
+      //Check for duplicate product
+      prods = [];
+      for (let prod of products) {
+        if (!prods.includes(prod.id)) {
+          prods.push(prod.id);
+        }
+      }
+      console.log(prods);
+      if (prods.length !== products.length)
+        throw "Error: cannot compare product with itself";
+
+      let result;
+      let productSKUs = [];
+      for (let product of products) {
+        productSKUs.push(Number(product.id));
+      }
+      if (products[0].type.toLowerCase() === "laptops") {
+        result = await productData.compareLaptops(productSKUs);
+      } else if (products[0].type.toLowerCase() === "phones") {
+        result = await productData.comparePhones(productSKUs);
+      } else {
+        result = await productData.compareTablets(productSKUs);
+      }
+      console.log("Comparison result before", result[0]);
+      let headers = Object.keys(result[0][0]);
+      let comparisonArray = [];
+      for (let header of headers) {
+        if (header.trim().toLowerCase() !== "sku") {
+          let arr = [header.charAt(0).toUpperCase() + header.slice(1)];
+          for (let product of result[0]) {
+            arr.push(product[header]);
+          }
+          comparisonArray.push(arr);
+        }
+      }
+      console.log("Comparison result ", comparisonArray);
+      res.render("products/compareproducts", {
+        products: comparisonArray,
+      });
+    } catch (e) {
+      console.log("error ", e);
+      res
+        .status(500)
+        .render("products/ProductError", { error: "Something went wrong" });
+      return;
+    }
+  });
 //compareProducts not finished
 //Api to fetch the Popular products in each category
 router.route("/popular").get(async (req, res) => {});

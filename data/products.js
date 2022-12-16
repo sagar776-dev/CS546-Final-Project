@@ -127,7 +127,7 @@ let exportedMethods = {
         let errors = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
-                let laptop = await this.getProductsByID(productsListSKU[i])
+                let laptop = await this.getProductsByID(Number(productsListSKU[i]))
                 //object
                 //we want to check if this object contains some of the details
                 //check if category is laptop (if not ask to remove it)
@@ -170,6 +170,7 @@ let exportedMethods = {
                     errors.push({ error: `Product:${productsListSKU[i]} not a laptop, you need to use ${laptop.category} category` })
                 }
             } catch (e) {
+                console.log(e);
                 errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }

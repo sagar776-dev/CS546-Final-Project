@@ -5,23 +5,19 @@ const usersRoutes = require("./users");
 const homeRoutes = require("./home");
 
 const constructorMethod = (app) => {
-  app.use("/", (req, res) => {
-    res.redirect("/api/products");
-  });
-
+  console.log("Index routes");
   app.use("/api/admin", adminRoutes);
   app.use("/api/products", productsRoutes);
   app.use("/api/reviews", reviewsRoutes);
   app.use("/users", usersRoutes);
-
-  app.use("*", (req, res) => {
-    res.sendStatus(404);
-  });
   app.use("/api", homeRoutes);
-
+  app.use("/", (req, res) => {
+    res.redirect("/api")
+  });
   app.use("*", (req, res) => {
     res.sendStatus(404);
   });
+  
 };
 
 module.exports = constructorMethod;

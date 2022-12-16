@@ -1,7 +1,7 @@
 <div class="signup-page">
   <div class="container text-center">
     <h3>User Registration</h3>
-    <form id="registration-form" action="/users/signup" method="POST">
+    <form id="registration-form" method="POST">
 
       <div class="form-group">
         <label for="firstName">First Name
@@ -109,12 +109,15 @@
       </div>
     </form>
 
-    <div class="error">
-      {{error}}
+    <div id="errorDiv" class="error hidden">
+      <ul id="errorlist">
+      </ul>
     </div>
 
     <div>
       <a href="/users/login">Already have an account? Click here to log-in</a>
     </div>
+
+    <script src="../../public/js/registration.js"></script>
   </div>
 </div>
