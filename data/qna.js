@@ -2,7 +2,8 @@ const mongoCollections = require('../config/mongoCollections');
 const productData = require('./products');
 const helper = ('../helper/userValidation.js');
 const validation = require('../validation');
-//const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
+const mongo = require('mongodb');
 
 const getDate = () => {
     let date = new Date();
@@ -23,31 +24,28 @@ const createQuestion = async (
     username,
     question
 ) => {
-    product_id = validation.checkId(id, "product ID");
-    question = validation.checkQuestion(question);
-    username = helper.validateUsername(username);
+    //product_id = validation.checkId(product_id, "product ID");
+    //question = validation.checkQuestion(question);
+    //username = helper.validateUsername(username);
 
     let newQuestion = {
-        id,
         username,
-        question,
-        date
+        question
     };
-
-
-
-    //newQuestion.id = mongo.ObjectId();
+    newQuestion._id = mongo.ObjectId();
     newQuestion.question = question;
     newQuestion.username = username;
     newQuestion.date = getDate();
 
-    const productCollections = await mongoCollections.products();
-    let insertInfo = await productCollections.updateOne({
-        "_id": mongo.ObjectId(product_id)
+    const productCollections = await mongoCollections.products()
+
+    let insertInfo = await productCollections.updateMany({
+        "_id": parseInt(product_id)
     },
         {
             "$push": {
                 "qna": {
+                    "_id": mongo.ObjectId(newQuestion._id),
                     "question": newQuestion.question,
                     "username": newQuestion.username,
                     "date": newQuestion.date
@@ -75,7 +73,7 @@ const addAnswer = async (product_id, question_id, username, answer) => {
     newAnswer.answer = answer;
     newAnswer.author = username;
     newAnswer.date = getDate();
-    
+
     const productCollections = await mongoCollections.products();
 
     let insertInfo = await productCollections.updateOne(
@@ -99,18 +97,22 @@ const addAnswer = async (product_id, question_id, username, answer) => {
     return newAnswer;
 };
 
-const getQna = async (product_id)=>{
-    try{
+const getQna = async (product_id) => {
+    try {
         let product = await productData.getProductsByID(product_id);
         let qna = product.qna;
         return qna;
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 }
+const trial = async () => {
+    let a = await createQuestion('6447818', 'naveen', 'how to do this?');
+    console.log(a);
+}
 
-
+//trial();
 module.exports = {
     createQuestion,
     addAnswer,

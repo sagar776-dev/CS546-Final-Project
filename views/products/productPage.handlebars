@@ -5,6 +5,8 @@
         border: 1px solid black;
     }
 </style> --}}
+<script src="/public/js/productpage.js"></script>
+
 <article class="product-page">
     {{#if error}}<p>{{error}}</p>{{/if}}
     <p>id: {{product._id}}</p>
@@ -35,7 +37,7 @@
         </tr>
         {{/each}}
     </table>
-    <form id="question-form">
+    <form id="question-form" method="POST">
         <label for="question">Question:</label>
         <input type="text" id="question" name="question" required>
 

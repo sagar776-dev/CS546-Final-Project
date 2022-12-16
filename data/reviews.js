@@ -151,7 +151,7 @@ const removeReview = async (reviewId) => {
 };
 
 
-const calculateOverallRating = async (movieId) => {
+const calculateOverallRating = async (product_id) => {
   let product = await productData.getProductsByID(product_id);
   let average = 0;
   let sum = 0;
@@ -165,6 +165,7 @@ const calculateOverallRating = async (movieId) => {
   average = Math.round(average * 10) / 10
   return average;
 }
+
 module.exports = {
   createReview,
   getAllReviews,
