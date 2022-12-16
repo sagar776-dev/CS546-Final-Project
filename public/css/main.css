@@ -28,6 +28,14 @@
   height: 400px;
 }
 
+.compareDiv {
+  background-color: rgb(182, 182, 182);
+}
+
+.compareDivRow {
+  width: min-content;
+}
+
 /* .product-compare-list .container{
   background-color: antiquewhite;
 } */

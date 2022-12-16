@@ -586,21 +586,21 @@ router
     console.log("Request body ", req.body);
     let products = req.body.compareList;
     products = JSON.parse(products);
-    if (!products) errorMessage = "Error: No products to compare";
-    else if (products.length === 0)
-      errorMessage = "Error: No products to compare";
-    else if (products.length === 1)
-      errorMessage = "Error: Only one product in the compare list";
-
-    if (errorMessage.length > 0) {
-      throw errorMessage;
-    }
-    console.log("Products ", JSON.parse(products));
-    products = JSON.parse(products);
-    let prods = [];
-    let categories = ["laptops", "phones", "tablets"];
-
     try {
+      if (!products) errorMessage = "Error: No products to compare";
+      products = JSON.parse(products);
+      if (products.length === 0) errorMessage = "Error: No products to compare";
+      else if (products.length === 1)
+        errorMessage = "Error: Only one product in the compare list";
+
+      if (errorMessage.length > 0) {
+        throw errorMessage;
+      }
+      console.log("Products ", products);
+      //products = JSON.parse(products);
+      let prods = [];
+      let categories = ["laptops", "phones", "tablets"];
+
       //Check for same category
       console.log("Compare list ", products, products.length);
       for (let prod of products) {
@@ -652,10 +652,9 @@ router
       });
     } catch (e) {
       console.log("error ", e);
-      res
-        .status(500)
-        .render("products/ProductError", { error: "Something went wrong" });
-      return;
+      res.render("products/compareproducts", {
+        error: e,
+      });
     }
   });
 //compareProducts not finished

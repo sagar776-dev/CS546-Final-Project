@@ -28,79 +28,6 @@
   <body>
     <header>
 
-      {{! <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="/">LookUpDevice</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <form class="form-inline my-2 my-lg-0">
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          >
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button
-              class="btn btn-default my-2 my-sm-0"
-              type="submit"
-            >Search</button>
-          </form>
-
-        <img
-          src="../../public//images/account-image.png"
-          class="ml-auto"
-          width="30"
-          height="30"
-          alt="user profile"
-          href="#"
-        >
-        <p class="nav-link ml_auto" href="#">Sagar Chakravarthy</p>
-      </nav>
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/admin">Admin
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Users</a>
-              </li>
-
-            </ul>
-          </div>
-        </nav>  }}
-
       <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">LookUpDevice</a>
@@ -181,6 +108,10 @@
         <form id="compare-form" action="/api/products/compare" method="post">
           <input type="hidden" id="compareList" name="compareList">
         </form>
+      </div>
+
+      <div id="compareDiv">
+        <div class="row" id="compareDivRow"></div>
       </div>
 
       <div class="compare-div">
