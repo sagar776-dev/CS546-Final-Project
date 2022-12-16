@@ -36,7 +36,6 @@ router
             let productList = 0;
             let categoryList = await productData.getCategoryOfProducts();
             const resultsProducts = {}
-
             //filter start 
             //start of url query
             let query_list = ``
@@ -190,7 +189,6 @@ router
             //page end
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
-
             res.render('products/listOfProducts', { productList: resultsProducts, categoryList: categoryList, error: error })
         } catch (e) {
             return res.status(404).json('products/listOfProducts', { error: e });
@@ -210,6 +208,13 @@ router
         }
         //
         let search = newobj.search
+        let minimum = newobj.min
+        let maximum = newobj.max
+        let instoreavailability = newobj.instoreavailability
+        let rating = newobj.rating
+        let customerreviewcount = newobj.customerreviewcount
+        let visitedtimes = newobj.visitedtimes
+        let manufacturer = newobj.manufacturer
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
@@ -218,7 +223,6 @@ router
         if (!page) {
             page = 1;
         }
-        let manufacturer = newobj.manufacturer
         let error = [];
         try {
             let productList = 0;
@@ -229,8 +233,95 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("laptops");
             //pagination start
+            //start of url query
+            let query_list = ``
+            //price start
+            let price = ""
+            if (manufacturer !== undefined) {
+                if (Array.isArray(manufacturer)) {
+                    manufacturer = manufacturer[0]
+                }
+                query_list += `&manufacturer=${manufacturer}`
+            }
+            if (Array.isArray(price) === true) {
+                temp = newobj.price
+                price = `${temp[0]}`
+                console.log(price)
+            }
+            else {
+                price = newobj.price
+            }
+            //Ascending order
+            if (price === "ascending") {
+                productList.sort((a, b) => {
+                    return a.price - b.price
+                })
+                query_list += `&price=${price}`
+            }
+            //Descending order 
+            if (price === "descending") {
+                productList.sort((a, b) => {
+                    return b.price - a.price
+                })
+                query_list += `&price=${price}`
+            }
+            if (isNaN(minimum)) {
+                minimum = 0
+            }
+            if (isNaN(maximum)) {
+                maximum = 10000
+            }
+            if (minimum > maximum) {
+                error.push("Minimum more or equal to Maximum")
+            }
+            else {
+                if (minimum > 0) {
+                    query_list += `&min=${minimum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price >= minimum
+                    })
+                }
+                if (maximum > 0 && maximum < 10000) {
+                    query_list += `&max=${maximum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price <= maximum
+                    })
+                }
+            }
+            if (rating === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewAverage - a.customerReviewAverage
+                })
+                query_list += `&rating=${rating}`
+            }
+            if (instoreavailability === "true") {
+                productList = productList.filter((object) => {
+                    return object.inStoreAvailability === false
+                })
+                query_list += `&inStoreAvailability=${instoreavailability}`
+                //console.log(productList)
+            }
+            if (customerreviewcount === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewCount - a.customerReviewCount
+                })
+                query_list += `&customerReviewCount=${customerreviewcount}`
+                //console.log(productList)
+            }
+            if (visitedtimes === "true") {
+                productList = productList.sort((a, b) => {
+                    return a.visitedTimes - b.visitedTimes
+                })
+                query_list += `&visitedTimes=${visitedtimes}`
+                //console.log(productList)
+            }
 
-
+            if (productList.length === 0) {
+                productList = await productData.getProductsByCategory("laptops");
+                error.push("Could not find products with this filter")
+            }
 
             //fix later
             current = page
@@ -262,7 +353,8 @@ router
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
-                limit: limit
+                limit: limit,
+                query_list: query_list
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
@@ -319,6 +411,7 @@ router
         }
         //
         let search = newobj.search
+
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
@@ -328,6 +421,12 @@ router
         if (!page) {
             page = 1;
         }
+        let minimum = newobj.min
+        let maximum = newobj.max
+        let instoreavailability = newobj.instoreavailability
+        let rating = newobj.rating
+        let customerreviewcount = newobj.customerreviewcount
+        let visitedtimes = newobj.visitedtimes
         let manufacturer = newobj.manufacturer
         let error = [];
         try {
@@ -339,6 +438,95 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("phones");
             //pagination start
+            //start of url query
+            let query_list = ``
+            //price start
+            let price = ""
+            if (manufacturer !== undefined) {
+                if (Array.isArray(manufacturer)) {
+                    manufacturer = manufacturer[0]
+                }
+                query_list += `&manufacturer=${manufacturer}`
+            }
+            if (Array.isArray(price) === true) {
+                temp = newobj.price
+                price = `${temp[0]}`
+                console.log(price)
+            }
+            else {
+                price = newobj.price
+            }
+            //Ascending order
+            if (price === "ascending") {
+                productList.sort((a, b) => {
+                    return a.price - b.price
+                })
+                query_list += `&price=${price}`
+            }
+            //Descending order 
+            if (price === "descending") {
+                productList.sort((a, b) => {
+                    return b.price - a.price
+                })
+                query_list += `&price=${price}`
+            }
+            if (isNaN(minimum)) {
+                minimum = 0
+            }
+            if (isNaN(maximum)) {
+                maximum = 10000
+            }
+            if (minimum > maximum) {
+                error.push("Minimum more or equal to Maximum")
+            }
+            else {
+                if (minimum > 0) {
+                    query_list += `&min=${minimum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price >= minimum
+                    })
+                }
+                if (maximum > 0 && maximum < 10000) {
+                    query_list += `&max=${maximum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price <= maximum
+                    })
+                }
+            }
+            if (rating === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewAverage - a.customerReviewAverage
+                })
+                query_list += `&rating=${rating}`
+            }
+            if (instoreavailability === "true") {
+                productList = productList.filter((object) => {
+                    return object.inStoreAvailability === false
+                })
+                query_list += `&inStoreAvailability=${instoreavailability}`
+                //console.log(productList)
+            }
+            if (customerreviewcount === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewCount - a.customerReviewCount
+                })
+                query_list += `&customerReviewCount=${customerreviewcount}`
+                //console.log(productList)
+            }
+            if (visitedtimes === "true") {
+                productList = productList.sort((a, b) => {
+                    return a.visitedTimes - b.visitedTimes
+                })
+                query_list += `&visitedTimes=${visitedtimes}`
+                //console.log(productList)
+            }
+
+            if (productList.length === 0) {
+                productList = await productData.getProductsByCategory("phones");
+                error.push("Could not find products with this filter")
+            }
             //fix later
             current = page
             if (current < 1) {
@@ -369,7 +557,8 @@ router
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
-                limit: limit
+                limit: limit,
+                query_list: query_list
             }
             resultsProducts.results = productList.slice(startIndex, endIndex)
             //pagination end
@@ -432,6 +621,12 @@ router
         if (!page) {
             page = 1;
         }
+        let minimum = newobj.min
+        let maximum = newobj.max
+        let instoreavailability = newobj.instoreavailability
+        let rating = newobj.rating
+        let customerreviewcount = newobj.customerreviewcount
+        let visitedtimes = newobj.visitedtimes
         let manufacturer = newobj.manufacturer
         let error = [];
         try {
@@ -443,6 +638,94 @@ router
             }
             let manufactort_List = await productData.getManufacturersOfProductsByCategory("tablets");
             //pagination start
+            //start of url query
+            let query_list = ``
+            //price start
+            let price = ""
+            if (manufacturer !== undefined) {
+                if (Array.isArray(manufacturer)) {
+                    manufacturer = manufacturer[0]
+                }
+                query_list += `&manufacturer=${manufacturer}`
+            }
+            if (Array.isArray(price) === true) {
+                temp = newobj.price
+                price = `${temp[0]}`
+                console.log(price)
+            }
+            else {
+                price = newobj.price
+            }
+            //Ascending order
+            if (price === "ascending") {
+                productList.sort((a, b) => {
+                    return a.price - b.price
+                })
+                query_list += `&price=${price}`
+            }
+            //Descending order 
+            if (price === "descending") {
+                productList.sort((a, b) => {
+                    return b.price - a.price
+                })
+                query_list += `&price=${price}`
+            }
+            if (isNaN(minimum)) {
+                minimum = 0
+            }
+            if (isNaN(maximum)) {
+                maximum = 10000
+            }
+            if (minimum > maximum) {
+                error.push("Minimum more or equal to Maximum")
+            }
+            else {
+                if (minimum > 0) {
+                    query_list += `&min=${minimum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price >= minimum
+                    })
+                }
+                if (maximum > 0 && maximum < 10000) {
+                    query_list += `&max=${maximum}`
+                    //sort 
+                    productList = productList.filter((object) => {
+                        return object.price <= maximum
+                    })
+                }
+            }
+            if (rating === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewAverage - a.customerReviewAverage
+                })
+                query_list += `&rating=${rating}`
+            }
+            if (instoreavailability === "true") {
+                productList = productList.filter((object) => {
+                    return object.inStoreAvailability === false
+                })
+                query_list += `&inStoreAvailability=${instoreavailability}`
+                //console.log(productList)
+            }
+            if (customerreviewcount === "true") {
+                productList = productList.sort((a, b) => {
+                    return b.customerReviewCount - a.customerReviewCount
+                })
+                query_list += `&customerReviewCount=${customerreviewcount}`
+                //console.log(productList)
+            }
+            if (visitedtimes === "true") {
+                productList = productList.sort((a, b) => {
+                    return a.visitedTimes - b.visitedTimes
+                })
+                query_list += `&visitedTimes=${visitedtimes}`
+                //console.log(productList)
+            }
+            if (productList.length === 0) {
+                productList = await productData.getProductsByCategory("tablets");
+                error.push("Could not find products with this filter")
+            }
             //fix later
             current = page
             if (current < 1) {
@@ -473,7 +756,8 @@ router
                 current: current,
                 next: pageNext,
                 previous: pagePrevious,
-                limit: limit
+                limit: limit,
+                query_list: query_list
             }
 
             resultsProducts.results = productList.slice(startIndex, endIndex)
