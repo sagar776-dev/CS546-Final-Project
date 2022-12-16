@@ -35,5 +35,52 @@
         </tr>
         {{/each}}
     </table>
-    <p>reviews: {{product.reviews}}</p>
+    <form id="question-form">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question" required>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <table id="question-list">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Here, the questions and answers will be added -->
+        </tbody>
+    </table>
+
+    <form id="review-form" action="addReview" method="post">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="body">Body:</label>
+        <textarea id="body" name="body" required></textarea>
+
+        <label for="rating">Rating:</label>
+        <input type="number" min="1" max="5" id="rating" name="rating" required>
+
+        <label for="photo">Photo:</label>
+        <input type="file" id="photo" name="photo">
+
+        <input type="submit" value="Submit">
+    </form>
+    <div style="overflow-y: scroll; height: 200px;">
+        {{#each product.reviews}}
+        <div class="review">
+            <h3>{{review-title}}</h3>
+            <p>{{review-body}}</p>
+            <p>
+                <em>By {{review-author}} on {{review-date}}</em>
+            </p>
+            <img src="{{review-photo}}" alt="Review photo">
+            <button onclick="likeReview({{this}})">Like</button>
+            <button onclick="dislikeReview({{this}})">Dislike</button>
+        </div>
+        {{/each}}
+    </div>
 </article>

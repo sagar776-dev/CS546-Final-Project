@@ -30,7 +30,7 @@ const createReview = async (
 ) => {
 
   helpers.validateReview(
-    product_id,
+  product_id,
   reviewTitle,
   reviewerName,
   review,
@@ -38,8 +38,7 @@ const createReview = async (
   pictures
   );
 
-  let newReview = {
-    
+  let newReview = {  
   reviewTitle,
   reviewerName,
   review,
