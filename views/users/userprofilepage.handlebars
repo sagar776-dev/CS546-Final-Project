@@ -1,7 +1,7 @@
 <div class="signup-page">
   <div class="container text-center">
-    <h3>User Registration</h3>
-    <form id="registration-form" method="POST">
+    <h3>User Profile</h3>
+    <form id="user-form" method="POST">
 
       <div class="form-group">
         <label for="firstName">First Name
@@ -9,7 +9,7 @@
             class="form-control"
             type="text"
             id="firstName"
-            value="{{firstName}}"
+            
             name="firstName"
           />
         </label>
@@ -21,7 +21,7 @@
             class="form-control"
             type="text"
             id="lastName"
-            value="{{lastName}}"
+            
             name="lastName"
           />
         </label>
@@ -33,7 +33,7 @@
             class="form-control"
             type="text"
             id="email"
-            value="{{email}}"
+            
             name="email"
           />
         </label>
@@ -44,7 +44,7 @@
           <select
             class="form-control"
             id="gender"
-            value="{{gender}}"
+           
             name="gender"
           >
             <option value="man">Man</option>
@@ -58,37 +58,27 @@
         </label>
       </div>
 
-      {{! <div class="form-group">
-      <label for="usertype">UserType
-        <select>
-            <option value="user">User</option>
-            <option value="expert">Expert</option>
-        </select>
-      </label>
-    </div> }}
-
       <div class="form-group">
-        <label for="username">Username
+        <label for="currentpassword">Current Password
           <input
             class="form-control"
             class="form-control"
-            type="text"
-            id="username"
-            value="{{username}}"
-            name="username"
+            type="password"
+            id="currentpassword"
+           
+            name="currentpassword"
           />
         </label>
       </div>
 
       <div class="form-group">
-        <label for="password">Password
+        <label for="newpassword">New Password
           <input
             class="form-control"
-            class="form-control"
             type="password"
-            id="password"
-            value="{{password}}"
-            name="password"
+            id="newPassword"
+            
+            name="newPassword"
           />
         </label>
       </div>
@@ -105,7 +95,7 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-primary" type="submit">Register</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
       </div>
     </form>
 
@@ -114,10 +104,6 @@
       </ul>
     </div>
 
-    <div>
-      <a href="/users/login">Already have an account? Click here to log-in</a>
-    </div>
-
-    <script src="/public/js/registration.js"></script>
+    <script src="/public/js/userprofile.js"></script>
   </div>
 </div>

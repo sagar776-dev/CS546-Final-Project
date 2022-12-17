@@ -1,56 +1,144 @@
 
-  // Get a reference to the form and the question list
+$(document).ready(function ($) {
+  var comparecheckbox = $("#comparecheckbox");
 
-  var form = document.querySelector('#question-form');
-  var questionList = document.querySelector('#question-list');
+  var addWishlistbtn = $("#add-wishlist");
+  var removeWishlistbtn = $("#remove-wishlist");
 
+  var removeWishlistp = $("#remove-wishlist-p");
+  var addWishlistp = $("#add-wishlist-p");
+  //var isWishListed = $("#isWishListed");
 
-  form.submit(function (event) {
-    // Prevent the form from actually being submitted
-    event.preventDefault();
-    console.log()
-    // Get the value of the question input field
-    var question = form.question.value;
-    fetch('/addquestion', {
-      method: 'POST',
-      body: JSON.stringify({ question: question }),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    // Create a new row for the question and answer
-    var row = document.createElement('tr');
+  var resetlistbtn = $('#resetlist');
 
-    // Create a cell for the question and add it to the row
-    var questionCell = document.createElement('td');
-    questionCell.innerHTML = question;
-    row.appendChild(questionCell);
+  function onLoad(event) {
+    //var isWishListed = $("#isWishListed");
+    resetlistbtn.hide();
+    var comparelist = JSON.parse(localStorage.getItem("comparelist"));
+    console.log("onload");
+    console.log("Path ", window.location.href);
+    //var isWishlisted = document.getElementById("isWishListed");
+    var idField = document.getElementById("id_field");
+    var productId = idField.innerText
+      .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
+      .trim();
+    console.log("Is wishlisted :", $("#isWishListed").text());
+    var ids = new Array();
+    for (let p of comparelist) {
+      console.log("ID ", p.id);
+      ids.push(p.id);
+    }
+    if($("#isWishListed").text().toLowerCase() === 'true'){
+      removeWishlistp.show();
+      addWishlistp.hide();
+    } else{
+      addWishlistp.show();
+      removeWishlistp.hide();
+    }
+    if (ids.includes(productId)) {
+      comparecheckbox.prop("checked", true);
+    } else {
+      comparecheckbox.prop("checked", false);
+    }
+  }
 
-    // Create a cell for the answer and add it to the row
-    var answerCell = document.createElement('td');
-    row.appendChild(answerCell);
-
-    // Create an answer input field and a submit button
-    var answerInput = document.createElement('input');
-    answerInput.type = 'text';
-    var answerButton = document.createElement('button');
-    answerButton.innerHTML = 'Submit';
-
-    // When the answer button is clicked, add the answer to the cell
-    answerButton.addEventListener('click', function () {
-      // Get the value of the answer input field
-      var answer = answerInput.value;
-      fetch('/addAnswer', {
-        method: 'POST',
-        body: JSON.stringify({ answer: answer }),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      // Add the answer to the cell
-      answerCell.innerHTML = answer;
-    });
-
-    // Add the answer input field and button to the cell
-    answerCell.appendChild(answerInput);
-    answerCell.appendChild(answerButton);
-
-    // Add the row to the question list
-    questionList.appendChild(row);
+  document.addEventListener("readystatechange", () => {
+    if (document.readyState == "complete") onLoad();
   });
+
+  comparecheckbox.change(function (event) {
+    var comparelist = JSON.parse(localStorage.getItem("comparelist"));
+    var flag = true;
+    var idField = document.getElementById("id_field");
+    var nameField = document.getElementById("name_field");
+    var typeField = document.getElementById("category_field");
+    console.log(idField.innerText, nameField.value, typeField.value);
+
+    var productId = idField.innerText
+      .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
+      .trim();
+    var productName = nameField.innerText
+      .slice(nameField.innerText.indexOf(":") + 1, nameField.innerText.length)
+      .trim();
+    var productType = typeField.innerText
+      .slice(typeField.innerText.indexOf(":") + 1, typeField.innerText.length)
+      .trim();
+
+    if ($(this).is(":checked")) {
+      console.log("add");
+      var prod = {
+        id: productId,
+        name: productName,
+        type: productType,
+      };
+      var ids = new Array();
+      for (let p of comparelist) {
+        console.log("ID ", p.id);
+        ids.push(p.id);
+      }
+      if (ids.includes(prod.id)) {
+        alert("Product already in the compare list");
+      } else if (ids.length > 2) {
+        alert("You can compare a maximum of 3 products");
+      } else {
+        if (!comparelist) {
+          localStorage.setItem("comparelist", "[]");
+          comparelist = new Array();
+        }
+        comparelist.push(prod);
+      }
+    } else {
+      console.log("remove");
+      var newCompareList = new Array();
+      var ids = new Array();
+      for (let p of comparelist) {
+        console.log("ID ", p.id);
+        ids.push(p.id);
+      }
+      for (let p of comparelist) {
+        if (!ids.push(ids.includes(p.id))) {
+          newCompareList.push(p);
+        }
+      }
+      comparelist = newCompareList;
+    }
+    localStorage.setItem("comparelist", JSON.stringify(comparelist));
+  });
+
+  addWishlistbtn.click(function (event) {
+    var idField = document.getElementById("id_field");
+    var productId = idField.innerText
+      .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
+      .trim();
+    var requestConfig = {
+      method: "GET",
+      url: "/users/addwishlist/"+productId,
+      contentType: "application/json",
+    };
+
+    $.ajax(requestConfig).then(function (responseMessage) {
+      console.log(responseMessage);
+      addWishlistp.hide();
+      removeWishlistp.show();
+    });
+  });
+
+  removeWishlistbtn.click(function (event) {
+    var idField = document.getElementById("id_field");
+    var productId = idField.innerText
+      .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
+      .trim();
+    var requestConfig = {
+      method: "GET",
+      url: "/users/removewishlist/"+productId,
+      contentType: "application/json",
+    };
+
+    $.ajax(requestConfig).then(function (responseMessage) {
+      console.log(responseMessage);
+      addWishlistp.show();
+      removeWishlistp.hide();
+    });
+  });
+})(window.jQuery);
+

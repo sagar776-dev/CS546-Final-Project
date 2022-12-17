@@ -4,7 +4,9 @@ $(document).ready(function ($) {
     usernameInput = $("#username"),
     passwordInput = $("#password"),
     errorLi = $("#errorlist"),
-    errorDiv = $("#errorDiv");
+    errorDiv = $("#errorDiv"),
+    userForm = $("#user-form"),
+    profileNav = $("#profile-nav");
 
   const usernameRegex = /^[A-Za-z0-9\s]*$/;
   const charRegex = /^[A-Za-z\s]*$/;
@@ -12,7 +14,7 @@ $(document).ready(function ($) {
   const capitalRegex = /^[A-Z]/;
   const specialRegex = /(?=.*[!@#$%^&*.])/;
   const emailRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
   var usernameErrorMessage = "";
   var passwordErrorMessage = "";
@@ -22,6 +24,7 @@ $(document).ready(function ($) {
   var lastnameErrorMessage = "";
 
   function validateEmail(email) {
+    emailErrorMessage = "";
     if (!email) emailErrorMessage = "Email should not be empty";
     email = email.trim();
     if (email.length === 0) emailErrorMessage = "Email should not be empty";
@@ -29,6 +32,7 @@ $(document).ready(function ($) {
   }
 
   function validateGender(gender) {
+    genderErrorMessage = "";
     if (!gender) genderErrorMessage = "Gender should not be empty";
     gender = gender.trim();
     if (gender.length === 0) genderErrorMessage = "Gender should not be empty";
@@ -46,6 +50,7 @@ $(document).ready(function ($) {
   }
 
   function validateFirstName(name) {
+    firstnameErrorMessage = "";
     if (!name) firstnameErrorMessage = "Firstname should not be empty";
     name = name.trim();
     if (name.length === 0)
@@ -58,6 +63,7 @@ $(document).ready(function ($) {
   }
 
   function validateLastName(name) {
+    lastnameErrorMessage = "";
     if (!name) lastnameErrorMessage = "Lastname should not be empty";
     name = name.trim();
     if (name.length === 0)
@@ -146,9 +152,7 @@ $(document).ready(function ($) {
           //alert("Logged in");
           var comparelist = localStorage.getItem("comparelist");
           console.log("Initial list ", comparelist);
-          if (!comparelist) {
-            localStorage.setItem("comparelist", "[]");
-          }
+          localStorage.setItem("comparelist", "[]");
           window.location.href = "/api";
         }
       });
@@ -193,15 +197,120 @@ $(document).ready(function ($) {
     validateEmail(email);
     validateGender(gender);
 
+    console.log(usernameErrorMessage);
+    console.log(passwordErrorMessage);
+    console.log(firstnameErrorMessage);
+    console.log(lastnameErrorMessage);
+    console.log(emailErrorMessage);
+    console.log(genderErrorMessage);
+
     if (passwordErrorMessage.length === 0) {
-      if (password === confirmPassword) {
+      if (password !== confirmPassword) {
         passwordErrorMessage = "Passwords do not match";
       }
     }
     console.log(usernameErrorMessage);
     if (
       usernameErrorMessage.length === 0 &&
-      passwordErrorMessage.length === 0
+      passwordErrorMessage.length === 0 &&
+      firstnameErrorMessage.length === 0 &&
+      lastnameErrorMessage.length === 0 &&
+      emailErrorMessage.length === 0 &&
+      genderErrorMessage.length === 0
+    ) {
+      //AJAX call to login API
+      var requestConfig = {
+        method: "POST",
+        url: "/users/signup",
+        contentType: "application/json",
+        data: JSON.stringify({
+          username: username.trim(),
+          password: password.trim(),
+          email: email.trim(),
+          firstName: firstname.trim(),
+          lastName: lastname.trim(),
+          gender: gender.trim(),
+        }),
+      };
+      $.ajax(requestConfig).then(function (responseMessage) {
+        console.log(responseMessage);
+        //newContent.html(responseMessage.message);
+        if (responseMessage.error) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(responseMessage.error));
+        } else {
+          var comparelist = localStorage.getItem("comparelist");
+          console.log("Initial list ", comparelist);
+          if (!comparelist) {
+            localStorage.setItem("comparelist", "[]");
+          }
+          window.location.href = "/api";
+        }
+      });
+    } else {
+      console.log("Errors");
+      if (usernameErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(usernameErrorMessage));
+      }
+      if (passwordErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(passwordErrorMessage));
+      }
+      if (emailErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(emailErrorMessage));
+      }
+      if (firstnameErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(firstnameErrorMessage));
+      }
+      if (lastnameErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(lastnameErrorMessage));
+      }
+      if (genderErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(genderErrorMessage));
+      }
+    }
+  });
+
+  
+
+  userForm.submit(function (event) {
+    event.preventDefault();
+    var dataValues = {};
+    signupForm.find("input").each(function (unusedIndex, child) {
+      dataValues[child.name] = child.value;
+    });
+    signupForm.find("select").each(function (unusedIndex, child) {
+      dataValues[child.name] = child.value;
+    });
+    //console.log(event);
+    console.log(dataValues);
+    errorDiv.addClass("hidden");
+    errorLi.empty();
+
+    var username = dataValues.username;
+    var password = dataValues.password;
+    var confirmPassword = dataValues.passwordConfirm;
+    var email = dataValues.email;
+    var firstname = dataValues.firstName;
+    var lastname = dataValues.lastName;
+    var gender = dataValues.gender;
+
+    validateFirstName(firstname);
+    validateLastName(lastname);
+    validateEmail(email);
+    validateGender(gender);
+
+    console.log(usernameErrorMessage);
+    if (
+      firstnameErrorMessage.length === 0 &&
+      lastnameErrorMessage.length === 0 &&
+      emailErrorMessage.length === 0 &&
+      genderErrorMessage.length === 0
     ) {
       // //AJAX call to login API
       // var requestConfig = {
@@ -230,39 +339,32 @@ $(document).ready(function ($) {
       //     window.location.href = "/api";
       //   }
       // });
-      } else {
-        console.log("Errors");
-        if (usernameErrorMessage.length !== 0) {
-          errorDiv.removeClass("hidden");
-          errorLi.append($("<li>").text(usernameErrorMessage));
-        }
-        if (passwordErrorMessage.length !== 0) {
-          errorDiv.removeClass("hidden");
-          errorLi.append($("<li>").text(passwordErrorMessage));
-        }
-        if (emailErrorMessage.length !== 0) {
-          errorDiv.removeClass("hidden");
-          errorLi.append($("<li>").text(emailErrorMessage));
-        }
-        if (firstnameErrorMessage.length !== 0) {
-          errorDiv.removeClass("hidden");
-          errorLi.append($("<li>").text(firstnameErrorMessage));
-        }
-        if (lastnameErrorMessage.length !== 0) {
-          errorDiv.removeClass("hidden");
-          errorLi.append($("<li>").text(lastnameErrorMessage));
-        }
-        if (genderErrorMessage.length !== 0) {
-          errorDiv.removeClass("hidden");
-          errorLi.append($("<li>").text(genderErrorMessage));
-        }
+    } else {
+      console.log("Errors");
+      if (usernameErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(usernameErrorMessage));
+      }
+      if (passwordErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(passwordErrorMessage));
+      }
+      if (emailErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(emailErrorMessage));
+      }
+      if (firstnameErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(firstnameErrorMessage));
+      }
+      if (lastnameErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(lastnameErrorMessage));
+      }
+      if (genderErrorMessage.length !== 0) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(genderErrorMessage));
+      }
     }
   });
-
-
-  var compareNav = $('#compare-prods');
-  compareNav.click(function (event){
-    event.preventDefault();
-    console.log("Hello compare");
-  })
 })(window.jQuery);

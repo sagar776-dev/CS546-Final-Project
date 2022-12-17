@@ -6,6 +6,7 @@ const static = express.static(__dirname + "/public");
 const exphbs = require("express-handlebars");
 
 app.use("/public", static);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,29 +30,43 @@ app.use(
 // });
 
 app.use("/", async (req, res, next) => {
-  // console.log(req.session);
-  // console.log(req.session.username + " " + req.method + " " + req.baseUrl);
-
-
-
-  //Only for testing
-
-
-
-  req.session.username = 'sagar776';
-
-  //----------------------------
-
+  console.log(req.session.username, req.originalUrl);
+  //req.session.username = 'sagar776';
   next();
 });
 
-// app.use("/api", async (req, res, next) => {
-//   if (req.session.username) {
-//     next();
-//   } else {
-//     res.redirect("/users/login");
-//   }
-// });
+app.use("/api", async (req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect("/users/login");
+  }
+});
+
+app.use("/users/wishlist", async (req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect("/users/login");
+  }
+});
+
+app.use("/users/viewhistory", async (req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect("/users/login");
+  }
+});
+
+app.use("/users/userprofile", async (req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect("/users/login");
+  }
+});
+
 
 configRoutes(app);
 

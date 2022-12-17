@@ -30,12 +30,14 @@
 
 .compareDiv {
   background-color: rgb(182, 182, 182);
+  padding: 10px;
 }
 
 .compareDivRow {
   width: min-content;
 }
 
-/* .product-compare-list .container{
-  background-color: antiquewhite;
-} */
+.compareDivRow col{
+  max-width:min-content;
+}
+
