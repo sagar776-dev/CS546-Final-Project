@@ -1,5 +1,8 @@
+{{#if error}}<p>{{error}}</p>
+
+{{else}}
+
 <article class="product-page">
-    {{#if error}}<p>{{error}}</p>{{/if}}
     <p>id: {{product._id}}</p>
     <p>name: {{product.name}}</p>
     <p>picures:</p>
@@ -30,3 +33,4 @@
     </table>
     <p>reviews: {{product.reviews}}</p>
 </article>
+{{/if}}

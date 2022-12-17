@@ -3,6 +3,8 @@ const router = express.Router();
 const data = require('../data');
 const productData = data.products;
 const validation = require('../helper/productsValidation');
+const xss = require('xss');
+
 // const validation = require('../helpers');
 const path = require('path');
 
@@ -17,51 +19,51 @@ router
         let newobj = {}
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
         //validation start
-        let page = parseInt(newobj.page)
+        let page = parseInt(xss(newobj.page))
         if (!page) {
             page = 1;
         }
-        let search = newobj.search
+        let search = xss(newobj.search)
         try {
             search = validation.checkString(search, "search")
         } catch (e) {
             error.push(e)
         }
-        let minimum = newobj.min
+        let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
         } catch (e) {
             error.push(e)
         }
-        let maximum = newobj.max
+        let maximum = xss(newobj.max)
         try {
             maximum = validation.checkNumber(maximum, "maximum")
         } catch (e) {
             error.push(e)
         }
-        let instoreavailability = newobj.instoreavailability
+        let instoreavailability = xss(newobj.instoreavailability)
         try {
             instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
         } catch (e) {
             error.push(e)
         }
-        let rating = newobj.rating
+        let rating = xss(newobj.rating)
         try {
             rating = validation.checkString(rating, "rating")
         } catch (e) {
             error.push(e)
         }
-        let customerreviewcount = newobj.customerreviewcount
+        let customerreviewcount = xss(newobj.customerreviewcount)
         try {
             customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
         } catch (e) {
             error.push(e)
         }
-        let visitedtimes = newobj.visitedtimes
+        let visitedtimes = xss(newobj.visitedtimes)
         try {
             visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
         } catch (e) {
@@ -93,12 +95,12 @@ router
                 }
             }
             if (Array.isArray(price) === true) {
-                temp = newobj.price
+                temp = xss(newobj.price)
                 price = `${temp[0]}`
                 console.log(price)
             }
             else {
-                price = newobj.price
+                price = xss(newobj.price)
             }
             if (price !== undefined) {
                 price = price.toLowerCase().trim()
@@ -241,62 +243,62 @@ router
         let error = [];
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search
+        let search = xss(newobj.search)
         try {
             search = validation.checkString(search, "search")
         } catch (e) {
             error.push(e)
         }
-        let minimum = newobj.min
+        let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
         } catch (e) {
             error.push(e)
         }
-        let maximum = newobj.max
+        let maximum = xss(newobj.max)
         try {
             maximum = validation.checkNumber(maximum, "maximum")
         } catch (e) {
             error.push(e)
         }
-        let instoreavailability = newobj.instoreavailability
+        let instoreavailability = xss(newobj.instoreavailability)
         try {
             instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
         } catch (e) {
             error.push(e)
         }
-        let rating = newobj.rating
+        let rating = xss(newobj.rating)
         try {
             rating = validation.checkString(rating, "rating")
         } catch (e) {
             error.push(e)
         }
-        let customerreviewcount = newobj.customerreviewcount
+        let customerreviewcount = xss(newobj.customerreviewcount)
         try {
             customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
         } catch (e) {
             error.push(e)
         }
-        let visitedtimes = newobj.visitedtimes
+        let visitedtimes = xss(newobj.visitedtimes)
         try {
             visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
         } catch (e) {
             error.push(e)
         }
-        let manufacturer = newobj.manufacturer
+        let manufacturer = xss(newobj.manufacturer)
         try {
             manufacturer = validation.checkString(manufacturer, "manufacturer")
         } catch (e) {
             error.push(e)
         }
-        if (search != undefined) {
+        if (search != undefined && search.length != 0) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //validation start
-        let page = parseInt(newobj.page)
+        let page = parseInt(xss(newobj.page))
         if (!page) {
             page = 1;
         }
@@ -314,19 +316,19 @@ router
             let query_list = ``
             //price start
             let price = ""
-            if (manufacturer !== undefined) {
+            if (manufacturer !== undefined && manufacturer.length != 0) {
                 if (Array.isArray(manufacturer)) {
                     manufacturer = manufacturer[0]
                 }
                 query_list += `&manufacturer=${manufacturer}`
             }
             if (Array.isArray(price) === true) {
-                temp = newobj.price
+                temp = xss(newobj.price)
                 price = `${temp[0]}`
                 console.log(price)
             }
             else {
-                price = newobj.price
+                price = xss(newobj.price)
             }
             //Ascending order
             if (price === "ascending") {
@@ -449,15 +451,15 @@ router.get('/laptops/:id', async (req, res) => {
         let newobj = {}
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search
+        let search = xss(newobj.search)
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
-        let sku = parseInt(req.params.id)
+        let sku = parseInt(xss(req.params.id))
         //validation start
         sku = sku
         //validation end
@@ -486,52 +488,52 @@ router
         let error = []
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search
+        let search = xss(newobj.search)
         try {
             search = validation.checkString(search, "search")
         } catch (e) {
             error.push(e)
         }
-        let minimum = newobj.min
+        let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
         } catch (e) {
             error.push(e)
         }
-        let maximum = newobj.max
+        let maximum = xss(newobj.max)
         try {
             maximum = validation.checkNumber(maximum, "maximum")
         } catch (e) {
             error.push(e)
         }
-        let instoreavailability = newobj.instoreavailability
+        let instoreavailability = xss(newobj.instoreavailability)
         try {
             instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
         } catch (e) {
             error.push(e)
         }
-        let rating = newobj.rating
+        let rating = xss(newobj.rating)
         try {
             rating = validation.checkString(rating, "rating")
         } catch (e) {
             error.push(e)
         }
-        let customerreviewcount = newobj.customerreviewcount
+        let customerreviewcount = xss(newobj.customerreviewcount)
         try {
             customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
         } catch (e) {
             error.push(e)
         }
-        let visitedtimes = newobj.visitedtimes
+        let visitedtimes = xss(newobj.visitedtimes)
         try {
             visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
         } catch (e) {
             error.push(e)
         }
-        let manufacturer = newobj.manufacturer
+        let manufacturer = xss(newobj.manufacturer)
         try {
             manufacturer = validation.checkString(manufacturer, "manufacturer")
         } catch (e) {
@@ -543,7 +545,7 @@ router
         }
         //move to validation
         //validation start
-        let page = parseInt(newobj.page)
+        let page = parseInt(xss(newobj.page))
         if (!page) {
             page = 1;
         }
@@ -567,12 +569,12 @@ router
                 query_list += `&manufacturer=${manufacturer}`
             }
             if (Array.isArray(price) === true) {
-                temp = newobj.price
+                temp = xss(newobj.price)
                 price = `${temp[0]}`
                 console.log(price)
             }
             else {
-                price = newobj.price
+                price = xss(newobj.price)
             }
             //Ascending order
             if (price === "ascending") {
@@ -694,15 +696,15 @@ router.get('/phones/:id', async (req, res) => {
         let newobj = {}
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search
+        let search = xss(newobj.search)
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
-        let sku = parseInt(req.params.id)
+        let sku = parseInt(xss(req.params.id))
         //validation start
         sku = sku
         //validation end
@@ -712,7 +714,7 @@ router.get('/phones/:id', async (req, res) => {
         }
         res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
-        return res.status(404).render('products/error', { error: 'Product not found' });
+        return res.status(404).render('products/productPage', { error: 'Product not found' });
     }
 });
 //tablets
@@ -727,34 +729,34 @@ router
         let error = [];
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search
+        let search = xss(newobj.search)
         try {
             search = validation.checkString(search, "search")
         } catch (e) {
             error.push(e)
         }
-        let minimum = newobj.min
+        let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
         } catch (e) {
             error.push(e)
         }
-        let maximum = newobj.max
+        let maximum = xss(newobj.max)
         try {
             maximum = validation.checkNumber(maximum, "maximum")
         } catch (e) {
             error.push(e)
         }
-        let instoreavailability = newobj.instoreavailability
+        let instoreavailability = xss(newobj.instoreavailability)
         try {
             instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
         } catch (e) {
             error.push(e)
         }
-        let rating = newobj.rating
+        let rating = xss(newobj.rating)
         try {
             rating = validation.checkString(rating, "rating")
         } catch (e) {
@@ -766,13 +768,13 @@ router
         } catch (e) {
             error.push(e)
         }
-        let visitedtimes = newobj.visitedtimes
+        let visitedtimes = xss(newobj.visitedtimes)
         try {
             visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
         } catch (e) {
             error.push(e)
         }
-        let manufacturer = newobj.manufacturer
+        let manufacturer = xss(newobj.manufacturer)
         try {
             manufacturer = manufacturer.checkString(manufacturer, "manufacturer")
         } catch (e) {
@@ -783,7 +785,7 @@ router
         }
         //move to validation
         //validation start
-        let page = parseInt(newobj.page)
+        let page = parseInt(xss(newobj.page))
         if (!page) {
             page = 1;
         }
@@ -808,12 +810,12 @@ router
                 query_list += `&manufacturer=${manufacturer}`
             }
             if (Array.isArray(price) === true) {
-                temp = newobj.price
+                temp = xss(newobj.price)
                 price = `${temp[0]}`
                 console.log(price)
             }
             else {
-                price = newobj.price
+                price = xss(newobj.price)
             }
             //Ascending order
             if (price === "ascending") {
@@ -935,15 +937,15 @@ router.get('/tablets/:id', async (req, res) => {
         let newobj = {}
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search
+        let search = xss(newobj.search)
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
-        let sku = parseInt(req.params.id)
+        let sku = parseInt(xss(req.params.id))
         //validation start
         sku = sku
         //validation end
@@ -953,9 +955,9 @@ router.get('/tablets/:id', async (req, res) => {
             res.status(404).render('products/productPage', { error: 'Product not found' });
             return;
         }
-        res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
+        return res.status(404).render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
-        res.status(404).render('products/error', { error: 'Product not found' });
+        return res.status(404).render('products/productPage', { error: 'Product not found' });
     }
 });
 
