@@ -11,9 +11,10 @@ const constructorMethod = (app) => {
     app.use('/api/reviews', reviewsRoutes);
     app.use('/users', usersRoutes);
     app.use('/api/qna', qnaRoutes);
-
     app.use('/api', homeRoutes);
-
+    app.use("/", (req, res) => {
+      res.redirect("/api")
+    });
     app.use('*', (req, res) => {
         res.sendStatus(404);
     });

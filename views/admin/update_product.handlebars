@@ -1,0 +1,48 @@
+<script src="/public/js/admin.js"></script>
+
+
+{{#if product}}
+<div class="form-group">
+    <form action="admin/{{product._id}}" method="POST">
+        <input type="hidden" name="sku" value={{product._id}}>
+        <button type="submit" class="btn btn-primary">Delete Product</button>
+    </form>
+</div>
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">Update Product</button>
+</div>
+<div>
+    {{#if error}}<p>{{error}}</p>{{/if}}
+    <p>id: {{product._id}}</p>
+    <form id="update-form" action="put" method="POST">
+        <p>name: {{product.name}}</p>
+        <p>picures:</p>
+        {{#each pictures}}
+        {{!-- Need to fix alt to name --}}
+        <img src={{ this }} alt={{ this }} width="300" height="250">
+        {{/each}}
+        <p>customerReviewAverage: {{product.customerReviewAverage}}</p>
+        <p>customerReviewCount: {{product.customerReviewCount}}</p>
+        <p>manufacturer: {{product.manufacturer}}</p>
+        <p>startDate: {{product.startDate}}</p>
+        <p>price: {{product.price}}</p>
+        <p>url: <a href={{product.url}}>{{product.url}}</a></p>
+        <p>inStoreAvailability: {{product.inStoreAvailability}}</p>
+        <p>Description: {{product.Description}}</p>
+        <p>details: </p>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Spec</th>
+            </tr>
+            {{#each details}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{value}}</td>
+            </tr>
+            {{/each}}
+        </table>
+
+    </form>
+</div>
+{{/if}}

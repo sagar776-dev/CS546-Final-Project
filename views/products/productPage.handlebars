@@ -1,20 +1,28 @@
-{{!-- <style>
-    table,
-    th,
-    td {
-        border: 1px solid black;
-    }
-</style> --}}
+<div class="product-page">
 
-<article class="product-page">
+ 
     {{#if error}}<p>{{error}}</p>{{/if}}
-    <p>id: {{product._id}}</p>
-    <p>name: {{product.name}}</p>
-    <p>picures:</p>
+    <p id="id_field" value="{{product._id}}">id: {{product._id}}</p>
+    <p id="name_field" value="{{product.name}}">name: {{product.name}}</p>
+    <p id="category_field" value="{{product.category}}">Category: {{product.category}}</p>
+    {{!-- <p id="picture_field" class="hidden" value = {{pictures.[0]}}></p> --}}
+    <p>pictures:</p>
     {{#each pictures}}
-    {{!-- Need to fix alt to name --}}
-    <img src={{ this }} alt={{ this }} width="300" height="250">
+      {{! Need to fix alt to name }}
+      <img src={{this}} alt={{this}} width="300" height="250" />
     {{/each}}
+    {{#if isWishlisted}}<p>Remove from wishlist :
+      <a href="/users/removewishlist/{{product._id}}"
+          class="btn btn-danger btn-xs"
+        >Remove</a></p>
+    {{else}}<p>Add to wishlist :
+      <a href="/users/addwishlist/{{product._id}}"
+          class="btn btn-success btn-xs"
+        >Add</a></p>{{/if}}
+    <p>Compare product:
+      <button id="compare" class="btn btn-success btn-xs" onclick="addToCompare({{product._id}})" type="button">Add to Compare</button></p>
+    <button type="button" class="btn btn-danger" id="clear-storage">Clear
+      LocalStorage</button>
     <p>customerReviewAverage: {{product.customerReviewAverage}}</p>
     <p>customerReviewCount: {{product.customerReviewCount}}</p>
     <p>manufacturer: {{product.manufacturer}}</p>
@@ -25,16 +33,16 @@
     <p>Description: {{product.Description}}</p>
     <p>details: </p>
     <table>
+      <tr>
+        <th>Name</th>
+        <th>Spec</th>
+      </tr>
+      {{#each details}}
         <tr>
-            <th>Name</th>
-            <th>Spec</th>
+          <td>{{name}}</td>
+          <td>{{value}}</td>
         </tr>
-        {{#each details}}
-        <tr>
-            <td>{{name}}</td>
-            <td>{{value}}</td>
-        </tr>
-        {{/each}}
+      {{/each}}
     </table>
 
 
@@ -90,3 +98,45 @@
         {{/each}}
     </div>
 </article>
+    <p>reviews: {{product.reviews}}</p>
+
+  </div>
+
+</div>
+<script>
+  function addToCompare(event){
+    var comparelist = JSON.parse(localStorage.getItem("comparelist"));
+    //console.log("comparelist ", localStorage['comparelist']);
+    var idField = document.getElementById("id_field");
+    var nameField = document.getElementById("name_field");
+    var typeField = document.getElementById("category_field");
+    console.log(idField.innerText, nameField.value, typeField.value);
+
+    var productId = idField.innerText.slice(idField.innerText.indexOf(":")+1, idField.innerText.length).trim();
+    var productName = nameField.innerText.slice(nameField.innerText.indexOf(":")+1, nameField.innerText.length).trim();
+    var productType = typeField.innerText.slice(typeField.innerText.indexOf(":")+1, typeField.innerText.length).trim();
+
+    var prod = {
+      "id": productId,
+      "name": productName,
+      "type": productType
+    }
+    var ids = new Array();
+    for(let p of comparelist){
+      console.log("ID ", p.id)
+      ids.push(p.id);
+    }
+    if(ids.includes(prod.id)){
+      alert("Product already in the compare list");
+    } else{
+      if(!comparelist){
+        localStorage.setItem("comparelist", "[]");
+        comparelist = new Array();
+      }
+      comparelist.push(prod);
+      localStorage.setItem("comparelist", JSON.stringify(comparelist));
+    }
+    //console.log(prod);
+    
+  }
+</script>
