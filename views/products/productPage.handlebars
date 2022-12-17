@@ -5,7 +5,6 @@
         border: 1px solid black;
     }
 </style> --}}
-<script src="/public/js/productpage.js"></script>
 
 <article class="product-page">
     {{#if error}}<p>{{error}}</p>{{/if}}
@@ -37,6 +36,11 @@
         </tr>
         {{/each}}
     </table>
+
+
+     <a href="/api/qna/{{product._id}}" class="btn btn-primary">Ask a Question</a>
+     <a href="/api/review/{{product._id}}" class="btn btn-primary">Add a review</a>
+
     <form id="question-form" method="POST">
         <label for="question">Question:</label>
         <input type="text" id="question" name="question" required>

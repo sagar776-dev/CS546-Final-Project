@@ -25,7 +25,7 @@ const createQuestion = async (
     question
 ) => {
     //product_id = validation.checkId(product_id, "product ID");
-    //question = validation.checkQuestion(question);
+    question = validation.checkQuestion(question);
     //username = helper.validateUsername(username);
 
     let newQuestion = {
@@ -97,7 +97,7 @@ const addAnswer = async (product_id, question_id, username, answer) => {
     return newAnswer;
 };
 
-const getQna = async (product_id) => {
+const getAllQna = async (product_id) => {
     try {
         let product = await productData.getProductsByID(product_id);
         let qna = product.qna;
@@ -116,5 +116,5 @@ const trial = async () => {
 module.exports = {
     createQuestion,
     addAnswer,
-    getQna
+    getAllQna
 };

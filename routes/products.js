@@ -201,7 +201,9 @@ const qnaData = data.qna;
             sku = sku
             //validation end
             let product = await productData.getProductsByID(sku);
-            let qna = await qnaData.getQna(sku);
+            console.log(product);
+            let qna = await qnaData.getAllQna(sku);
+            console.log(qna);
             //let qna =
             // check category of sku
             //cause we can use same id for tablets and phones
@@ -212,7 +214,8 @@ const qnaData = data.qna;
             let updatedProduct = await productData.updateProductVisitedCounter(sku);
             res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
-            return res.status(404).render('products/error', { error: 'Product not found' });
+            console.log(e);
+            //return res.status(404).render('products/error', { error: 'Product not found' });
         }
     });
     //phones
@@ -318,7 +321,7 @@ const qnaData = data.qna;
             let updatedProduct = await productData.updateProductVisitedCounter(sku);
             res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
-            return res.status(404).render('products/error', { error: 'Product not found' });
+            return res.status(404).render('products/productPage', { error: 'Product not found' });
         }
     });
     //tablets
@@ -427,7 +430,7 @@ const qnaData = data.qna;
             let updatedProduct = await productData.updateProductVisitedCounter(sku);
             res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
-            res.status(404).render('products/error', { error: 'Product not found' });
+            res.status(404).render('products/productPage', { error: 'Product not found' });
         }
     });
 

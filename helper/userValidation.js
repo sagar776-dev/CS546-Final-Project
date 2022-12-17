@@ -74,9 +74,18 @@ const validateUsername = (username) => {
     if(!id) throw `${variableName} should not be empty`;
     id = id.trim();
     if(id.length === 0) throw `${variableName} should not be empty`;
-    if (!ObjectId.isValid(id)) throw "Error: Invalid movie ID";
+    return id;
   }
   
+  const validateQuestion = (question, variableName) =>{
+    if (!question) throw 'You must provide a question?';
+    if (typeof question !== 'string') throw 'question must be a string';
+    if (question.trim().length === 0)
+      throw 'question cannot be an empty string or string with just spaces';
+    question = question.trim();
+    return question;
+}
+
   module.exports = {
     validateUsername,
     validatePassword,
@@ -84,6 +93,7 @@ const validateUsername = (username) => {
     validateGender,
     validateName,
     validateUsertype,
-    validateId
+    validateId,
+    validateQuestion
   };
   
