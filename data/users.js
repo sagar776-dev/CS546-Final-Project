@@ -1,7 +1,7 @@
 const mongoCollection = require("../config/mongoCollections");
 const bcrypt = require("bcrypt");
 const config = require("../config/settings.json");
-
+const { ObjectId } = require("mongodb");
 const userValidate = require("../helper/userValidation");
 
 const registerUser = async (user) => {
@@ -16,6 +16,9 @@ const registerUser = async (user) => {
   let usersCollection = await mongoCollection.users();
   let tempUser = await usersCollection.findOne({ username: username });
   if (tempUser) throw "Error: User already exists";
+
+  tempUser = await usersCollection.findOne({ email: email });
+  if (tempUser) throw "Error: User with the given email already exists";
 
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.saltRounds);
   user = {
@@ -189,17 +192,62 @@ const getHistoryForUser = async (username) => {
   return historyProducts;
 };
 
-const userProfile = async (username) => {
+const getUserProfile = async (username) => {
   let usersCollection = await mongoCollection.users();
   let user = await usersCollection.findOne({ username: username });
-  if (!tempUser) throw "Error: User does not exists";
+  if (!user) throw "Error: User does not exists";
+  return user;
+};
+
+const updateProfile = async (user) => {
+  username = userValidate.validateUsername(user.username);
+  firstName = userValidate.validateName(user.firstName, "First name");
+  lastName = userValidate.validateName(user.lastName, "Last name");
+  gender = userValidate.validateGender(user.gender);
+  email = userValidate.validateEmail(user.email);
+  password = userValidate.validatePassword(user.password);
+  let newPassword, currentPassword;
+  user = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    gender: gender,
+  };
+
+  let usersCollection = await mongoCollection.users();
+  let tempuser = await usersCollection.findOne({ username: user.username });
+
+  if (!tempuser) throw "Error: User does not exists";
+
+  if (newData.newPassword.length !== 0) {
+    currentPassword = userValidate.validatePassword(user.currentPassword);
+    newPassword = userValidate.validatePassword(user.newPassword);
+
+    try{
+      let auth = checkUser(username, currentPassword);
+    } catch(e){
+      throw "Error: Wrong current password entered";
+    }
+  
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      config.bcrypt.saltRounds
+    );
+    user.password = hashedPassword;
+  }
+
+  const updateInfo = await usersCollection.updateOne(
+    { _id: ObjectId(user._id) },
+    { $set: user }
+  );
+  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+    throw "Update failed";
   return user;
 };
 
 const checkIfWishlisted = async (sku, username) => {
   let usersCollection = await mongoCollection.users();
   let user = await usersCollection.findOne({ username: username });
-
   if (user.wishlist.includes(sku)) return true;
   return false;
 };
@@ -213,6 +261,7 @@ module.exports = {
   addProductToHistory,
   removeProductFromHistory,
   getHistoryForUser,
-  userProfile,
+  getUserProfile,
   checkIfWishlisted,
+  updateProfile
 };

@@ -1,12 +1,13 @@
 <div>
   <link rel="stylesheet" href="../../public/css/main.css" />
-  {{#if error}}
-    <div id="error" class="alert alert-danger" role="alert">
-      <p class="col-sm-12" id="error-p">{{error}}</p>
-    </div>
-  {{/if}}
+
   <div id="popular-products-div" class="container">
-    <p class="h1">Wishlist</p>
+    <h1>Wishlist</h1>
+    {{#if error}}
+      <div id="error" class="alert alert-danger" role="alert">
+        <p class="col-sm-12" id="error-p">{{error}}</p>
+      </div>
+    {{/if}}
     {{#if wishlistProducts}}
       <div class="container">
 
@@ -14,7 +15,7 @@
           {{#each wishlistProducts}}
             <div class="col-3 popular-prod-div-col">
               <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{pictures.[0]}}" alt="{{name}}"/>
+                <img class="card-img-top" src="{{pictures.[0]}}" alt="{{name}}" />
                 <div class="card-body">
                   <h5 class="card-title">{{name}}</h5>
                   {{!-- <p class="card-text">{{Description}}</p> --}}
@@ -22,7 +23,6 @@
                     href="/api/products/{{category}}/{{_id}}"
                     class="btn btn-primary"
                   >View</a>
-                  <p>Session list: {{session.list}}</p>
                 </div>
               </div>
             </div>

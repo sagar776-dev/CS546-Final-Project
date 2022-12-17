@@ -1,12 +1,13 @@
 <div>
   <link rel="stylesheet" href="../../public/css/main.css" />
-  {{#if error}}
+  
+  <div id="popular-products-div" class="container">
+    <h1>View History</h1>
+    {{#if error}}
     <div id="error" class="alert alert-danger" role="alert">
       <p class="col-sm-12" id="error-p">{{error}}</p>
     </div>
   {{/if}}
-  <div id="popular-products-div" class="container">
-    <p class="h1">View History</p>
     {{#if historyProducts}}
       <div class="container">
 
