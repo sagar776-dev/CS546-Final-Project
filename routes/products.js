@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const productData = data.products;
+const validation = require('../helper/productsValidation');
 // const validation = require('../helpers');
 const path = require('path');
 
@@ -25,12 +26,47 @@ router
             page = 1;
         }
         let search = newobj.search
+        try {
+            search = validation.checkString(search, "search")
+        } catch (e) {
+            error.push(e)
+        }
         let minimum = newobj.min
+        try {
+            minimum = validation.checkNumber(minimum, "minimum")
+        } catch (e) {
+            error.push(e)
+        }
         let maximum = newobj.max
+        try {
+            maximum = validation.checkNumber(maximum, "maximum")
+        } catch (e) {
+            error.push(e)
+        }
         let instoreavailability = newobj.instoreavailability
+        try {
+            instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
+        } catch (e) {
+            error.push(e)
+        }
         let rating = newobj.rating
+        try {
+            rating = validation.checkString(rating, "rating")
+        } catch (e) {
+            error.push(e)
+        }
         let customerreviewcount = newobj.customerreviewcount
+        try {
+            customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
+        } catch (e) {
+            error.push(e)
+        }
         let visitedtimes = newobj.visitedtimes
+        try {
+            visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
+        } catch (e) {
+            error.push(e)
+        }
         //validation end
         try {
             let productList = 0;
@@ -118,7 +154,7 @@ router
             }
             if (instoreavailability === "true") {
                 productList = productList.filter((object) => {
-                    return object.inStoreAvailability === false
+                    return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
                 //console.log(productList)
@@ -202,19 +238,60 @@ router
         let key, keys = Object.keys(url_query);
         let n = keys.length;
         let newobj = {}
+        let error = [];
         while (n--) {
             key = keys[n];
             newobj[key.toLowerCase()] = url_query[key];
         }
         //
         let search = newobj.search
+        try {
+            search = validation.checkString(search, "search")
+        } catch (e) {
+            error.push(e)
+        }
         let minimum = newobj.min
+        try {
+            minimum = validation.checkNumber(minimum, "minimum")
+        } catch (e) {
+            error.push(e)
+        }
         let maximum = newobj.max
+        try {
+            maximum = validation.checkNumber(maximum, "maximum")
+        } catch (e) {
+            error.push(e)
+        }
         let instoreavailability = newobj.instoreavailability
+        try {
+            instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
+        } catch (e) {
+            error.push(e)
+        }
         let rating = newobj.rating
+        try {
+            rating = validation.checkString(rating, "rating")
+        } catch (e) {
+            error.push(e)
+        }
         let customerreviewcount = newobj.customerreviewcount
+        try {
+            customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
+        } catch (e) {
+            error.push(e)
+        }
         let visitedtimes = newobj.visitedtimes
+        try {
+            visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
+        } catch (e) {
+            error.push(e)
+        }
         let manufacturer = newobj.manufacturer
+        try {
+            manufacturer = validation.checkString(manufacturer, "manufacturer")
+        } catch (e) {
+            error.push(e)
+        }
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
@@ -223,7 +300,7 @@ router
         if (!page) {
             page = 1;
         }
-        let error = [];
+
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -298,7 +375,7 @@ router
             }
             if (instoreavailability === "true") {
                 productList = productList.filter((object) => {
-                    return object.inStoreAvailability === false
+                    return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
                 //console.log(productList)
@@ -332,7 +409,7 @@ router
                 error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
-                current = parseInt(productList.length / 10) + 1
+                current = parseInt(productList.length / 10)
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
                 error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
@@ -341,7 +418,7 @@ router
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
             }
-            if (pageNext > 1 + parseInt(productList.length / 10)) {
+            if (pageNext > parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
             const limit = 10
@@ -406,12 +483,60 @@ router
         let key, keys = Object.keys(url_query);
         let n = keys.length;
         let newobj = {}
+        let error = []
         while (n--) {
             key = keys[n];
             newobj[key.toLowerCase()] = url_query[key];
         }
         //
         let search = newobj.search
+        try {
+            search = validation.checkString(search, "search")
+        } catch (e) {
+            error.push(e)
+        }
+        let minimum = newobj.min
+        try {
+            minimum = validation.checkNumber(minimum, "minimum")
+        } catch (e) {
+            error.push(e)
+        }
+        let maximum = newobj.max
+        try {
+            maximum = validation.checkNumber(maximum, "maximum")
+        } catch (e) {
+            error.push(e)
+        }
+        let instoreavailability = newobj.instoreavailability
+        try {
+            instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
+        } catch (e) {
+            error.push(e)
+        }
+        let rating = newobj.rating
+        try {
+            rating = validation.checkString(rating, "rating")
+        } catch (e) {
+            error.push(e)
+        }
+        let customerreviewcount = newobj.customerreviewcount
+        try {
+            customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
+        } catch (e) {
+            error.push(e)
+        }
+        let visitedtimes = newobj.visitedtimes
+        try {
+            visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
+        } catch (e) {
+            error.push(e)
+        }
+        let manufacturer = newobj.manufacturer
+        try {
+            manufacturer = validation.checkString(manufacturer, "manufacturer")
+        } catch (e) {
+            error.push(e)
+        }
 
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
@@ -422,14 +547,6 @@ router
         if (!page) {
             page = 1;
         }
-        let minimum = newobj.min
-        let maximum = newobj.max
-        let instoreavailability = newobj.instoreavailability
-        let rating = newobj.rating
-        let customerreviewcount = newobj.customerreviewcount
-        let visitedtimes = newobj.visitedtimes
-        let manufacturer = newobj.manufacturer
-        let error = [];
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -504,7 +621,7 @@ router
             }
             if (instoreavailability === "true") {
                 productList = productList.filter((object) => {
-                    return object.inStoreAvailability === false
+                    return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
                 //console.log(productList)
@@ -537,7 +654,7 @@ router
                 error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
-                current = parseInt(productList.length / 10) + 1
+                current = parseInt(productList.length / 10)
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
                 error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
@@ -546,7 +663,7 @@ router
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
             }
-            if (pageNext > 1 + parseInt(productList.length / 10)) {
+            if (pageNext > parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
             const limit = 10
@@ -607,12 +724,60 @@ router
         let key, keys = Object.keys(url_query);
         let n = keys.length;
         let newobj = {}
+        let error = [];
         while (n--) {
             key = keys[n];
             newobj[key.toLowerCase()] = url_query[key];
         }
         //
         let search = newobj.search
+        try {
+            search = validation.checkString(search, "search")
+        } catch (e) {
+            error.push(e)
+        }
+        let minimum = newobj.min
+        try {
+            minimum = validation.checkNumber(minimum, "minimum")
+        } catch (e) {
+            error.push(e)
+        }
+        let maximum = newobj.max
+        try {
+            maximum = validation.checkNumber(maximum, "maximum")
+        } catch (e) {
+            error.push(e)
+        }
+        let instoreavailability = newobj.instoreavailability
+        try {
+            instoreavailability = validation.checkString(instoreavailability, "instoreavailability")
+        } catch (e) {
+            error.push(e)
+        }
+        let rating = newobj.rating
+        try {
+            rating = validation.checkString(rating, "rating")
+        } catch (e) {
+            error.push(e)
+        }
+        let customerreviewcount = newobj.customerreviewcount
+        try {
+            customerreviewcount = validation.checkString(customerreviewcount, "customerreviewcount")
+        } catch (e) {
+            error.push(e)
+        }
+        let visitedtimes = newobj.visitedtimes
+        try {
+            visitedtimes = validation.checkString(visitedtimes, "visitedtimes")
+        } catch (e) {
+            error.push(e)
+        }
+        let manufacturer = newobj.manufacturer
+        try {
+            manufacturer = manufacturer.checkString(manufacturer, "manufacturer")
+        } catch (e) {
+            error.push(e)
+        }
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`)
         }
@@ -622,14 +787,7 @@ router
         if (!page) {
             page = 1;
         }
-        let minimum = newobj.min
-        let maximum = newobj.max
-        let instoreavailability = newobj.instoreavailability
-        let rating = newobj.rating
-        let customerreviewcount = newobj.customerreviewcount
-        let visitedtimes = newobj.visitedtimes
-        let manufacturer = newobj.manufacturer
-        let error = [];
+
         try {
             let productList = 0;
             if (!manufacturer) {
@@ -704,7 +862,7 @@ router
             }
             if (instoreavailability === "true") {
                 productList = productList.filter((object) => {
-                    return object.inStoreAvailability === false
+                    return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
                 //console.log(productList)
@@ -736,7 +894,7 @@ router
                 error.push(`If you using a URL, you exceeded a page size. So we move you to the first page of products.`)
             }
             if (current > parseInt(productList.length / 10) + 1) {
-                current = parseInt(productList.length / 10) + 1
+                current = parseInt(productList.length / 10)
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
                 error.push(`If you using a URL, you exceeded a page size. So we move you to the last page of products.`)
@@ -745,7 +903,7 @@ router
                 pageNext = (current + 1)
                 pagePrevious = (current - 1)
             }
-            if (pageNext > 1 + parseInt(productList.length / 10)) {
+            if (pageNext > parseInt(productList.length / 10)) {
                 pageNext = NaN
             }
             const limit = 10
