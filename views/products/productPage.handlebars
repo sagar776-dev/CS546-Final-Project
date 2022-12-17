@@ -46,15 +46,9 @@
     </table>
 
 
-     <a href="/api/qna/{{product._id}}" class="btn btn-primary">Ask a Question</a>
-     <a href="/api/review/{{product._id}}" class="btn btn-primary">Add a review</a>
+     <a href="/api/qna/product_id={{product._id}}&product_category={{product.category}}" class="btn btn-primary">Ask a Question</a>
+     <a href="/api/reviews/{{product._id}}" class="btn btn-primary">Add a review</a>
 
-    <form id="question-form" method="POST">
-        <label for="question">Question:</label>
-        <input type="text" id="question" name="question" required>
-
-        <input type="submit" value="Submit">
-    </form>
 
     <table id="question-list">
         <thead>

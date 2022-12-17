@@ -14,7 +14,7 @@ router
       req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
-    }
+    } 
     try {
     //   const qnas = await qnaData.getAllQna(req.params.id);
     //   if (qnas.length === 0)
@@ -33,15 +33,16 @@ router
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
-    const question = req.body.question;
+    let question = req.body.question;
     try {
-        helpers.validateQuestion(question,'Question');
+        question = helpers.validateQuestion(question,'Question');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
 
     try {
       const newQuestion = await qnaData.createQuestion(req.params.id,'naveen',question);
+      res.redirect('api/products/')
       res.status(200).json({message: newQuestion});
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });

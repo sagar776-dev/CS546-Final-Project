@@ -1,8 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const productData = require('./products');
-const helper = ('../helper/userValidation.js');
-const validation = require('../validation');
-const { ObjectId } = require('mongodb');
+const helpers = require('../helper/userValidation.js');
+// const { ObjectId } = require('mongodb');
 const mongo = require('mongodb');
 
 const getDate = () => {
@@ -25,7 +24,7 @@ const createQuestion = async (
     question
 ) => {
     //product_id = validation.checkId(product_id, "product ID");
-    question = validation.checkQuestion(question);
+    question = helpers.validateQuestion(question,'Question ');
     //username = helper.validateUsername(username);
 
     let newQuestion = {
