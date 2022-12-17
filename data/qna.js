@@ -80,7 +80,7 @@ const addAnswer = async (qnaId, username, answer) => {
         { $set: { "qna.$.answer": answer1 } }
     );
     if (!insertInfo.acknowledged || !insertInfo.modifiedCount)
-        throw 'Could not remove review from movie';
+        throw 'Could not add answer to review';
     return product[0]._id;
 }
 

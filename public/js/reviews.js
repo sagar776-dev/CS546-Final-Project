@@ -24,8 +24,9 @@ $(document).ready(function () {
       success: function (response) {
         console.log('Dislike count increased successfully');
         // Increment the dislike count by 1 and update the button text
-        dislikeCount++;
-        $('.dislike-btn[data-review-id="' + reviewId + '"]').text(`Dislike (${dislikeCount})`);
+        let dislike = parseInt(dislikeCount)
+        dislike++;
+        $('.dislike-btn[data-review-id="' + reviewId + '"]').text(`Dislike (${dislike})`);
       }
     });
   });

@@ -48,12 +48,12 @@
   </table>
 
 
-  <a href="/api/qna/product_id={{product._id}}&product_category={{product.category}}" class="btn btn-primary">Ask a
-    Question</a>
+  <a href="/api/qna/{{product._id}}" class="btn btn-primary">Ask a Question</a>
   <a href="/api/reviews/{{product._id}}" class="btn btn-primary">Add a review</a>
 
 
   <table class="table table-striped">
+    {{#each product.qna}}
     <thead>
       <tr>
         <th>Question</th>
@@ -64,7 +64,6 @@
       </tr>
     </thead>
     <tbody>
-      {{#each product.qna}}
       <tr>
         <td>{{question}}</td>
         {{#if answer}}
@@ -74,7 +73,8 @@
         <td></td>
         {{else}}
         <td colspan="3">No answer yet</td>
-        <td><a href="/api/qna/answer/question_id={{_id}}" class="btn btn-primary" role="button">Add Answer</a></td>
+
+        <td><a href="/api/qna/answer/{{_id}}" class="btn btn-primary">Add Answer</a></td>
         {{/if}}
       </tr>
       {{/each}}

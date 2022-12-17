@@ -4,17 +4,17 @@ const data = require('../data');
 const helpers = require('../helper/userValidation');
 const reviewData = data.reviews;
 const productData = data.products;
-const multer = require("multer");
+//const multer = require("multer");
 
-const imageFilter = function (req, file, cb) {
-  // Accept images only
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return cb(new Error("Only image files are allowed!"), false);
-  }
-  cb(null, true);
-};
+// const imageFilter = function (req, file, cb) {
+//   // Accept images only
+//   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+//     return cb(new Error("Only image files are allowed!"), false);
+//   }
+//   cb(null, true);
+// };
 
-const upload = multer({ dest: "uploads/", fileFilter: imageFilter });
+// const upload = multer({ dest: "uploads/", fileFilter: imageFilter });
 
 router
   .route('/:id/like')
@@ -26,7 +26,7 @@ router
     }
     try {
       let a = await reviewData.likeReview(req.params.id);
-      res.send(200);
+      res.sendStatus(200);
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
     }
@@ -42,7 +42,8 @@ router
     }
     try {
       let a = await reviewData.dislikeReview(req.params.id);
-      res.status(200);
+      res.sendStatus(200);
+
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
     }
@@ -63,11 +64,12 @@ router
       res.status(404).json({ error: e.message, e });
     }
   })
-  .post(upload.single("reviewPhoto"), async (req, res) => {
+  .post(//upload.single("reviewPhoto"),
+   async (req, res) => {
     //code here for POST
     var reviewTitle = req.body.reviewTitle;
     var reviewText = req.body.reviewText;
-    var reviewPhoto = req.file;
+    //var reviewPhoto = req.file;
     var rating = req.body.rating;
     try {
       req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
@@ -81,10 +83,12 @@ router
       return res.status(400).json({ error: e.message, e });
     }
     try {
-      const newReview = await reviewData.createReview(req.params.id, reviewTitle, 'naveen', reviewText, rating, reviewPhoto);
+      const newReview = await reviewData.createReview(req.params.id, reviewTitle, 'naveen', reviewText, rating); //reviewPhoto);
       let product = await productData.getProductsByID(parseInt(req.params.id));
       let product_category = product.category;
-      res.redirect('/api/products/' + product_category + '/' + req.params.id);
+      return res.json({product_category:product_category, product_id:req.params.id})
+      
+      //res.redirect('/api/products/' + product_category + '/' + req.params.id);
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
     }

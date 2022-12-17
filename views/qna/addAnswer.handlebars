@@ -1,9 +1,8 @@
-<script src="../../public/js/qna.js"></script>
+<script src="/public/js/addAnswer.js"></script>
 
 <h3>Answer the question</h3>
-    <form id="answer-form" method="POST">
-        <label for="answer">Answer:</label>
-        <input type="text" id="answer" name="answer" required>
-
-        <input type="submit" value="Submit">
-    </form>
+<form id="answer-form" method="POST">
+    <label for="answer">Answer:</label>
+    <input type="text" id="answer" name="answer" required>
+    <button type="submit" class="btn btn-primary submit-btn" data-question-id="{{_id}}">Submit</button>
+</form>

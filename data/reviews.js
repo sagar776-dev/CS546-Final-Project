@@ -100,7 +100,7 @@ const createReview = async (
   reviewerName,
   review,
   rating,
-  pictures
+  //pictures
 ) => {
   // Validate input fields
   try {
@@ -113,9 +113,9 @@ const createReview = async (
   }
 
   // Set default value for pictures if not provided
-  if (!pictures) {
-    pictures = [];
-  }
+  // if (!pictures) {
+  //   pictures = [];
+  // }
 
   // Create new review object
   let newReview = {
@@ -123,14 +123,14 @@ const createReview = async (
     reviewTitle,
     reviewerName,
     review,
-    rating,
-    pictures,
+    rating
+    //pictures,
   };
 
   // Add review date
   newReview.reviewDate = getDate();
   newReview.like = 0;
-  newReview.dislike=0;
+  newReview.dislike = 0;
   // Update product with new review
   const productCollection = await products();
   let insertInfo = await productCollection.updateOne(
@@ -146,7 +146,7 @@ const createReview = async (
           reviewerName: newReview.reviewerName,
           review: newReview.review,
           rating: newReview.rating,
-          pictures: newReview.pictures,
+          //pictures: newReview.pictures,
           like:newReview.like,
           dislike:newReview.like
         },
