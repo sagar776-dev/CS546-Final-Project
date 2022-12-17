@@ -470,7 +470,7 @@ router.get('/laptops/:id', async (req, res) => {
         // end
         res.render('products/productPage', { product: product, pictures: product.pictures, details: product.details })
     } catch (e) {
-        return res.status(404).render('products/error', { error: 'Product not found' });
+        return res.status(404).render('products/productPage', { error: 'Product not found' });
     }
 });
 //phones

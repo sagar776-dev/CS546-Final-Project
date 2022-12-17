@@ -17,6 +17,7 @@ const checkString = (strVal, varName) => {
     }
     if (isNaN(strVal)) return strVal;
     if (typeof strVal !== 'string') throw `Error: ${varName} must be a string!`;
+    if (strVal.length === 0) return strVal;
     strVal = strVal.trim();
     if (strVal.length === 0)
         throw `Error: ${varName} cannot be an empty string or string with just spaces`;
