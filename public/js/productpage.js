@@ -6,24 +6,28 @@ $(document).ready(function ($) {
 
   var removeWishlistp = $("#remove-wishlist-p");
   var addWishlistp = $("#add-wishlist-p");
-  // var isWishListed = $("#isWishListed");
+  //var isWishListed = $("#isWishListed");
+
+  var resetlistbtn = $('#resetlist');
 
   function onLoad(event) {
+    //var isWishListed = $("#isWishListed");
+    resetlistbtn.hide();
     var comparelist = JSON.parse(localStorage.getItem("comparelist"));
     console.log("onload");
     console.log("Path ", window.location.href);
-    var isWishlisted = document.getElementById("isWishListed").innerText;
+    //var isWishlisted = document.getElementById("isWishListed");
     var idField = document.getElementById("id_field");
     var productId = idField.innerText
       .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
       .trim();
-    console.log("Is wishlisted :", isWishListed.innerText);
+    console.log("Is wishlisted :", $("#isWishListed").text());
     var ids = new Array();
     for (let p of comparelist) {
       console.log("ID ", p.id);
       ids.push(p.id);
     }
-    if(isWishListed.innerText.toLowerCase() === 'true'){
+    if($("#isWishListed").text().toLowerCase() === 'true'){
       removeWishlistp.show();
       addWishlistp.hide();
     } else{

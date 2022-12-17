@@ -10,6 +10,10 @@ const xss = require("xss");
 router
   .route("/signup")
   .get(async (req, res) => {
+    if (req.session.username) {
+      res.redirect("/api");
+      return;
+    }
     res.render("users/signup");
   })
   .post(async (req, res) => {
@@ -23,10 +27,10 @@ router
       user.email = userValidate.validateEmail(user.email);
       user.password = userValidate.validatePassword(user.password);
       await userData.registerUser(user);
-      res.statusCode(200).json({ message: "User registered" });
+      res.status(200).json({ message: "User registered" });
     } catch (e) {
       console.log(e);
-      res.json({ error: e });
+      res.status(200).json({ error: e });
     }
   });
 
@@ -41,7 +45,6 @@ router
     }
   })
   .post(async (req, res) => {
-    
     console.log("Signin route");
     try {
       //var html = xss('<script>alert("xss");</script>');
@@ -52,12 +55,12 @@ router
       let response = await userData.checkUser(user.username, user.password);
       req.session.username = user.username;
       //res.json({ message: "Logged in" });
-      res.json(response);
+      res.status(200).json(response);
       return;
     } catch (e) {
       console.log(e);
       // res.render("users/login", { error: e });
-      res.json({ error: e });
+      res.status(500).json({ error: e });
       return;
     }
   });
@@ -71,26 +74,42 @@ router.route("/logout").get(async (req, res) => {
   }
 });
 
-router.route("/userProfile").get(async (req, res) => {
-  //code here for GET
-  let username = req.session.username;
-  if (!username) {
-    res.redirect("/");
-    return;
-  }
-  try {
-    username = userValidate.validateUsername(username);
-  } catch (e) {
-    return res.status(400).json({ error: e.message, e });
-  }
-  try {
-    const user = await userData.userProfile(username);
-    if (!user) res.status(404).json({ error: "user doesn't exist" });
-    else res.json(user);
-  } catch (e) {
-    res.status(404).json({ error: e.message, e });
-  }
-});
+router
+  .route("/userProfile")
+  .get(async (req, res) => {
+    //code here for GET
+    let username = "sagar776";
+    if (!username) {
+      res.redirect("/");
+      return;
+    }
+    try {
+      username = userValidate.validateUsername(username);
+    } catch (e) {
+      return res.status(400).json({ error: e.message, e });
+    }
+    try {
+      const user = await userData.getUserProfile(username);
+      if (!user) {
+        return res.status(404).json({ error: "user doesn't exist" });
+      } else {
+        return res.status(200).json({ user: user });
+      }
+    } catch (e) {
+      return res.status(500).json({ error: "Something went wrong" });
+    }
+  })
+  .post(async (req, res) => {
+    username = userValidate.validateUsername(user.username);
+    firstName = userValidate.validateName(user.firstName, "First name");
+    lastName = userValidate.validateName(user.lastName, "Last name");
+    gender = userValidate.validateGender(user.gender);
+    email = userValidate.validateEmail(user.email);
+    password = userValidate.validatePassword(user.password);
+    if (newData.newPassword.length !== 0) {
+      currentPassword = userValidate.validatePassword(user.currentPassword);
+    }
+  });
 
 router.route("/wishlist").get(async (req, res) => {
   //code here for GET
@@ -98,6 +117,7 @@ router.route("/wishlist").get(async (req, res) => {
   try {
     username = userValidate.validateUsername(username);
   } catch (e) {
+    console.log(e);
     return res.status(400).json({ error: e.message });
   }
   try {
@@ -112,7 +132,10 @@ router.route("/wishlist").get(async (req, res) => {
       });
     return;
   } catch (e) {
-    res.status(404).json({ error: e.message });
+    console.log(e);
+    res.render("users/wishlist", {
+      error: "No products in your wishlist",
+    });
   }
 });
 
@@ -132,10 +155,12 @@ router.route("/addwishlist/:id").get(async (req, res) => {
     let updatedWishlist = await userData.addProductToWishlist(sku, username);
     product = await productData.getProductsByID(sku);
     console.log(product);
-    return res.status(200).json({message: "Product added to your wishlist"});
+    return res.status(200).json({ message: "Product added to your wishlist" });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({message: "Error while adding product to wishlist"});
+    return res
+      .status(500)
+      .json({ message: "Error while adding product to wishlist" });
   }
 });
 
@@ -158,10 +183,14 @@ router.route("/removewishlist/:id").get(async (req, res) => {
     );
     product = await productData.getProductsByID(sku);
     console.log(product);
-    return res.status(200).json({message: "Product removed from your wishlist"});
+    return res
+      .status(200)
+      .json({ message: "Product removed from your wishlist" });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({message: "Error while removing product from wishlist"});
+    return res
+      .status(500)
+      .json({ message: "Error while removing product from wishlist" });
   }
 });
 
@@ -186,7 +215,9 @@ router.route("/viewhistory").get(async (req, res) => {
     return;
   } catch (e) {
     console.log(e);
-    res.status(404).json({ error: e.message });
+    res.render("users/viewHistory", {
+      error: "Your view history is empty",
+    });
   }
 });
 

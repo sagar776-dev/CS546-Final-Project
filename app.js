@@ -30,7 +30,8 @@ app.use(
 // });
 
 app.use("/", async (req, res, next) => {
-  req.session.username = 'sagar776';
+  console.log(req.session.username, req.originalUrl);
+  //req.session.username = 'sagar776';
   next();
 });
 
@@ -57,6 +58,15 @@ app.use("/users/viewhistory", async (req, res, next) => {
     res.redirect("/users/login");
   }
 });
+
+app.use("/users/userprofile", async (req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect("/users/login");
+  }
+});
+
 
 configRoutes(app);
 

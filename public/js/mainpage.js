@@ -9,11 +9,11 @@ $(document).ready(function ($) {
   var compareDiv = $("#compareDiv");
   var compareDivRow = $("#compareDivRow");
 
-  var dummybtn = $('#clear-storage');
+  var dummybtn = $("#clear-storage");
 
-  dummybtn.click(function (event){
+  dummybtn.click(function (event) {
     alert("Dummy btn");
-  })
+  });
 
   function onLoad(event) {
     console.log("onload");
@@ -66,5 +66,37 @@ $(document).ready(function ($) {
     console.log("Reset");
     localStorage.setItem("comparelist", "[]");
     window.location.href = "/api";
+  });
+
+  var profileNav = $("#profile-nav");
+
+  function populate(frm, data) {
+    $.each(data, function (key, value) {
+      $("[name=" + key + "]", frm).val(value);
+    });
+  }
+
+  profileNav.click(function (event) {
+    event.preventDefault();
+    console.log("profile hello");
+
+    //AJAX call to login API
+    var requestConfig = {
+      method: "GET",
+      url: "/users/userprofile",
+      contentType: "application/json",
+    };
+    $.ajax(requestConfig).then(function (responseMessage) {
+      console.log(responseMessage);
+      //newContent.html(responseMessage.message);
+      if (responseMessage.error) {
+        errorDiv.removeClass("hidden");
+        errorLi.append($("<li>").text(responseMessage.error));
+      } else {
+        window.location.href = "/users/userprofilepage";
+        console.log(responseMessage);
+        //populate("#user-form", $.parseJSON(responseMessage));
+      }
+    });
   });
 })(window.jQuery);
