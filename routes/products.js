@@ -190,8 +190,8 @@ router
             }
             // console.log(productList.length)
             // console.log(error)
-            // console.log(url_query)
-            // console.log(query_list)
+            console.log(url_query)
+            console.log(query_list)
             //page start
             current = page
             if (current < 1) {

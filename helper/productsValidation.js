@@ -27,9 +27,11 @@ const checkString = (strVal, varName) => {
 // minimum
 // maximum
 const checkNumber = (num, varName) => {
+    num = num.split(',')
     if (Array.isArray(num)) {
         num = num[0]
     }
+    console.log(num)
     if (isNaN(num)) return num;
     if (/[a-z]/i.test(num)) throw `${varName} contains letters`
     num = parseInt(num)
