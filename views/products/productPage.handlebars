@@ -1,104 +1,120 @@
+<script src="/public/js/reviews.js"></script>
+
 <div class="product-page">
 
- 
-    {{#if error}}<p>{{error}}</p>{{/if}}
-    <p id="id_field" value="{{product._id}}">id: {{product._id}}</p>
-    <p id="name_field" value="{{product.name}}">name: {{product.name}}</p>
-    <p id="category_field" value="{{product.category}}">Category: {{product.category}}</p>
-    {{!-- <p id="picture_field" class="hidden" value = {{pictures.[0]}}></p> --}}
-    <p>pictures:</p>
-    {{#each pictures}}
-      {{! Need to fix alt to name }}
-      <img src={{this}} alt={{this}} width="300" height="250" />
+
+  {{#if error}}<p>{{error}}</p>{{/if}}
+  <p id="id_field" value="{{product._id}}">id: {{product._id}}</p>
+  <p id="name_field" value="{{product.name}}">name: {{product.name}}</p>
+  <p id="category_field" value="{{product.category}}">Category: {{product.category}}</p>
+  {{!-- <p id="picture_field" class="hidden" value={{pictures.[0]}}></p> --}}
+  <p>pictures:</p>
+  {{#each pictures}}
+  {{! Need to fix alt to name }}
+  <img src={{this}} alt={{this}} width="300" height="250" />
+  {{/each}}
+  {{#if isWishlisted}}<p>Remove from wishlist :
+    <a href="/users/removewishlist/{{product._id}}" class="btn btn-danger btn-xs">Remove</a>
+  </p>
+  {{else}}<p>Add to wishlist :
+    <a href="/users/addwishlist/{{product._id}}" class="btn btn-success btn-xs">Add</a>
+  </p>{{/if}}
+  <p>Compare product:
+    <button id="compare" class="btn btn-success btn-xs" onclick="addToCompare({{product._id}})" type="button">Add to
+      Compare</button>
+  </p>
+  <button type="button" class="btn btn-danger" id="clear-storage">Clear
+    LocalStorage</button>
+  <p>customerReviewAverage: {{product.customerReviewAverage}}</p>
+  <p>customerReviewCount: {{product.customerReviewCount}}</p>
+  <p>manufacturer: {{product.manufacturer}}</p>
+  <p>startDate: {{product.startDate}}</p>
+  <p>price: {{product.price}}</p>
+  <p>url: <a href={{product.url}}>{{product.url}}</a></p>
+  <p>inStoreAvailability: {{product.inStoreAvailability}}</p>
+  <p>Description: {{product.Description}}</p>
+  <p>details: </p>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Spec</th>
+    </tr>
+    {{#each details}}
+    <tr>
+      <td>{{name}}</td>
+      <td>{{value}}</td>
+    </tr>
     {{/each}}
-    {{#if isWishlisted}}<p>Remove from wishlist :
-      <a href="/users/removewishlist/{{product._id}}"
-          class="btn btn-danger btn-xs"
-        >Remove</a></p>
-    {{else}}<p>Add to wishlist :
-      <a href="/users/addwishlist/{{product._id}}"
-          class="btn btn-success btn-xs"
-        >Add</a></p>{{/if}}
-    <p>Compare product:
-      <button id="compare" class="btn btn-success btn-xs" onclick="addToCompare({{product._id}})" type="button">Add to Compare</button></p>
-    <button type="button" class="btn btn-danger" id="clear-storage">Clear
-      LocalStorage</button>
-    <p>customerReviewAverage: {{product.customerReviewAverage}}</p>
-    <p>customerReviewCount: {{product.customerReviewCount}}</p>
-    <p>manufacturer: {{product.manufacturer}}</p>
-    <p>startDate: {{product.startDate}}</p>
-    <p>price: {{product.price}}</p>
-    <p>url: <a href={{product.url}}>{{product.url}}</a></p>
-    <p>inStoreAvailability: {{product.inStoreAvailability}}</p>
-    <p>Description: {{product.Description}}</p>
-    <p>details: </p>
-    <table>
+  </table>
+
+
+  <a href="/api/qna/product_id={{product._id}}&product_category={{product.category}}" class="btn btn-primary">Ask a
+    Question</a>
+  <a href="/api/reviews/{{product._id}}" class="btn btn-primary">Add a review</a>
+
+
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <th>Name</th>
-        <th>Spec</th>
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Action</th>
       </tr>
-      {{#each details}}
-        <tr>
-          <td>{{name}}</td>
-          <td>{{value}}</td>
-        </tr>
+    </thead>
+    <tbody>
+      {{#each product.qna}}
+      <tr>
+        <td>{{question}}</td>
+        {{#if answer}}
+        <td>{{answer.answer}}</td>
+        <td>{{answer.author}}</td>
+        <td>{{answer.date}}</td>
+        <td></td>
+        {{else}}
+        <td colspan="3">No answer yet</td>
+        <td><a href="/api/qna/answer/question_id={{_id}}" class="btn btn-primary" role="button">Add Answer</a></td>
+        {{/if}}
+      </tr>
       {{/each}}
-    </table>
+    </tbody>
+  </table>
 
-
-     <a href="/api/qna/product_id={{product._id}}&product_category={{product.category}}" class="btn btn-primary">Ask a Question</a>
-     <a href="/api/reviews/{{product._id}}" class="btn btn-primary">Add a review</a>
-
-
-    <table id="question-list">
-        <thead>
-            <tr>
-                <th>Question</th>
-                <th>Answer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Here, the questions and answers will be added -->
-        </tbody>
-    </table>
-
-    <form id="review-form" action="addReview" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-
-        <label for="body">Body:</label>
-        <textarea id="body" name="body" required></textarea>
-
-        <label for="rating">Rating:</label>
-        <input type="number" min="1" max="5" id="rating" name="rating" required>
-
-        <label for="photo">Photo:</label>
-        <input type="file" id="photo" name="photo">
-
-        <input type="submit" value="Submit">
-    </form>
-    <div style="overflow-y: scroll; height: 200px;">
-        {{#each product.reviews}}
-        <div class="review">
-            <h3>{{review-title}}</h3>
-            <p>{{review-body}}</p>
-            <p>
-                <em>By {{review-author}} on {{review-date}}</em>
-            </p>
-            <img src="{{review-photo}}" alt="Review photo">
-            <button onclick="likeReview({{this}})">Like</button>
-            <button onclick="dislikeReview({{this}})">Dislike</button>
+  <div class="container">
+    {{#each product.reviews}}
+    <div class="card mt-4">
+      <div class="card-header">
+        <h4>{{reviewTitle}}</h4>
+        <p>By {{reviewerName}} on {{reviewDate}}</p>
+      </div>
+      <div class="card-body">
+        <p>{{review}}</p>
+        {{#if pictures}}
+        <div class="row mt-4">
+          {{#each pictures}}
+          <div class="col-md-3">
+            <img src="{{this}}" class="img-fluid">
+          </div>
+          {{/each}}
         </div>
-        {{/each}}
+        {{/if}}
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button class="btn btn-primary like-btn" data-review-id="{{_id}}">Like ({{like}})</button>
+        <button class="btn btn-secondary dislike-btn" data-review-id="{{_id}}">Dislike ({{dislike}})</button>
+      </div>
     </div>
-</article>
-    <p>reviews: {{product.reviews}}</p>
-
+    {{/each}}
   </div>
+
+  </article>
+
+</div>
 
 </div>
 <script>
-  function addToCompare(event){
+  function addToCompare(event) {
     var comparelist = JSON.parse(localStorage.getItem("comparelist"));
     //console.log("comparelist ", localStorage['comparelist']);
     var idField = document.getElementById("id_field");
@@ -106,9 +122,9 @@
     var typeField = document.getElementById("category_field");
     console.log(idField.innerText, nameField.value, typeField.value);
 
-    var productId = idField.innerText.slice(idField.innerText.indexOf(":")+1, idField.innerText.length).trim();
-    var productName = nameField.innerText.slice(nameField.innerText.indexOf(":")+1, nameField.innerText.length).trim();
-    var productType = typeField.innerText.slice(typeField.innerText.indexOf(":")+1, typeField.innerText.length).trim();
+    var productId = idField.innerText.slice(idField.innerText.indexOf(":") + 1, idField.innerText.length).trim();
+    var productName = nameField.innerText.slice(nameField.innerText.indexOf(":") + 1, nameField.innerText.length).trim();
+    var productType = typeField.innerText.slice(typeField.innerText.indexOf(":") + 1, typeField.innerText.length).trim();
 
     var prod = {
       "id": productId,
@@ -116,14 +132,14 @@
       "type": productType
     }
     var ids = new Array();
-    for(let p of comparelist){
+    for (let p of comparelist) {
       console.log("ID ", p.id)
       ids.push(p.id);
     }
-    if(ids.includes(prod.id)){
+    if (ids.includes(prod.id)) {
       alert("Product already in the compare list");
-    } else{
-      if(!comparelist){
+    } else {
+      if (!comparelist) {
         localStorage.setItem("comparelist", "[]");
         comparelist = new Array();
       }
@@ -131,6 +147,6 @@
       localStorage.setItem("comparelist", JSON.stringify(comparelist));
     }
     //console.log(prod);
-    
+
   }
 </script>

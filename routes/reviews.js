@@ -3,8 +3,50 @@ const router = express.Router();
 const data = require('../data');
 const helpers = require('../helper/userValidation');
 const reviewData = data.reviews;
+const productData = data.products;
+const multer = require("multer");
 
+const imageFilter = function (req, file, cb) {
+  // Accept images only
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    return cb(new Error("Only image files are allowed!"), false);
+  }
+  cb(null, true);
+};
 
+const upload = multer({ dest: "uploads/", fileFilter: imageFilter });
+
+router
+  .route('/:id/like')
+  .post(async (req, res) => {
+    try {
+      req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+    } catch (e) {
+      return res.status(400).json({ error: e.message, e });
+    }
+    try {
+      let a = await reviewData.likeReview(req.params.id);
+      res.send(200);
+    } catch (e) {
+      res.status(500).json({ error: e.message, e, e });
+    }
+  });
+
+router
+  .route('/:id/dislike')
+  .post(async (req, res) => {
+    try {
+      req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+    } catch (e) {
+      return res.status(400).json({ error: e.message, e });
+    }
+    try {
+      let a = await reviewData.dislikeReview(req.params.id);
+      res.status(200);
+    } catch (e) {
+      res.status(500).json({ error: e.message, e, e });
+    }
+  });
 
 router
   .route('/:id')
@@ -16,36 +58,37 @@ router
       return res.status(400).json({ error: e.message, e });
     }
     try {
-    //   const qnas = await qnaData.getAllQna(req.params.id);
-    //   if (qnas.length === 0)
-    //     res.status(404).json({ error: 'no qnas for this product' });
-    //   else
-    //     res.json(qna);
-    res.render("reviews/addReview",{_id: req.params.id});
+      res.render("reviews/addReview", { _id: req.params.id });
     } catch (e) {
       res.status(404).json({ error: e.message, e });
     }
   })
-  .post(async (req, res) => {
+  .post(upload.single("reviewPhoto"), async (req, res) => {
     //code here for POST
+    var reviewTitle = req.body.reviewTitle;
+    var reviewText = req.body.reviewText;
+    var reviewPhoto = req.file;
+    var rating = req.body.rating;
     try {
       req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
-    let question = req.body;
     try {
-        question = helpers.validateQuestion(question,'Question');
+      reviewTitle = helpers.validateQuestion(reviewTitle, 'review Title');
+      reviewText = helpers.validateQuestion(reviewText, 'review Text');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
-
     try {
-      const newQuestion = await qnaData.createQuestion(req.params.id,'naveen',question);
-      res.status(200).json({message: newQuestion});
+      const newReview = await reviewData.createReview(req.params.id, reviewTitle, 'naveen', reviewText, rating, reviewPhoto);
+      let product = await productData.getProductsByID(parseInt(req.params.id));
+      let product_category = product.category;
+      res.redirect('/api/products/' + product_category + '/' + req.params.id);
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
     }
+
   });
 
-  module.exports = router;
+module.exports = router;
