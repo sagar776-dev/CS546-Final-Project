@@ -1,111 +1,77 @@
 <div>
   <link rel="stylesheet" href="../../public/css/main.css" />
-  {{#if error}}
+
+  <div class="container mt-5">
+    {{#if error}}
     <div id="error" class="alert alert-danger" role="alert">
       <p class="col-sm-12" id="error-p">{{error}}</p>
     </div>
-  {{/if}}
-  {{!-- <div class="comparelist">
-    <div class="row">
-      {{#each localStorage.getItem("comparelist")}}
-        <div class="col">{{name}}</div>
-      {{/each}}
-    </div>
-  </div> --}}
-  <div id="popular-products-div" class="container">
-    <p class="h1">Popular Products</p>
-    {{#if popularProducts}}
-      <div class="container">
-        {{#if popularProducts.laptops}}
-          <p class="h2">Top 5 in Laptops</p>
-          <div class="row flex-row flex-nowrap popular-prod-div-row">
-            {{#each popularProducts.laptops}}
-              <div class="col-3 popular-prod-div-col">
-                <div class="card" style="width: 18rem;">
-                  <img
-                    class="card-img-top"
-                    src="{{pictures.[0]}}"
-                    alt="{{name}}"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">{{name}}</h5>
-                    {{!-- <p class="card-text">{{Description}}</p> --}}
-                    <a
-                      href="/api/products/{{category}}/{{_id}}"
-                      class="btn btn-primary"
-                    >View</a>
-                  </div>
-                </div>
-              </div>
-            {{/each}}
-          </div>
-        {{/if}}
-      </div>
-      <div class="container">
-        {{#if popularProducts.phones}}
-          <p class="h2">Top 5 in Phones</p>
-          <div class="row flex-row flex-nowrap">
-            {{#each popularProducts.phones}}
-              <div class="col-3">
-                <div class="card" style="width: 18rem;">
-                  <img
-                    class="card-img-top"
-                    src="{{pictures.[0]}}"
-                    alt="{{name}}"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">{{name}}</h5>
-                    <p class="card-text">{{Description}}</p>
-                    <a
-                      href="/api/products/{{category}}/{{_id}}"
-                      class="btn btn-primary"
-                    >View</a>
-                  </div>
-                </div>
-              </div>
-            {{/each}}
-          </div>
-        {{/if}}
-      </div>
-      <div class="container">
-        {{#if popularProducts.tablets}}
-          <p class="h2">Top 5 in Tablets</p>
-          <div class="row flex-row flex-nowrap">
-            {{#each popularProducts.tablets}}
-              <div class="col-3">
-                <div class="card" style="width: 18rem;">
-                  <img
-                    class="card-img-top"
-                    src="{{pictures.[0]}}"
-                    alt="{{name}}"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">{{name}}</h5>
-                    <p class="card-text">{{Description}}</p>
-                    <a
-                      href="/api/products/{{category}}/{{_id}}"
-                      class="btn btn-primary"
-                    >View</a>
-                  </div>
-                </div>
-              </div>
-            {{/each}}
-          </div>
-        {{/if}}
-      </div>
     {{/if}}
-  </div>
-  
-  <footer class="bg-light text-center text-lg-start">
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      <p class="lead">
-        We understand the difficulty of having to choose between two devices
-        that cost and sound nearly identical. To assist our users in making
-        their decision, we propose a website that allows users to search for
-        devices, find information and reviews on them and perform a detailed
-        comparison if they must choose between two devices based on
-        specifications, cost, and ratings.
-      </p>
+
+<div id="popular-products-div">
+  <h1 class="mb-4">Popular Products</h1>
+  {{#if popularProducts}}
+  {{#if popularProducts.laptops}}
+  <h2 class="mb-4">Top 5 in Laptops</h2>
+  <div class="row">
+    {{#each popularProducts.laptops}}
+    <div class="col-2 mb-4">
+      <div class="card h-100">
+        <img class="card-img-top" src="{{pictures.[0]}}" alt="{{name}}" style="height: 150px; object-fit: cover;" />
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">{{name}}</h6>
+          <a href="/api/products/{{category}}/{{_id}}" class="btn btn-primary mt-auto">View</a>
+        </div>
+      </div>
     </div>
-  </footer>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{#if popularProducts.phones}}
+  <h2 class="mb-4">Top 5 in Phones</h2>
+  <div class="row">
+       {{#each popularProducts.phones}}
+    <div class="col-2 mb-4">
+      <div class="card h-100">
+        <img class="card-img-top" src="{{pictures.[0]}}" alt="{{name}}" style="height: 150px; object-fit: cover;" />
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">{{name}}</h6>
+          <a href="/api/products/{{category}}/{{_id}}" class="btn btn-primary mt-auto">View</a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{#if popularProducts.tablets}}
+  <h2 class="mb-4">Top 5 in Tablets</h2>
+  <div class="row">
+    {{#each popularProducts.tablets}}
+    <div class="col-2 mb-4">
+      <div class="card h-100">
+        <img class="card-img-top" src="{{pictures.[0]}}" alt="{{name}}" style="height: 150px; object-fit: cover;" />
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">{{name}}</h6>
+          <a href="/api/products/{{category}}/{{_id}}" class="btn btn-primary mt-auto">View</a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{/if}}
 </div>
+
+
+
+    <footer class="bg-light text-center text-lg-start">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.03);">
+        <p class="lead">
+          We strive to make the process of choosing between devices as smooth as possible. That's why we offer a website
+          that allows users to search for and compare devices based on specifications, cost, and ratings. With this
+          tool, we hope to help users make informed decisions when choosing between two similar devices
+        </p>
+        <p>Copyright &copy; FALL 2022 CS546 B Group-33 </p>
+      </div>
+    </footer>
+  </div>
