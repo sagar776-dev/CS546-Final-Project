@@ -5,7 +5,7 @@ const data = require("../data");
 const userData = data.users;
 const productData = data.products;
 const userValidate = require("../helper/userValidation");
-const xss = require('xss');
+const xss = require("xss");
 
 router
   .route("/signup")
@@ -41,9 +41,12 @@ router
     }
   })
   .post(async (req, res) => {
+    
     console.log("Signin route");
     try {
-      let user = req.body;
+      //var html = xss('<script>alert("xss");</script>');
+      let user = JSON.parse(xss(JSON.stringify(req.body)));
+      console.log(user);
       user.username = userValidate.validateUsername(user.username);
       user.password = userValidate.validatePassword(user.password);
       let response = await userData.checkUser(user.username, user.password);
@@ -58,6 +61,15 @@ router
       return;
     }
   });
+
+router.route("/logout").get(async (req, res) => {
+  try {
+    req.session.destroy();
+    res.render("users/login");
+  } catch (e) {
+    res.render("users/login");
+  }
+});
 
 router.route("/userProfile").get(async (req, res) => {
   //code here for GET
@@ -102,7 +114,7 @@ router.route("/wishlist").get(async (req, res) => {
   } catch (e) {
     res.status(404).json({ error: e.message });
   }
-})
+});
 
 router.route("/addwishlist/:id").get(async (req, res) => {
   //code here for GET
@@ -111,7 +123,7 @@ router.route("/addwishlist/:id").get(async (req, res) => {
   let product;
   try {
     username = userValidate.validateUsername(username);
-    if(!sku) throw "Product ID not valid";
+    if (!sku) throw "Product ID not valid";
     sku = Number(sku);
   } catch (e) {
     return res.status(400).json({ error: e.message });
@@ -120,12 +132,12 @@ router.route("/addwishlist/:id").get(async (req, res) => {
     let updatedWishlist = await userData.addProductToWishlist(sku, username);
     product = await productData.getProductsByID(sku);
     console.log(product);
-    return res.redirect("/api/products/"+product.category+"/"+product._id);
+    return res.status(200).json({message: "Product added to your wishlist"});
   } catch (e) {
     console.log(e);
-    return res.redirect("/api/products/"+product.category+"/"+product._id);
+    return res.status(500).json({message: "Error while adding product to wishlist"});
   }
-})
+});
 
 router.route("/removewishlist/:id").get(async (req, res) => {
   //code here for GET
@@ -134,21 +146,24 @@ router.route("/removewishlist/:id").get(async (req, res) => {
   let product;
   try {
     username = userValidate.validateUsername(username);
-    if(!sku) throw "Product ID not valid";
+    if (!sku) throw "Product ID not valid";
     sku = Number(sku);
   } catch (e) {
     return res.status(400).json({ error: e.message });
   }
   try {
-    let updatedWishlist = await userData.removeProductFromWishlist(sku, username);
+    let updatedWishlist = await userData.removeProductFromWishlist(
+      sku,
+      username
+    );
     product = await productData.getProductsByID(sku);
     console.log(product);
-    return res.redirect("/api/products/"+product.category+"/"+product._id);
+    return res.status(200).json({message: "Product removed from your wishlist"});
   } catch (e) {
     console.log(e);
-    return res.redirect("/api/products/"+product.category+"/"+product._id);
+    return res.status(500).json({message: "Error while removing product from wishlist"});
   }
-})
+});
 
 router.route("/viewhistory").get(async (req, res) => {
   //code here for GET

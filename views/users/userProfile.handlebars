@@ -1,0 +1,73 @@
+<div class="signup-page">
+  <div class="container text-center">
+    <h3>User Registration</h3>
+    <form id="user-form" method="POST">
+
+      <div class="form-group">
+        <label for="firstName">First Name
+          <input
+            class="form-control"
+            type="text"
+            id="firstName"
+            value="{{firstName}}"
+            name="firstName"
+          />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name
+          <input
+            class="form-control"
+            type="text"
+            id="lastName"
+            value="{{lastName}}"
+            name="lastName"
+          />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email ID
+          <input
+            class="form-control"
+            type="text"
+            id="email"
+            value="{{email}}"
+            name="email"
+          />
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender
+          <select
+            class="form-control"
+            id="gender"
+            value="{{gender}}"
+            name="gender"
+          >
+            <option value="man">Man</option>
+            <option value="woman">Woman</option>
+            <option value="transgender">Transgender</option>
+            <option
+              value="non-binary/non-conforming"
+            >Non-binary/Non-conforming</option>
+            <option value="prefer not to respond">Prefer not to respond</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+
+    <div id="errorDiv" class="error hidden">
+      <ul id="errorlist">
+      </ul>
+    </div>
+
+    <script src="../../public/js/registration.js"></script>
+  </div>
+</div>

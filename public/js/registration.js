@@ -4,7 +4,9 @@ $(document).ready(function ($) {
     usernameInput = $("#username"),
     passwordInput = $("#password"),
     errorLi = $("#errorlist"),
-    errorDiv = $("#errorDiv");
+    errorDiv = $("#errorDiv"),
+    userForm = $('#user-form');
+
 
   const usernameRegex = /^[A-Za-z0-9\s]*$/;
   const charRegex = /^[A-Za-z\s]*$/;
@@ -259,10 +261,103 @@ $(document).ready(function ($) {
     }
   });
 
-
   var compareNav = $('#compare-prods');
   compareNav.click(function (event){
     event.preventDefault();
     console.log("Hello compare");
-  })
+  });
+
+  userForm.submit(function (event) {
+    event.preventDefault();
+    var dataValues = {};
+    signupForm.find("input").each(function (unusedIndex, child) {
+      dataValues[child.name] = child.value;
+    });
+    signupForm.find("select").each(function (unusedIndex, child) {
+      dataValues[child.name] = child.value;
+    });
+    //console.log(event);
+    console.log(dataValues);
+    errorDiv.addClass("hidden");
+    errorLi.empty();
+
+    var username = dataValues.username;
+    var password = dataValues.password;
+    var confirmPassword = dataValues.passwordConfirm;
+    var email = dataValues.email;
+    var firstname = dataValues.firstName;
+    var lastname = dataValues.lastName;
+    var gender = dataValues.gender;
+
+    validateFirstName(firstname);
+    validateLastName(lastname);
+    validateEmail(email);
+    validateGender(gender);
+
+    console.log(usernameErrorMessage);
+    if (
+      firstnameErrorMessage.length === 0 &&
+      lastnameErrorMessage.length === 0 &&
+      emailErrorMessage.length === 0 &&
+      genderErrorMessage.length === 0 
+    ) {
+      // //AJAX call to login API
+      // var requestConfig = {
+      //   method: "POST",
+      //   url: "/users/signup",
+      //   contentType: "application/json",
+      //   data: JSON.stringify({
+      //     username: username.trim(),
+      //     password: password.trim(),
+      //   }),
+      // };
+      // $.ajax(requestConfig).then(function (responseMessage) {
+      //   console.log(responseMessage);
+      //   //newContent.html(responseMessage.message);
+      //   if (responseMessage.error) {
+      //     errorDiv.removeClass("hidden");
+      //     errorLi.append($("<li>").text(responseMessage.error));
+      //   } else {
+      //     //Redirect to home page
+      //     //alert("Logged in");
+      //     var comparelist = localStorage.getItem("comparelist");
+      //     console.log("Initial list ",comparelist);
+      //     if(!comparelist){
+      //       localStorage.setItem("comparelist", "[]");
+      //     }
+      //     window.location.href = "/api";
+      //   }
+      // });
+      } else {
+        console.log("Errors");
+        if (usernameErrorMessage.length !== 0) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(usernameErrorMessage));
+        }
+        if (passwordErrorMessage.length !== 0) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(passwordErrorMessage));
+        }
+        if (emailErrorMessage.length !== 0) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(emailErrorMessage));
+        }
+        if (firstnameErrorMessage.length !== 0) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(firstnameErrorMessage));
+        }
+        if (lastnameErrorMessage.length !== 0) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(lastnameErrorMessage));
+        }
+        if (genderErrorMessage.length !== 0) {
+          errorDiv.removeClass("hidden");
+          errorLi.append($("<li>").text(genderErrorMessage));
+        }
+    }
+  });
+
+
+
+    
 })(window.jQuery);
