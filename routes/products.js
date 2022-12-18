@@ -454,8 +454,8 @@ router.get('/laptops/:id', async (req, res) => {
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search)
-        if (search != undefined) {
+        let search = (newobj.search)
+        if (search != undefined && search.length != 0) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
@@ -540,7 +540,7 @@ router
             error.push(e)
         }
 
-        if (search != undefined) {
+        if (search != undefined && search.length != 0) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
@@ -699,8 +699,8 @@ router.get('/phones/:id', async (req, res) => {
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search)
-        if (search != undefined) {
+        let search = (newobj.search)
+        if (search != undefined && search.length != 0) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
@@ -780,7 +780,7 @@ router
         } catch (e) {
             error.push(e)
         }
-        if (search != undefined) {
+        if (search != undefined && search.length != 0) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
@@ -940,8 +940,8 @@ router.get('/tablets/:id', async (req, res) => {
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search)
-        if (search != undefined) {
+        let search = (newobj.search)
+        if (search != undefined && search.length != 0) {
             return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation

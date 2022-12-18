@@ -13,7 +13,7 @@ const specialRegex = /(?=.*[!@#$%^&*.])/;
 // visitedtimes
 const checkString = (strVal, varName) => {
     if (Array.isArray(strVal)) {
-        search = search[0]
+        strVal = strVal[0]
     }
     if (isNaN(strVal)) return strVal;
     if (typeof strVal !== 'string') throw `Error: ${varName} must be a string!`;
@@ -31,9 +31,8 @@ const checkNumber = (num, varName) => {
     if (Array.isArray(num)) {
         num = num[0]
     }
-    console.log(num)
-    if (isNaN(num)) return num;
     if (/[a-z]/i.test(num)) throw `${varName} contains letters`
+    if (isNaN(num)) return num;
     num = parseInt(num)
     if (typeof num !== 'number') throw `${varName} is not a number`;
     if (num < 0) throw `Error: ${varName} is less than 0`;
