@@ -5,6 +5,8 @@ const configRoutes = require("./routes");
 const static = express.static(__dirname + "/public");
 const exphbs = require("express-handlebars");
 
+const usersData = require('./data/users');
+
 app.use("/public", static);
 
 app.use(express.json());
@@ -33,6 +35,18 @@ app.use("/", async (req, res, next) => {
   //console.log(req.session.username, req.originalUrl);
   //req.session.username = 'sagar776';
   next();
+});
+
+app.use("/api/admin", async (req, res, next) => {
+  if (req.session.username) {
+    let userType = await usersData.getUserType(req.session.username);
+    if(userType.toLowerCase() === 'admin'){
+      next();
+    }
+    res.redirect("/api");
+  } else {
+    res.redirect("/api");
+  }
 });
 
 app.use("/api", async (req, res, next) => {

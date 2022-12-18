@@ -365,7 +365,7 @@ const main = async () => {
     let users = [
         {
             "username": "sagar776",
-            "password": "$2b$07$r1vPthVJOAcQBiywyxERIOfGEKgB7rjW8BJkSUpHwyZyuHsXwcsPm",//Test.1234
+            "password": "Test.1234",
             "firstName": "Sagar",
             "lastName": "Mathada",
             "email": "sagara199@gmail.com",
@@ -395,7 +395,7 @@ const main = async () => {
           },
           {
             "username": "admin123",
-            "password": "$2b$07$kESVxGSRORIPsZxrsCa5iOZg8zk6DC2SAuULlhtaaopUGi8cUfTOC",
+            "password": "Admin.123",
             "firstName": "Admin",
             "lastName": "User",
             "email": "admin@gmail.com",

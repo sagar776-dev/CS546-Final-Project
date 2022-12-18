@@ -14,7 +14,9 @@ const registerUser = async (user) => {
   password = userValidate.validatePassword(user.password);
 
   let usersCollection = await mongoCollection.users();
-  let tempUser = await usersCollection.findOne({ username: username.toLowerCase() });
+  let tempUser = await usersCollection.findOne({
+    username: username.toLowerCase(),
+  });
   if (tempUser) throw "Error: User already exists";
 
   tempUser = await usersCollection.findOne({ email: email });
@@ -62,6 +64,14 @@ const checkUser = async (username, password) => {
   } else {
     throw "Error: Either the username or password is invalid";
   }
+};
+
+const getUserType = async (username) => {
+  let usersCollection = await mongoCollection.users();
+  let user = await usersCollection.findOne({
+    username: username.toLowerCase(),
+  });
+  return user.userType; 
 };
 
 //User product wishlist APIs
@@ -188,17 +198,18 @@ const getHistoryForUser = async (username) => {
   let historyProducts = await productCollection
     .find({
       _id: { $in: history },
-    }).toArray();
-    // .then((result) => {
-    //   let sorted = history.map((i) => result.find((j) => j.id === i));
-    //   ////console.log(sorted);
-    // });
-    let historyNew = [];
-  for(let pid of history){
+    })
+    .toArray();
+  // .then((result) => {
+  //   let sorted = history.map((i) => result.find((j) => j.id === i));
+  //   ////console.log(sorted);
+  // });
+  let historyNew = [];
+  for (let pid of history) {
     //////console.log(pid);
-    for(let pr of historyProducts){
+    for (let pr of historyProducts) {
       ////console.log(pr);
-      if(pr._id === pid){
+      if (pr._id === pid) {
         historyNew.push(pr);
       }
     }
@@ -251,12 +262,15 @@ const updateProfile = async (user) => {
       );
       newuser.password = hashedPassword;
     }
-  }
-  else {
-    if (tempuser.firstName == firstName && tempuser.lastName == lastName && tempuser.gender == gender && tempuser.email == email)
+  } else {
+    if (
+      tempuser.firstName == firstName &&
+      tempuser.lastName == lastName &&
+      tempuser.gender == gender &&
+      tempuser.email == email
+    )
       throw "No Change in details to modify the user profile";
   }
-
 
   const updateInfo = await usersCollection.updateOne(
     { username: user.username },
@@ -274,8 +288,6 @@ const checkIfWishlisted = async (sku, username) => {
   return false;
 };
 
-
-
 const seedUser = async (user) => {
   //Validate all fields to checck for valid inputs
   username = userValidate.validateUsername(user.username);
@@ -286,7 +298,9 @@ const seedUser = async (user) => {
   password = userValidate.validatePassword(user.password);
 
   let usersCollection = await mongoCollection.users();
-  let tempUser = await usersCollection.findOne({ username: username.toLowerCase() });
+  let tempUser = await usersCollection.findOne({
+    username: username.toLowerCase(),
+  });
   if (tempUser) throw "Error: User already exists";
 
   tempUser = await usersCollection.findOne({ email: email });
@@ -325,5 +339,6 @@ module.exports = {
   getUserProfile,
   checkIfWishlisted,
   updateProfile,
-  seedUser
+  seedUser,
+  getUserType
 };
