@@ -53,7 +53,7 @@ app.use("/api", async (req, res, next) => {
   }
 });
 
-app.use("/api/admin", async (req, res, next) => {
+app.use("/admin", async (req, res, next) => {
   if (req.session.username) {
     let userType = await usersData.getUserType(req.session.username);
     if (userType.toLowerCase() === "admin") {

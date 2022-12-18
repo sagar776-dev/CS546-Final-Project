@@ -219,7 +219,7 @@
         if(errorList.length < 1){
             var requestConfig = {
                 method: "GET",
-                url: `/api/products/${skuId}`,
+                url: `/products/${skuId}`,
                 contentType: "application/json",
             };
 
@@ -306,7 +306,7 @@
         if(errorList.length < 1){
             var requestConfig = {
                 method: "GET",
-                url: `/api/admin/${skuId}`,
+                url: `/admin/delete/${skuId}`,
                 contentType: "application/json",
             };
 
@@ -318,7 +318,7 @@
                 }
                 else{
                     alert(responseMessage.responseMessage);
-                    window.location.href = "/api/admin";
+                    window.location.href = "/admin";
                 }
             });
         }else{
@@ -477,7 +477,7 @@
         if(errorList.length < 1){
             var requestConfig = {
                 method: "POST",
-                url: "/api/admin",
+                url: "/admin",
                 contentType: "application/json",
                 data: JSON.stringify(product),
             };
@@ -490,7 +490,7 @@
                 }
                 else{
                     alert(responseMessage.responseMessage);
-                    window.location.href = "/api/admin";
+                    window.location.href = "/admin";
                 }
             });
         }

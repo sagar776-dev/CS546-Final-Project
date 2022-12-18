@@ -84,10 +84,10 @@ router
 //     });
 
 router
-    .route('delete/:id')
+    .route('/delete/:id')
     .get(async (req, res) => {
         //remove
-        let skuId = req.body.skuId;
+        let skuId = req.params.id;
         try {
             //validation start
             skuId = validation.validateSkuId(skuId);
@@ -95,7 +95,7 @@ router
             let responseMessage = await productData.removeProduct(skuId);
             return res.status(200).json({responseMessage: responseMessage});
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             return res.status(200).json({ error: error });
         }
     });
