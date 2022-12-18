@@ -78,7 +78,7 @@ router
   .route("/userProfile")
   .get(async (req, res) => {
     //code here for GET
-    let username = "sagar776";
+    let username = req.session.username;
     if (!username) {
       res.redirect("/");
       return;
@@ -93,23 +93,36 @@ router
       if (!user) {
         return res.status(404).json({ error: "user doesn't exist" });
       } else {
-        return res.status(200).json({ user: user });
+        //need to render the user Profile Page.
+        res.render("users/userprofilepage", { user: user });
       }
     } catch (e) {
       return res.status(500).json({ error: "Something went wrong" });
     }
   })
   .post(async (req, res) => {
-    username = userValidate.validateUsername(user.username);
-    firstName = userValidate.validateName(user.firstName, "First name");
-    lastName = userValidate.validateName(user.lastName, "Last name");
-    gender = userValidate.validateGender(user.gender);
-    email = userValidate.validateEmail(user.email);
-    password = userValidate.validatePassword(user.password);
-    if (newData.newPassword.length !== 0) {
-      currentPassword = userValidate.validatePassword(user.currentPassword);
+    const user = req.body.user;
+    try {
+      username = userValidate.validateUsername(user.username);
+      firstName = userValidate.validateName(user.firstname, "First name");
+      lastName = userValidate.validateName(user.lastname, "Last name");
+      gender = userValidate.validateGender(user.gender);
+      email = userValidate.validateEmail(user.email);
+      if(user.currentPassword){
+        currentPassword = userValidate.validatePassword(user.currentPassword);
+        newPassword = userValidate.validatePassword(user.newPassword);
+      }
+      else{
+        user.currentPassword='';
+        user.newPassword='';
+      }
+      const updatedUser = await userData.updateProfile(user);
+      res.json({user: updatedUser, message: "Updated successfully"});
+    } catch (e) {
+      res.status(400).json({user:user , message:e})
     }
   });
+
 
 router.route("/wishlist").get(async (req, res) => {
   //code here for GET
