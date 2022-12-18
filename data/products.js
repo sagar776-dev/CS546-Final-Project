@@ -111,9 +111,6 @@ let exportedMethods = {
     //sort by reviews 
     async sortProductsByReviews() {
     },
-    //sort by prices 
-    async sortProductsByPrices() {
-    },
     //show by price
     //db.marks.find({ "price": { "$gt": low, '$lt': high} })
     //user fixes
@@ -127,7 +124,7 @@ let exportedMethods = {
         let errors = []
         for (let i = 0; i < productsListSKU.length; i++) {
             try {
-                let laptop = await this.getProductsByID(productsListSKU[i])
+                let laptop = await this.getProductsByID(Number(productsListSKU[i]))
                 //object
                 //we want to check if this object contains some of the details
                 //check if category is laptop (if not ask to remove it)
@@ -137,6 +134,8 @@ let exportedMethods = {
                         "sku": laptop._id,
                         "name": laptop.name,
                         "url": laptop.url,
+                        "Price":'$'+laptop.price,
+                        "Rating": laptop.customerReviewAverage,
                         "Processor Model": "",
                         "System Memory (RAM)": "",
                         "Graphics": "",
@@ -168,6 +167,7 @@ let exportedMethods = {
                     errors.push({ error: `Product:${productsListSKU[i]} not a laptop, you need to use ${laptop.category} category` })
                 }
             } catch (e) {
+                console.log(e);
                 errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }

@@ -11,7 +11,8 @@ router
             let popularProducts = await productData.getPopularProducts();
 
             return res.render("home/homepage", {
-                popularProducts: popularProducts
+                popularProducts: popularProducts,
+                compareList: [{name: "Asus TUF 15", sku:134556},{name: "Asus TUF 14", sku:934088}]
             });
         } catch (error) {
             return res.render("home/homepage", {

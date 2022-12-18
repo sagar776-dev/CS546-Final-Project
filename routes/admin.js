@@ -66,6 +66,8 @@ router
             return res.status(200).json({ error: e.toString()});
         }
     })
+router
+    .route('/:id')
     .delete(async (req, res) => {
         //remove
         let skuId = req.body.skuId;
