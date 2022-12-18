@@ -1,46 +1,28 @@
 <div>
-  <link rel="stylesheet" href="../../public/css/main.css" />
-  
-  <div id="popular-products-div" class="container">
-    <h1>View History</h1>
-    {{#if error}}
-    <div id="error" class="alert alert-danger" role="alert">
-      <p class="col-sm-12" id="error-p">{{error}}</p>
-    </div>
-  {{/if}}
-    {{#if historyProducts}}
-      <div class="container">
+  <link rel="stylesheet" href="/public/css/main.css" />
+  <link rel="stylesheet" href="/public/css/viewHistory.css" />
 
-        <div class="row flex-row flex-nowrap popular-prod-div-row">
-          {{#each historyProducts}}
-            <div class="col-3 popular-prod-div-col">
-              <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{pictures.[0]}}" alt="{{name}}" />
-                <div class="card-body">
-                  <h5 class="card-title">{{name}}</h5>
-                  {{!-- <p class="card-text">{{Description}}</p> --}}
-                  <a
-                    href="/api/products/{{category}}/{{_id}}"
-                    class="btn btn-primary"
-                  >View</a>
-                </div>
-              </div>
-            </div>
-          {{/each}}
-        </div>
-      </div>
-    {{/if}}
+
+<div id="popular-products-div" class="container">
+  <h1 class="text-center">View History</h1>
+  {{#if error}}
+  <div id="error" class="alert alert-danger" role="alert">
+    <p class="col-sm-12 text-center" id="error-p">{{error}}</p>
   </div>
-  <footer class="bg-light text-center text-lg-start">
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      <p class="lead">
-        We understand the difficulty of having to choose between two devices
-        that cost and sound nearly identical. To assist our users in making
-        their decision, we propose a website that allows users to search for
-        devices, find information and reviews on them and perform a detailed
-        comparison if they must choose between two devices based on
-        specifications, cost, and ratings.
-      </p>
-    </div>
-  </footer>
+  {{/if}}
+  {{#if historyProducts}}
+  <ul class="list-unstyled">
+    {{#each historyProducts}}
+    <li class="d-flex align-items-center mb-3">
+      <img src="{{pictures.[0]}}" alt="{{name}}" class="mr-3">
+      <div>
+        <h6 class="mb-0">{{name}}</h6>
+        <a href="/api/products/{{category}}/{{_id}}" class="btn btn-dark mt-3">View</a>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</div>
+
 </div>

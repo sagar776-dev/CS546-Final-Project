@@ -78,7 +78,7 @@ router
   .route("/userProfile")
   .get(async (req, res) => {
     //code here for GET
-    let username = "sagar776";
+    let username = req.session.username;
     if (!username) {
       res.redirect("/");
       return;
@@ -93,34 +93,36 @@ router
       if (!user) {
         return res.status(404).json({ error: "user doesn't exist" });
       } else {
-        return res.status(200).json({ user: user });
+        //need to render the user Profile Page.
+        res.render("users/userprofilepage", { user: user });
       }
     } catch (e) {
       return res.status(500).json({ error: "Something went wrong" });
     }
   })
   .post(async (req, res) => {
+    const user = req.body.user;
     try {
-      let user = req.body;
       username = userValidate.validateUsername(xss(user.username));
-      firstName = userValidate.validateName(xss(user.firstName), "First name");
-      lastName = userValidate.validateName(xss(user.lastName), "Last name");
+      firstName = userValidate.validateName(xss(user.firstname), "First name");
+      lastName = userValidate.validateName(xss(user.lastname), "Last name");
       gender = userValidate.validateGender(xss(user.gender));
       email = userValidate.validateEmail(xss(user.email));
-      //password = userValidate.validatePassword(user.password);
-      if (user.newPassword.length !== 0) {
-        currentPassword = userValidate.validatePassword(xss(user.currentPassword));
-        newPassword = userValidate.validatePassword(xss(user.newPassword));
+      if(user.currentPassword){
+        currentPassword = userValidate.validatePassword(user.currentPassword);
+        newPassword = userValidate.validatePassword(user.newPassword);
       }
-
-      let result = await userData.updateProfile(user);
-
-      res.status(200).json({message: "Profile updated"});
+      else{
+        user.currentPassword='';
+        user.newPassword='';
+      }
+      const updatedUser = await userData.updateProfile(user);
+      res.json({user: updatedUser, message: "Updated successfully"});
     } catch (e) {
-      console.log(e);
-      res.status(500).json({error: e.message});
+      res.status(400).json({user:user , message:e})
     }
   });
+
 
 router.route("/wishlist").get(async (req, res) => {
   //code here for GET

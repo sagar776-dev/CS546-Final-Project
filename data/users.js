@@ -216,12 +216,13 @@ const getUserProfile = async (username) => {
 };
 
 const updateProfile = async (user) => {
+  let newPassword, currentPassword;
   username = userValidate.validateUsername(user.username);
-  firstName = userValidate.validateName(user.firstName, "First name");
-  lastName = userValidate.validateName(user.lastName, "Last name");
+  firstName = userValidate.validateName(user.firstname, "First name");
+  lastName = userValidate.validateName(user.lastname, "Last name");
   gender = userValidate.validateGender(user.gender);
   email = userValidate.validateEmail(user.email);
-  let newPassword, currentPassword;
+
   newuser = {
     firstName: firstName,
     lastName: lastName,
@@ -233,26 +234,32 @@ const updateProfile = async (user) => {
   let tempuser = await usersCollection.findOne({ username: user.username });
 
   if (!tempuser) throw "Error: User does not exists";
+  if (user.currentPassword) {
+    if (user.newPassword.length !== 0) {
+      currentPassword = userValidate.validatePassword(user.currentPassword);
+      newPassword = userValidate.validatePassword(user.newPassword);
 
-  if (user.newPassword.length !== 0) {
-    currentPassword = userValidate.validatePassword(user.currentPassword);
-    newPassword = userValidate.validatePassword(user.newPassword);
+      try {
+        let auth = await checkUser(username, currentPassword);
+      } catch (e) {
+        throw "Error: Wrong current password entered";
+      }
 
-    try {
-      let auth = checkUser(username, currentPassword);
-    } catch (e) {
-      throw "Error: Wrong current password entered";
+      const hashedPassword = await bcrypt.hash(
+        newPassword,
+        config.bcrypt.saltRounds
+      );
+      newuser.password = hashedPassword;
     }
-
-    const hashedPassword = await bcrypt.hash(
-      newPassword,
-      config.bcrypt.saltRounds
-    );
-    newuser.password = hashedPassword;
+  }
+  else {
+    if (tempuser.firstName == firstName && tempuser.lastName == lastName && tempuser.gender == gender && tempuser.email == email)
+      throw "No Change in details to modify the user profile";
   }
 
+
   const updateInfo = await usersCollection.updateOne(
-    { username: username },
+    { username: user.username },
     { $set: newuser }
   );
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
