@@ -92,3 +92,34 @@
   width: 100%;
   height: 2.5rem;            /* Footer height */
 }
+
+/* [data-theme="dark"]{
+  background-color: #111 !important;
+  color: #eee;
+} */
+
+ /* body > *{
+  background-color: #111 !important;
+  color: #eee;
+}
+
+.card footer{
+  background-color: #111 !important;
+  color: #eee;
+}
+
+p, h1, h2, h3, h4, h5, h6{
+  background-color: #111 !important;
+  color: #eee;
+} */
+
+/* body{
+  background-color: rgb(8, 7, 25);
+  color: aliceblue;
+}
+
+p, h1, h2, h3, h4, h5, h6{
+  color: aliceblue;
+} */
+
+

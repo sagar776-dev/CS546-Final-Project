@@ -16,7 +16,7 @@ router
     }
     try {
       let a = await reviewData.likeReview(req.params.id, req.session.username);
-      res.status(200).json({likeCount: a});
+      res.status(200).json(a);
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
     }
@@ -32,7 +32,7 @@ router
     }
     try {
       let a = await reviewData.dislikeReview(xss(req.params.id), req.session.username);
-      res.status(200).json({dislikeCount: a});
+      res.status(200).json(a);
 
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
