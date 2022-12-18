@@ -1,7 +1,7 @@
 const mongoCollection = require("../config/mongoCollections");
 const bcrypt = require("bcrypt");
 const config = require("../config/settings.json");
-
+const { ObjectId } = require("mongodb");
 const userValidate = require("../helper/userValidation");
 
 const registerUser = async (user) => {
@@ -16,6 +16,9 @@ const registerUser = async (user) => {
   let usersCollection = await mongoCollection.users();
   let tempUser = await usersCollection.findOne({ username: username });
   if (tempUser) throw "Error: User already exists";
+
+  tempUser = await usersCollection.findOne({ email: email });
+  if (tempUser) throw "Error: User with the given email already exists";
 
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.saltRounds);
   user = {
@@ -46,14 +49,14 @@ const checkUser = async (username, password) => {
 
   let usersCollection = await mongoCollection.users();
   let user = await usersCollection.findOne(query);
-  console.log(user);
+  //console.log(user);
   if (!user) throw "Error: Either the username or password is invalid";
 
   let compareToHash = false;
   compareToHash = await bcrypt.compare(password, user.password);
 
   if (compareToHash) {
-    return { authenticatedUser: true };
+    return { authenticatedUser: true, user: user };
   } else {
     throw "Error: Either the username or password is invalid";
   }
@@ -64,7 +67,7 @@ const addProductToWishlist = async (productId, username) => {
   //Validate userId and productId
   let usersCollection = await mongoCollection.users();
   let user = await usersCollection.findOne({ username: username });
-  console.log(user);
+  //console.log(user);
 
   if (user.wishlist.includes(productId)) {
     throw "Product already exists in the wishlist";
@@ -84,15 +87,16 @@ const addProductToWishlist = async (productId, username) => {
 
 const removeProductFromWishlist = async (productId, username) => {
   //Validate userId and productId
+  productId = Number(productId);
   let usersCollection = await mongoCollection.users();
   let user = await usersCollection.findOne({ username: username });
   console.log(user);
 
-  if (user.wishlist.includes(productId)) {
+  if (!user.wishlist.includes(productId)) {
     throw "Product does not exist in the wishlist";
   } else {
     let wishlist = user.wishlist;
-    wishlist = wishlist.splice(wishlist.indexOf(productId), 1);
+    wishlist.splice(wishlist.indexOf(productId), 1);
     let updatedUser = {
       wishlist: wishlist,
     };
@@ -130,18 +134,22 @@ const addProductToHistory = async (productId, username) => {
   console.log(user);
 
   if (user.history.includes(productId)) {
-    throw "Product already exists in the wishlist";
-  } else {
-    let history = user.history;
-    history.push(productId);
-    let updatedUser = {
-      history: history,
-    };
-    await usersCollection.updateOne(
-      { username: username },
-      { $set: updatedUser }
-    );
+    const index = user.history.indexOf(productId);
+    if (index > -1) {
+      user.history.splice(index, 1);
+    }
   }
+  let history = user.history;
+  user.history.unshift(productId);
+  let updatedUser = {
+    history: history,
+  };
+  await usersCollection.updateOne(
+    { username: username },
+    { $set: updatedUser }
+  );
+
+  return checkIfWishlisted(productId, username);
 };
 
 const removeProductFromHistory = async (productId, username) => {
@@ -181,18 +189,67 @@ const getHistoryForUser = async (username) => {
     })
     .toArray();
   console.log("Wishlist ", historyProducts);
-  return wishlistProducts;
+  return historyProducts;
 };
 
-const userProfile = async (username) => {
+const getUserProfile = async (username) => {
   let usersCollection = await mongoCollection.users();
   let user = await usersCollection.findOne({ username: username });
-  if (!tempUser) throw "Error: User does not exists";
+  if (!user) throw "Error: User does not exists";
   return user;
-}
+};
 
-// addProductToWishlist(6478315, "sagar776");
-// getWishlistForUser("sagar776");
+const updateProfile = async (user) => {
+  username = userValidate.validateUsername(user.username);
+  firstName = userValidate.validateName(user.firstName, "First name");
+  lastName = userValidate.validateName(user.lastName, "Last name");
+  gender = userValidate.validateGender(user.gender);
+  email = userValidate.validateEmail(user.email);
+  let newPassword, currentPassword;
+  newuser = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    gender: gender,
+  };
+
+  let usersCollection = await mongoCollection.users();
+  let tempuser = await usersCollection.findOne({ username: user.username });
+
+  if (!tempuser) throw "Error: User does not exists";
+
+  if (user.newPassword.length !== 0) {
+    currentPassword = userValidate.validatePassword(user.currentPassword);
+    newPassword = userValidate.validatePassword(user.newPassword);
+
+    try{
+      let auth = checkUser(username, currentPassword);
+    } catch(e){
+      throw "Error: Wrong current password entered";
+    }
+  
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      config.bcrypt.saltRounds
+    );
+    newuser.password = hashedPassword;
+  }
+
+  const updateInfo = await usersCollection.updateOne(
+    { username: username },
+    { $set: newuser }
+  );
+  if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+    throw "Update failed";
+  return user;
+};
+
+const checkIfWishlisted = async (sku, username) => {
+  let usersCollection = await mongoCollection.users();
+  let user = await usersCollection.findOne({ username: username });
+  if (user.wishlist.includes(sku)) return true;
+  return false;
+};
 
 module.exports = {
   registerUser,
@@ -203,5 +260,7 @@ module.exports = {
   addProductToHistory,
   removeProductFromHistory,
   getHistoryForUser,
-  userProfile
+  getUserProfile,
+  checkIfWishlisted,
+  updateProfile
 };
