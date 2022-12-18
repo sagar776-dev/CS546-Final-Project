@@ -5,7 +5,7 @@ const productData = data.products;
 const usersData = data.users;
 const xss = require("xss");
 
-// const validation = require('../helpers');
+const validation = require('../helper/productsValidation');
 const path = require("path");
 router
     .route('/')
@@ -714,7 +714,7 @@ router.get("/phones/:id", async (req, res) => {
         let newobj = {};
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
         let search = newobj.search;
@@ -722,7 +722,7 @@ router.get("/phones/:id", async (req, res) => {
             return res.redirect(`/api/products?search=${search}`);
         }
         //move to validation
-        let sku = parseInt(req.params.id);
+        let sku = parseInt(xss(req.params.id));
         //validation start
         sku = sku;
         //validation end
@@ -970,15 +970,15 @@ router.get("/tablets/:id", async (req, res) => {
         let newobj = {};
         while (n--) {
             key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
+            newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search;
+        let search = xss(newobj.search);
         if (search != undefined) {
             return res.redirect(`/api/products?search=${search}`);
         }
         //move to validation
-        let sku = parseInt(req.params.id);
+        let sku = parseInt(xss(req.params.id));
         //validation start
         sku = sku;
         //validation end
