@@ -1,24 +1,12 @@
-<article>
-    <form id="find-form" action="/api/admin" method="get">
-        <div class=" find-group">
-            <label for="findSKU">Find Product by ID to update or delete
-                <input class="form-control" type="text" id="findSKU" name="findSKU" />
-            </label>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Find Product</button>
-        </div>
-    </form>
-
-    <form id="create-form" action="/api/admin" method="get">
-        <div class="form-group">
-            <a href="/api/admin/create_product">Reviews</a>
-        </div>
-    </form>
-</article>
-
-{{#if error}}
-<p>{{error}}</p>
-{{/if}}
-
-<script src="/public/js/admin.js"></script>
+<div class="admin-page">
+    <div class="container text-center">
+        <ul>
+            <li>
+                <a href="admin/addproduct">Add Product</a>
+            </li>
+            <li>
+                <a href="admin/updateproduct">Update/Delete Product</a>
+            </li>
+        </ul>
+    </div>
+</div>
