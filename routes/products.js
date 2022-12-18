@@ -206,13 +206,13 @@ const qnaData = data.qna;
             // check category of sku
             //cause we can use same id for tablets and phones
             if (product.category !== "laptops") {
-                return res.status(404).render('products/productPage', { error: 'Product not found' });
+                return res.status(500).render('products/productPage', { error: 'Product not found' });
             }
             // end
             let updatedProduct = await productData.updateProductVisitedCounter(sku);
             res.render('products/productPage', { product: updatedProduct, pictures: updatedProduct.pictures, details: updatedProduct.details, qna: qna });
         } catch (e) {
-            return res.status(404).render('products/error', { error: 'Product not found' });
+            return res.status(500).render('products/error', { error: 'Product not found' });
         }
     });
     //phones
@@ -441,4 +441,20 @@ const qnaData = data.qna;
         .get(async(req, res) => {
 
         });
+    
+    router
+        .route('/:id')
+        .get(async (req, res)=>{
+            let skuId = req.params.id;
+            try {
+                //validate skuId
+                skuId = parseInt(skuId);
+                const productObj = await productData.getProductsByID(skuId);
+                return res.status(200).json({responseMessage: productObj});
+            } catch (error) {
+                console.log(error);
+                return res.status(200).json({ error: error });
+            }
+        });
+
     module.exports = router;
