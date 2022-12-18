@@ -101,7 +101,6 @@ const loadData = () => {
     validateEmail,
     validateGender,
     validateName,
-    validateUsertype,
     validateId,
     validateQuestion
   };
