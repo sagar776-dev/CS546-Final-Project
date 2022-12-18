@@ -31,6 +31,8 @@ const registerUser = async (user) => {
     userType: "user",
     wishlist: [],
     history: [],
+    likedReviews: [],
+    dislikedReviews: [],
   };
   //console.log("User ",user);
   let insertInfo = await usersCollection.insertOne(user);
@@ -186,10 +188,24 @@ const getHistoryForUser = async (username) => {
   let historyProducts = await productCollection
     .find({
       _id: { $in: history },
-    })
-    .toArray();
-  console.log("Wishlist ", historyProducts);
-  return historyProducts;
+    }).toArray();
+    // .then((result) => {
+    //   let sorted = history.map((i) => result.find((j) => j.id === i));
+    //   console.log(sorted);
+    // });
+    let historyNew = [];
+  for(let pid of history){
+    //console.log(pid);
+    for(let pr of historyProducts){
+      console.log(pr);
+      if(pr._id === pid){
+        historyNew.push(pr);
+      }
+    }
+  }
+
+  console.log("Wishlist ", historyNew);
+  return historyNew;
 };
 
 const getUserProfile = async (username) => {
@@ -222,12 +238,12 @@ const updateProfile = async (user) => {
     currentPassword = userValidate.validatePassword(user.currentPassword);
     newPassword = userValidate.validatePassword(user.newPassword);
 
-    try{
+    try {
       let auth = checkUser(username, currentPassword);
-    } catch(e){
+    } catch (e) {
       throw "Error: Wrong current password entered";
     }
-  
+
     const hashedPassword = await bcrypt.hash(
       newPassword,
       config.bcrypt.saltRounds
@@ -262,5 +278,5 @@ module.exports = {
   getHistoryForUser,
   getUserProfile,
   checkIfWishlisted,
-  updateProfile
+  updateProfile,
 };

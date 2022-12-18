@@ -25,8 +25,8 @@ router
       return res.status(400).json({ error: e.message, e });
     }
     try {
-      let a = await reviewData.likeReview(req.params.id);
-      res.sendStatus(200);
+      let a = await reviewData.likeReview(req.params.id, req.session.username);
+      res.status(200).json({likeCount: a});
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
     }
@@ -41,8 +41,8 @@ router
       return res.status(400).json({ error: e.message, e });
     }
     try {
-      let a = await reviewData.dislikeReview(req.params.id);
-      res.sendStatus(200);
+      let a = await reviewData.dislikeReview(req.params.id, req.session.username);
+      res.status(200).json({dislikeCount: a});
 
     } catch (e) {
       res.status(500).json({ error: e.message, e, e });
@@ -90,6 +90,7 @@ router
       
       //res.redirect('/api/products/' + product_category + '/' + req.params.id);
     } catch (e) {
+      console.log(e);
       res.status(500).json({ error: e.message, e, e });
     }
 
