@@ -245,12 +245,6 @@ router
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search)
-        try {
-            search = validation.checkString(search, "search")
-        } catch (e) {
-            error.push(e)
-        }
         let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
@@ -293,9 +287,7 @@ router
         } catch (e) {
             error.push(e)
         }
-        if (search != undefined && search.length != 0) {
-            return res.redirect(`/api/products?search=${search}`)
-        }
+
         //validation start
         let page = parseInt(xss(newobj.page))
         if (!page) {
@@ -454,10 +446,6 @@ router.get("/laptops/:id", async (req, res) => {
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search;
-        if (search != undefined) {
-            return res.redirect(`/api/products?search=${search}`);
-        }
         //move to validation
         let sku = parseInt(xss(req.params.id));
         //validation start
@@ -489,7 +477,7 @@ router.get("/laptops/:id", async (req, res) => {
         console.log(e);
         return res
             .status(404)
-            .render("products/error", { error: "Product not found" });
+            .render("products/productPage", { error: "Product not found" });
     }
 });
 //phones
@@ -508,12 +496,6 @@ router
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search)
-        try {
-            search = validation.checkString(search, "search")
-        } catch (e) {
-            error.push(e)
-        }
         let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
@@ -555,10 +537,6 @@ router
             manufacturer = validation.checkString(manufacturer, "manufacturer")
         } catch (e) {
             error.push(e)
-        }
-
-        if (search != undefined && search.length != 0) {
-            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         //validation start
@@ -717,10 +695,6 @@ router.get("/phones/:id", async (req, res) => {
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = newobj.search;
-        if (search != undefined) {
-            return res.redirect(`/api/products?search=${search}`);
-        }
         //move to validation
         let sku = parseInt(xss(req.params.id));
         //validation start
@@ -746,7 +720,7 @@ router.get("/phones/:id", async (req, res) => {
     } catch (e) {
         return res
             .status(404)
-            .render("products/error", { error: "Product not found" });
+            .render("products/productPage", { error: "Product not found" });
     }
 });
 //tablets
@@ -764,12 +738,6 @@ router
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search)
-        try {
-            search = validation.checkString(search, "search")
-        } catch (e) {
-            error.push(e)
-        }
         let minimum = xss(newobj.min)
         try {
             minimum = validation.checkNumber(minimum, "minimum")
@@ -811,9 +779,6 @@ router
             manufacturer = manufacturer.checkString(manufacturer, "manufacturer")
         } catch (e) {
             error.push(e)
-        }
-        if (search != undefined && search.length != 0) {
-            return res.redirect(`/api/products?search=${search}`)
         }
         //move to validation
         //validation start
@@ -973,10 +938,6 @@ router.get("/tablets/:id", async (req, res) => {
             newobj[key.toLowerCase()] = xss(url_query[key]);
         }
         //
-        let search = xss(newobj.search);
-        if (search != undefined) {
-            return res.redirect(`/api/products?search=${search}`);
-        }
         //move to validation
         let sku = parseInt(xss(req.params.id));
         //validation start
@@ -997,7 +958,7 @@ router.get("/tablets/:id", async (req, res) => {
     } catch (e) {
         return res
             .status(404)
-            .render("products/error", { error: "Product not found" });
+            .render("products/productPage", { error: "Product not found" });
     }
 });
 
@@ -1141,3 +1102,7 @@ router
 
 //compareProducts not finished
 module.exports = router;
+
+
+// https://stackoverflow.com/questions/12539574/whats-the-best-way-most-efficient-to-turn-all-the-keys-of-an-object-to-lower
+// sort queary to lowercase
