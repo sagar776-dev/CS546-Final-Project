@@ -11,9 +11,9 @@
 
   <div class="product-info row">
     <div class="col-sm-6">
-      <h2 id="name_field" value="{{product.name}}">{{product.name}}</h2>
-      <p id="id_field" value="{{product._id}}" hidden>ID: {{product._id}}</p>
-      <p id="category_field" value="{{product.category}}">Category: {{product.category}}</p>
+      <h1 id="name_field">{{product.name}}</h1>
+      <p id="id_field" hidden>ID: {{product._id}}</p>
+      <p id="category_field">Category: {{product.category}}</p>
       <p>Manufacturer: {{product.manufacturer}}</p>
       <p>Price: {{product.price}}</p>
       <p>Start Date: {{product.startDate}}</p>
@@ -44,12 +44,14 @@
     {{!-- <p>Wishlist:{{isWishlisted}}
       <input type="checkbox" id="wishlistcheckbox" value="wishlisted" {{#if isWishlisted}}checked{{/if}} /> --}}
     <p>Compare product:
-      <input type="checkbox" id="comparecheckbox" value="compared" />
+      <label for="comparecheckbox">
+        <input type="checkbox" id="comparecheckbox" value="compared" />
+      </label>
       {{! <button id="compare" class="btn btn-success btn-xs" type="button">Add to Compare</button> }}
     </p>
   </div>
 
-  <h3 class="mt-3">Description:</h3>
+  <h2 class="mt-3">Description:</h2>
   <p>{{product.description}}</p>
 
   <h3 class="mt-3">Details:</h3>
@@ -97,8 +99,8 @@
         <td><a href="/api/qna/answer/{{_id}}" class="btn btn-dark">Add Answer</a></td>
         {{/if}}
       </tr>
-      {{/each}}
     </tbody>
+    {{/each}}
   </table>
 
   <div class="container">
@@ -127,8 +129,5 @@
     </div>
     {{/each}}
   </div>
-
-  </article>
-
 </div>
 {{/if}}

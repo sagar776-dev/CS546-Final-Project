@@ -3,26 +3,26 @@
   <link rel="stylesheet" href="/public/css/viewHistory.css" />
 
 
-<div id="popular-products-div" class="container">
-  <h1 class="text-center">View History</h1>
-  {{#if error}}
-  <div id="error" class="alert alert-danger" role="alert">
-    <p class="col-sm-12 text-center" id="error-p">{{error}}</p>
+  <div id="popular-products-div" class="container">
+    <h1 class="text-center">View History</h1>
+    {{#if error}}
+    <div id="error" class="alert alert-danger" role="alert">
+      <p class="col-sm-12 text-center" id="error-p">{{error}}</p>
+    </div>
+    {{/if}}
+    {{#if historyProducts}}
+    <ul class="list-unstyled">
+      {{#each historyProducts}}
+      <li class="d-flex align-items-center mb-3">
+        <img src="{{pictures.[0]}}" alt="{{name}}" class="mr-3">
+        <div>
+          <p class="mb-0">{{name}}</p>
+          <a href="/api/products/{{category}}/{{_id}}" class="btn btn-dark mt-3">View</a>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+    {{/if}}
   </div>
-  {{/if}}
-  {{#if historyProducts}}
-  <ul class="list-unstyled">
-    {{#each historyProducts}}
-    <li class="d-flex align-items-center mb-3">
-      <img src="{{pictures.[0]}}" alt="{{name}}" class="mr-3">
-      <div>
-        <h6 class="mb-0">{{name}}</h6>
-        <a href="/api/products/{{category}}/{{_id}}" class="btn btn-dark mt-3">View</a>
-      </div>
-    </li>
-    {{/each}}
-  </ul>
-  {{/if}}
-</div>
 
 </div>

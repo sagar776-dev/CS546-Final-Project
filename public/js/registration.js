@@ -276,7 +276,7 @@ $(document).ready(function ($) {
     }
   });
 
-  
+
 
   userForm.submit(function (event) {
     event.preventDefault();
@@ -367,4 +367,4 @@ $(document).ready(function ($) {
       }
     }
   });
-})(window.jQuery);
+})

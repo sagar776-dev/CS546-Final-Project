@@ -28,10 +28,10 @@ $(document).ready(function ($) {
       //console.log("ID ", p.id);
       ids.push(p.id);
     }
-    if($("#isWishListed").text().toLowerCase() === 'true'){
+    if ($("#isWishListed").text().toLowerCase() === 'true') {
       removeWishlistp.show();
       addWishlistp.hide();
-    } else{
+    } else {
       addWishlistp.show();
       removeWishlistp.hide();
     }
@@ -112,7 +112,7 @@ $(document).ready(function ($) {
       .trim();
     var requestConfig = {
       method: "GET",
-      url: "/users/addwishlist/"+productId,
+      url: "/users/addwishlist/" + productId,
       contentType: "application/json",
     };
 
@@ -130,7 +130,7 @@ $(document).ready(function ($) {
       .trim();
     var requestConfig = {
       method: "GET",
-      url: "/users/removewishlist/"+productId,
+      url: "/users/removewishlist/" + productId,
       contentType: "application/json",
     };
 
@@ -140,5 +140,5 @@ $(document).ready(function ($) {
       removeWishlistp.hide();
     });
   });
-})(window.jQuery);
+})
 
