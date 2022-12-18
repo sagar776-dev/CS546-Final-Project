@@ -16,8 +16,8 @@ $(document).ready(function ($) {
   });
 
   function onLoad(event) {
-    console.log("onload");
-    console.log("Path ", window.location.href);
+    //console.log("onload");
+    //console.log("Path ", window.location.href);
     if (window.location.href.endsWith("/api")) {
       compareDiv.show();
     } else {
@@ -27,11 +27,11 @@ $(document).ready(function ($) {
     if(comparelist.length === 0){
       compareDiv.hide();
     }
-    //console.log(comparelist);
+    ////console.log(comparelist);
     for (let prod of comparelist) {
-      console.log(prod.name);
+      //console.log(prod.name);
       const col = `<div class="col"> ${prod.name} </div>`;
-      console.log(col);
+      //console.log(col);
       compareDivRow.append(col);
     }
   }
@@ -42,7 +42,7 @@ $(document).ready(function ($) {
 
   compareNav.click(function (event) {
     event.preventDefault();
-    console.log("Hello compare");
+    //console.log("Hello compare");
 
     let products = localStorage.getItem("comparelist");
     compareListInput.val(JSON.stringify(products));
@@ -51,7 +51,7 @@ $(document).ready(function ($) {
 
   compareBtn.click(function (event) {
     event.preventDefault();
-    console.log("Hello compare");
+    //console.log("Hello compare");
 
     let products = localStorage.getItem("comparelist");
     compareListInput.val(JSON.stringify(products));
@@ -59,13 +59,13 @@ $(document).ready(function ($) {
   });
 
   resetcomparelistbtn.click(function (event) {
-    console.log("Reset");
+    //console.log("Reset");
     localStorage.setItem("comparelist", "[]");
     window.location.href = "/api";
   });
 
   resetcomparelistbtn2.click(function (event) {
-    console.log("Reset");
+    //console.log("Reset");
     localStorage.setItem("comparelist", "[]");
     window.location.href = "/api";
   });
@@ -80,7 +80,7 @@ $(document).ready(function ($) {
 
   // profileNav.click(function (event) {
   //   event.preventDefault();
-  //   console.log("profile hello");
+  //   //console.log("profile hello");
 
   //   //AJAX call to login API
   //   var requestConfig = {
@@ -89,14 +89,14 @@ $(document).ready(function ($) {
   //     contentType: "application/json",
   //   };
   //   $.ajax(requestConfig).then(function (responseMessage) {
-  //     console.log(responseMessage);
+  //     //console.log(responseMessage);
   //     //newContent.html(responseMessage.message);
   //     if (responseMessage.error) {
   //       errorDiv.removeClass("hidden");
   //       errorLi.append($("<li>").text(responseMessage.error));
   //     } else {
   //       window.location.href = "/users/userprofilepage";
-  //       console.log(responseMessage);
+  //       //console.log(responseMessage);
   //       //populate("#user-form", $.parseJSON(responseMessage));
   //     }
   //   });

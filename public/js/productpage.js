@@ -15,17 +15,17 @@ $(document).ready(function ($) {
     //var isWishListed = $("#isWishListed");
     resetlistbtn.hide();
     var comparelist = JSON.parse(localStorage.getItem("comparelist"));
-    console.log("onload");
-    console.log("Path ", window.location.href);
+    //console.log("onload");
+    //console.log("Path ", window.location.href);
     //var isWishlisted = document.getElementById("isWishListed");
     var idField = document.getElementById("id_field");
     var productId = idField.innerText
       .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
       .trim();
-    console.log("Is wishlisted :", $("#isWishListed").text());
+    //console.log("Is wishlisted :", $("#isWishListed").text());
     var ids = new Array();
     for (let p of comparelist) {
-      console.log("ID ", p.id);
+      //console.log("ID ", p.id);
       ids.push(p.id);
     }
     if($("#isWishListed").text().toLowerCase() === 'true'){
@@ -52,7 +52,7 @@ $(document).ready(function ($) {
     var idField = document.getElementById("id_field");
     var nameField = document.getElementById("name_field");
     var typeField = document.getElementById("category_field");
-    console.log(idField.innerText, nameField.value, typeField.value);
+    //console.log(idField.innerText, nameField.value, typeField.value);
 
     var productId = idField.innerText
       .slice(idField.innerText.indexOf(":") + 1, idField.innerText.length)
@@ -65,7 +65,7 @@ $(document).ready(function ($) {
       .trim();
 
     if ($(this).is(":checked")) {
-      console.log("add");
+      //console.log("add");
       var prod = {
         id: productId,
         name: productName,
@@ -73,7 +73,7 @@ $(document).ready(function ($) {
       };
       var ids = new Array();
       for (let p of comparelist) {
-        console.log("ID ", p.id);
+        //console.log("ID ", p.id);
         ids.push(p.id);
       }
       if (ids.includes(prod.id)) {
@@ -88,11 +88,11 @@ $(document).ready(function ($) {
         comparelist.push(prod);
       }
     } else {
-      console.log("remove");
+      //console.log("remove");
       var newCompareList = new Array();
       var ids = new Array();
       for (let p of comparelist) {
-        console.log("ID ", p.id);
+        //console.log("ID ", p.id);
         ids.push(p.id);
       }
       for (let p of comparelist) {
@@ -117,7 +117,7 @@ $(document).ready(function ($) {
     };
 
     $.ajax(requestConfig).then(function (responseMessage) {
-      console.log(responseMessage);
+      //console.log(responseMessage);
       addWishlistp.hide();
       removeWishlistp.show();
     });
@@ -135,7 +135,7 @@ $(document).ready(function ($) {
     };
 
     $.ajax(requestConfig).then(function (responseMessage) {
-      console.log(responseMessage);
+      //console.log(responseMessage);
       addWishlistp.show();
       removeWishlistp.hide();
     });

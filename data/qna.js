@@ -66,7 +66,7 @@ const addAnswer = async (qnaId, username, answer) => {
     let product_id = null;
 
     const productCollections = await mongoCollections.products()
-    console.log("Searching the product");
+    //console.log("Searching the product");
     let product = await productCollections.find({ "qna._id": mongo.ObjectId(qnaId) }).toArray()
     if (!product) throw 'Product not found';
     product_id = product[0]._id
@@ -91,7 +91,7 @@ const getAllQna = async (product_id) => {
         return qna;
     }
     catch (e) {
-        console.log(e);
+        //console.log(e);
     }
 }
 

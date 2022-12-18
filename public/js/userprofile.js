@@ -3,7 +3,7 @@ $(document).ready(function () {
     //     return a == b ? options.fn(this) : options.inverse(this);
     //   });
     $('#edit-form').submit(function (e) {
-        console.log("triggered");
+        //console.log("triggered");
         e.preventDefault();
 
         const usernameRegex = /^[A-Za-z0-9\s]*$/;

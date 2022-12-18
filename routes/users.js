@@ -18,7 +18,7 @@ router
   })
   .post(async (req, res) => {
     try {
-      console.log("Signup route");
+      //console.log("Signup route");
       let user = req.body;
       user.username = userValidate.validateUsername(xss(user.username));
       user.firstName = userValidate.validateName(xss(user.firstName, "First name"));
@@ -29,7 +29,7 @@ router
       await userData.registerUser(user);
       res.status(200).json({ message: "User registered" });
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       res.status(200).json({ error: e });
     }
   });
@@ -45,11 +45,11 @@ router
     }
   })
   .post(async (req, res) => {
-    console.log("Signin route");
+    //console.log("Signin route");
     try {
       //var html = xss('<script>alert("xss");</script>');
       let user = JSON.parse(xss(JSON.stringify(req.body)));
-      console.log(user);
+      //console.log(user);
       user.username = userValidate.validateUsername(xss(user.username));
       user.password = userValidate.validatePassword(xss(user.password));
       let response = await userData.checkUser(user.username, user.password);
@@ -58,7 +58,7 @@ router
       res.status(200).json(response);
       return;
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       // res.render("users/login", { error: e });
       res.status(200).json({ error: e });
       return;
@@ -130,7 +130,7 @@ router.route("/wishlist").get(async (req, res) => {
   try {
     username = userValidate.validateUsername(username);
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     return res.status(400).json({ error: e.message });
   }
   try {
@@ -145,7 +145,7 @@ router.route("/wishlist").get(async (req, res) => {
       });
     return;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     res.render("users/wishlist", {
       error: "No products in your wishlist",
     });
@@ -167,10 +167,10 @@ router.route("/addwishlist/:id").get(async (req, res) => {
   try {
     let updatedWishlist = await userData.addProductToWishlist(sku, username);
     product = await productData.getProductsByID(sku);
-    console.log(product);
+    //console.log(product);
     return res.status(200).json({ message: "Product added to your wishlist" });
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     return res
       .status(500)
       .json({ message: "Error while adding product to wishlist" });
@@ -195,12 +195,12 @@ router.route("/removewishlist/:id").get(async (req, res) => {
       username
     );
     product = await productData.getProductsByID(sku);
-    console.log(product);
+    //console.log(product);
     return res
       .status(200)
       .json({ message: "Product removed from your wishlist" });
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     return res
       .status(500)
       .json({ message: "Error while removing product from wishlist" });
@@ -227,7 +227,7 @@ router.route("/viewhistory").get(async (req, res) => {
       });
     return;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     res.render("users/viewHistory", {
       error: "Your view history is empty",
     });

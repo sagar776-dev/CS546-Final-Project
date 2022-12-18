@@ -167,7 +167,7 @@ let exportedMethods = {
                     errors.push({ error: `Product:${productsListSKU[i]} not a laptop, you need to use ${laptop.category} category` })
                 }
             } catch (e) {
-                console.log(e);
+                //console.log(e);
                 errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
@@ -302,7 +302,7 @@ let exportedMethods = {
             }
         }
         catch (e) {
-            console.log(e);
+            //console.log(e);
         }
         name = name; // Name
         manufacturer = manufacturer; // manufacturer
@@ -418,11 +418,11 @@ let exportedMethods = {
                 throw 'URL is not found';
             });
         let final = [];
-        console.log(data.totalPages)
+        //console.log(data.totalPages)
         if (data.totalPages > 1) {
             for (let i = 1; i <= data.totalPages; i++) {
                 final = final.concat(await this.getProductsByAxios1(i, key, API_KEY))
-                console.log(final.length)
+                //console.log(final.length)
             }
         }
         else {

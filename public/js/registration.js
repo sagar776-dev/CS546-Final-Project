@@ -116,7 +116,7 @@ $(document).ready(function ($) {
 
   loginForm.submit(function (event) {
     event.preventDefault();
-    console.log(errorDiv);
+    //console.log(errorDiv);
     errorDiv.addClass("hidden");
     errorLi.empty();
 
@@ -142,7 +142,7 @@ $(document).ready(function ($) {
       };
 
       $.ajax(requestConfig).then(function (responseMessage) {
-        console.log(responseMessage);
+        //console.log(responseMessage);
         //newContent.html(responseMessage.message);
         if (responseMessage.error) {
           errorDiv.removeClass("hidden");
@@ -151,13 +151,13 @@ $(document).ready(function ($) {
           //Redirect to home page
           //alert("Logged in");
           var comparelist = localStorage.getItem("comparelist");
-          console.log("Initial list ", comparelist);
+          //console.log("Initial list ", comparelist);
           localStorage.setItem("comparelist", "[]");
           window.location.href = "/api";
         }
       });
     } else {
-      console.log("Errors");
+      //console.log("Errors");
       if (usernameErrorMessage.length !== 0) {
         errorDiv.removeClass("hidden");
         errorLi.append($("<li>").text(usernameErrorMessage));
@@ -178,8 +178,8 @@ $(document).ready(function ($) {
     signupForm.find("select").each(function (unusedIndex, child) {
       dataValues[child.name] = child.value;
     });
-    //console.log(event);
-    console.log(dataValues);
+    ////console.log(event);
+    //console.log(dataValues);
     errorDiv.addClass("hidden");
     errorLi.empty();
 
@@ -197,19 +197,19 @@ $(document).ready(function ($) {
     validateEmail(email);
     validateGender(gender);
 
-    console.log(usernameErrorMessage);
-    console.log(passwordErrorMessage);
-    console.log(firstnameErrorMessage);
-    console.log(lastnameErrorMessage);
-    console.log(emailErrorMessage);
-    console.log(genderErrorMessage);
+    //console.log(usernameErrorMessage);
+    //console.log(passwordErrorMessage);
+    //console.log(firstnameErrorMessage);
+    //console.log(lastnameErrorMessage);
+    //console.log(emailErrorMessage);
+    //console.log(genderErrorMessage);
 
     if (passwordErrorMessage.length === 0) {
       if (password !== confirmPassword) {
         passwordErrorMessage = "Passwords do not match";
       }
     }
-    console.log(usernameErrorMessage);
+    //console.log(usernameErrorMessage);
     if (
       usernameErrorMessage.length === 0 &&
       passwordErrorMessage.length === 0 &&
@@ -233,14 +233,14 @@ $(document).ready(function ($) {
         }),
       };
       $.ajax(requestConfig).then(function (responseMessage) {
-        console.log(responseMessage);
+        //console.log(responseMessage);
         //newContent.html(responseMessage.message);
         if (responseMessage.error) {
           errorDiv.removeClass("hidden");
           errorLi.append($("<li>").text(responseMessage.error));
         } else {
           var comparelist = localStorage.getItem("comparelist");
-          console.log("Initial list ", comparelist);
+          //console.log("Initial list ", comparelist);
           if (!comparelist) {
             localStorage.setItem("comparelist", "[]");
           }
@@ -248,7 +248,7 @@ $(document).ready(function ($) {
         }
       });
     } else {
-      console.log("Errors");
+      //console.log("Errors");
       if (usernameErrorMessage.length !== 0) {
         errorDiv.removeClass("hidden");
         errorLi.append($("<li>").text(usernameErrorMessage));
@@ -287,8 +287,8 @@ $(document).ready(function ($) {
     signupForm.find("select").each(function (unusedIndex, child) {
       dataValues[child.name] = child.value;
     });
-    //console.log(event);
-    console.log(dataValues);
+    ////console.log(event);
+    //console.log(dataValues);
     errorDiv.addClass("hidden");
     errorLi.empty();
 
@@ -305,7 +305,7 @@ $(document).ready(function ($) {
     validateEmail(email);
     validateGender(gender);
 
-    console.log(usernameErrorMessage);
+    //console.log(usernameErrorMessage);
     if (
       firstnameErrorMessage.length === 0 &&
       lastnameErrorMessage.length === 0 &&
@@ -323,7 +323,7 @@ $(document).ready(function ($) {
       //   }),
       // };
       // $.ajax(requestConfig).then(function (responseMessage) {
-      //   console.log(responseMessage);
+      //   //console.log(responseMessage);
       //   //newContent.html(responseMessage.message);
       //   if (responseMessage.error) {
       //     errorDiv.removeClass("hidden");
@@ -332,7 +332,7 @@ $(document).ready(function ($) {
       //     //Redirect to home page
       //     //alert("Logged in");
       //     var comparelist = localStorage.getItem("comparelist");
-      //     console.log("Initial list ",comparelist);
+      //     //console.log("Initial list ",comparelist);
       //     if(!comparelist){
       //       localStorage.setItem("comparelist", "[]");
       //     }
@@ -340,7 +340,7 @@ $(document).ready(function ($) {
       //   }
       // });
     } else {
-      console.log("Errors");
+      //console.log("Errors");
       if (usernameErrorMessage.length !== 0) {
         errorDiv.removeClass("hidden");
         errorLi.append($("<li>").text(usernameErrorMessage));

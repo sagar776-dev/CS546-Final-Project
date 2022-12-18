@@ -30,7 +30,7 @@ app.use(
 // });
 
 app.use("/", async (req, res, next) => {
-  console.log(req.session.username, req.originalUrl);
+  //console.log(req.session.username, req.originalUrl);
   //req.session.username = 'sagar776';
   next();
 });

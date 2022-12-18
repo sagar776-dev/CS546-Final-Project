@@ -20,7 +20,7 @@
         try {
             var givenUrl = new URL(url);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             return false;
         }
         return true;
@@ -359,7 +359,7 @@
             };
     
             $.ajax(requestConfig).then(function (responseMessage){
-                console.log({responseMessage});
+                //console.log({responseMessage});
                 if(responseMessage.error){
                     errorDiv.removeClass("hidden");
                     errorLi.append($("<li>").text(responseMessage.error));
@@ -371,7 +371,7 @@
             });
         }
         else{
-            console.log(errorList);
+            //console.log(errorList);
             for(let msg of errorList){
                 errorDiv.removeClass("hidden");
                 errorLi.append($("<li>").text(msg));

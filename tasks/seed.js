@@ -365,7 +365,7 @@ const main = async () => {
     let users = [
         {
             "username": "sagar776",
-            "password": "$2b$07$r1vPthVJOAcQBiywyxERIOfGEKgB7rjW8BJkSUpHwyZyuHsXwcsPm",
+            "password": "$2b$07$r1vPthVJOAcQBiywyxERIOfGEKgB7rjW8BJkSUpHwyZyuHsXwcsPm",//Test.1234
             "firstName": "Sagar",
             "lastName": "Mathada",
             "email": "sagara199@gmail.com",
@@ -394,22 +394,24 @@ const main = async () => {
             "likedReviews": []
           },
           {
-            "username": "manudeep123",
-            "password": "$2b$07$xUYPgaVmLBiuLQw5UufUsejm17JAKusWUXVWdi5wTorvop0/IsNEm",
-            "firstName": "Manudeep",
-            "lastName": "Reddy",
-            "email": "manudeep@gmail.com",
+            "username": "admin123",
+            "password": "$2b$07$kESVxGSRORIPsZxrsCa5iOZg8zk6DC2SAuULlhtaaopUGi8cUfTOC",
+            "firstName": "Admin",
+            "lastName": "User",
+            "email": "admin@gmail.com",
             "gender": "man",
-            "userType": "user",
+            "userType": "admin",
             "wishlist": [],
             "history": [],
-            "dislikedReviews": [],
-            "likedReviews": []
+            "likedReviews": [],
+            "dislikedReviews": []
           }
     ]
 
-
-
+    for(let user of users){
+        await userData.seedUser(user);
+    }
+    console.log("Users done");
     await dbConnection.closeConnection();
 };
 

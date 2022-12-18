@@ -39,7 +39,7 @@ router
             return res.status(200).json({responseMessage: responseMessage});
 
         } catch (e) {
-            console.log(e);
+            //console.log(e);
             return res.status(200).json({ error: e.toString() });
         }
     })
@@ -52,7 +52,7 @@ router
 
             // upload(req, res, function(error){
             //     if(error) {
-            //         console.log(error);
+            //         //console.log(error);
             //     }
             //     product.pictures.push(req.file.path);
             // });
@@ -62,7 +62,7 @@ router
 
             return res.status(200).json({responseMessage:responseMessage});
         } catch (e) {
-            console.log(e);
+            //console.log(e);
             return res.status(200).json({ error: e.toString()});
         }
     })
@@ -78,7 +78,7 @@ router
             let responseMessage = await productData.removeProduct(skuId);
             return res.status(200).json({responseMessage: responseMessage});
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             return res.status(200).json({ error: error });
         }
     });

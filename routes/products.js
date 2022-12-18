@@ -157,21 +157,21 @@ router
                     return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (customerreviewcount === "true") {
                 productList = productList.sort((a, b) => {
                     return b.customerReviewCount - a.customerReviewCount
                 })
                 query_list += `&customerReviewCount=${customerreviewcount}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (visitedtimes === "true") {
                 productList = productList.sort((a, b) => {
                     return a.visitedTimes - b.visitedTimes
                 })
                 query_list += `&visitedTimes=${visitedtimes}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             resultsProducts.features = {
                 price: price,
@@ -186,10 +186,10 @@ router
                 productList = await productData.getAllProducts();
                 error.push("Could not find products with this filter")
             }
-            // console.log(productList.length)
-            // console.log(error)
-            // console.log(url_query)
-            // console.log(query_list)
+            // //console.log(productList.length)
+            // //console.log(error)
+            // //console.log(url_query)
+            // //console.log(query_list)
             //page start
             current = page
             if (current < 1) {
@@ -316,7 +316,7 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                // console.log(price)
+                // //console.log(price)
             }
             else {
                 price = xss(newobj.price)
@@ -371,21 +371,21 @@ router
                     return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (customerreviewcount === "true") {
                 productList = productList.sort((a, b) => {
                     return b.customerReviewCount - a.customerReviewCount
                 })
                 query_list += `&customerReviewCount=${customerreviewcount}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (visitedtimes === "true") {
                 productList = productList.sort((a, b) => {
                     return a.visitedTimes - b.visitedTimes
                 })
                 query_list += `&visitedTimes=${visitedtimes}`
-                //console.log(productList)
+                ////console.log(productList)
             }
 
             if (productList.length === 0) {
@@ -459,14 +459,14 @@ router.get("/laptops/:id", async (req, res) => {
             sku,
             req.session.username
         );
-        console.log(isWishlisted);
+        //console.log(isWishlisted);
         if (product.category !== "laptops") {
             return res
                 .status(404)
                 .render("products/productPage", { error: "Product not found" });
         }
         // end
-        //console.log(product);
+        ////console.log(product);
         return res.render("products/productPage", {
             product: product,
             pictures: product.pictures,
@@ -474,7 +474,7 @@ router.get("/laptops/:id", async (req, res) => {
             isWishlisted: isWishlisted
         });
     } catch (e) {
-        console.log(e);
+        //console.log(e);
         return res
             .status(404)
             .render("products/productPage", { error: "Product not found" });
@@ -566,7 +566,7 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                // console.log(price)
+                // //console.log(price)
             }
             else {
                 price = xss(newobj.price)
@@ -621,21 +621,21 @@ router
                     return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (customerreviewcount === "true") {
                 productList = productList.sort((a, b) => {
                     return b.customerReviewCount - a.customerReviewCount
                 })
                 query_list += `&customerReviewCount=${customerreviewcount}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (visitedtimes === "true") {
                 productList = productList.sort((a, b) => {
                     return a.visitedTimes - b.visitedTimes
                 })
                 query_list += `&visitedTimes=${visitedtimes}`
-                //console.log(productList)
+                ////console.log(productList)
             }
 
             if (productList.length === 0) {
@@ -809,7 +809,7 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                // console.log(price)
+                // //console.log(price)
             }
             else {
                 price = xss(newobj.price)
@@ -864,21 +864,21 @@ router
                     return object.inStoreAvailability === true
                 })
                 query_list += `&inStoreAvailability=${instoreavailability}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (customerreviewcount === "true") {
                 productList = productList.sort((a, b) => {
                     return b.customerReviewCount - a.customerReviewCount
                 })
                 query_list += `&customerReviewCount=${customerreviewcount}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (visitedtimes === "true") {
                 productList = productList.sort((a, b) => {
                     return a.visitedTimes - b.visitedTimes
                 })
                 query_list += `&visitedTimes=${visitedtimes}`
-                //console.log(productList)
+                ////console.log(productList)
             }
             if (productList.length === 0) {
                 productList = await productData.getProductsByCategory("tablets");
@@ -1025,7 +1025,7 @@ router
     })
     .post("/compare", async (req, res) => {
         let errorMessage = "";
-        console.log("Request body ", req.body);
+        //console.log("Request body ", req.body);
         let products = req.body.compareList;
         products = JSON.parse(products);
         try {
@@ -1038,13 +1038,13 @@ router
             if (errorMessage.length > 0) {
                 throw errorMessage;
             }
-            console.log("Products ", products);
+            //console.log("Products ", products);
             //products = JSON.parse(products);
             let prods = [];
             let categories = ["laptops", "phones", "tablets"];
 
             //Check for same category
-            console.log("Compare list ", products, products.length);
+            //console.log("Compare list ", products, products.length);
             for (let prod of products) {
                 if (!prods.includes(prod.type.toLowerCase())) {
                     prods.push(prod.type.toLowerCase());
@@ -1060,7 +1060,7 @@ router
                     prods.push(prod.id);
                 }
             }
-            console.log(prods);
+            //console.log(prods);
             if (prods.length !== products.length)
                 throw "Error: cannot compare product with itself";
 
@@ -1076,7 +1076,7 @@ router
             } else {
                 result = await productData.compareTablets(productSKUs);
             }
-            console.log("Comparison result before", result[0]);
+            //console.log("Comparison result before", result[0]);
             let headers = Object.keys(result[0][0]);
             let comparisonArray = [];
             for (let header of headers) {
@@ -1088,12 +1088,12 @@ router
                     comparisonArray.push(arr);
                 }
             }
-            console.log("Comparison result ", comparisonArray);
+            //console.log("Comparison result ", comparisonArray);
             res.render("products/compareproducts", {
                 products: comparisonArray,
             });
         } catch (e) {
-            console.log("error ", e);
+            //console.log("error ", e);
             res.render("products/compareproducts", {
                 error: e,
             });
@@ -1111,7 +1111,7 @@ router
                 const productObj = await productData.getProductsByID(skuId);
                 return res.status(200).json({responseMessage: productObj});
             } catch (error) {
-                console.log(error);
+                //console.log(error);
                 return res.status(200).json({ error: error });
             }
         });
