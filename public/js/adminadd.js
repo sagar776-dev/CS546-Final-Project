@@ -353,7 +353,7 @@
         if (errorList.length < 1) {
             var requestConfig = {
                 method: "PUT",
-                url: "/api/admin",
+                url: "/admin",
                 contentType: "application/json",
                 data: JSON.stringify(product),
             };
@@ -366,7 +366,7 @@
                 }
                 else {
                     alert(responseMessage.responseMessage);
-                    window.location.href = "/api/admin";
+                    window.location.href = "/admin";
                 }
             });
         }
