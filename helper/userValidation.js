@@ -72,26 +72,6 @@ const validateName = (name, variableName) => {
   return name;
 };
 
-const validateUsertype = (usertype) => {
-  if (!usertype) throw "Usertype should not be empty";
-  usertype = usertype.trim();
-  if (usertype.length === 0) throw "Usertype should not be empty";
-  if (
-    usertype.toLowerCase() === "user" ||
-    usertype.toLowerCase() === "admin" ||
-    usertype.toLowerCase() === "expert"
-  ) {
-    throw "Usertype if invalid";
-  }
-};
-
-const validateId = (id, variableName) => {
-  if (!id) throw `${variableName} should not be empty`;
-  id = id.trim();
-  if (id.length === 0) throw `${variableName} should not be empty`;
-  if (!ObjectId.isValid(id)) throw "Error: Invalid movie ID";
-};
-
 const loadData = () => {
     fs.readFile("./public/bad-words.csv", 'utf8', function (err, data) {
       let dataArray = data.split(/\r?\n/);
@@ -99,14 +79,31 @@ const loadData = () => {
     })
 };
 
+  const validateId = (id, variableName) =>{
+    if(!id) throw `${variableName} should not be empty`;
+    id = id.trim();
+    if(id.length === 0) throw `${variableName} should not be empty`;
+    return id;
+  }
+  
+  const validateQuestion = (question, variableName) =>{
+    if (!question) throw 'You must provide a question?';
+    if (typeof question !== 'string') throw 'question must be a string';
+    if (question.trim().length === 0)
+      throw 'question cannot be an empty string or string with just spaces';
+    question = question.trim();
+    return question;
+}
 
-module.exports = {
-  validateUsername,
-  validatePassword,
-  validateEmail,
-  validateGender,
-  validateName,
-  validateUsertype,
-  validateId,
-  loadData
-};
+  module.exports = {
+    validateUsername,
+    validatePassword,
+    validateEmail,
+    validateGender,
+    validateName,
+    validateUsertype,
+    validateId,
+    validateQuestion
+  };
+  
+

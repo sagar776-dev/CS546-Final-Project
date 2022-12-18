@@ -1,8 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const productData = require('./products');
-const helper = ('../helper/userValidation.js');
-const validation = require('../validation');
-//const { ObjectId } = require('mongodb');
+const helpers = require('../helper/userValidation.js');
+// const { ObjectId } = require('mongodb');
+const mongo = require('mongodb');
 
 const getDate = () => {
     let date = new Date();
@@ -23,31 +23,28 @@ const createQuestion = async (
     username,
     question
 ) => {
-    product_id = validation.checkId(id, "product ID");
-    question = validation.checkQuestion(question);
-    username = helper.validateUsername(username);
+    //product_id = validation.checkId(product_id, "product ID");
+    question = helpers.validateQuestion(question, 'Question ');
+    //username = helper.validateUsername(username);
 
     let newQuestion = {
-        id,
         username,
-        question,
-        date
+        question
     };
-
-
-
-    //newQuestion.id = mongo.ObjectId();
+    newQuestion._id = mongo.ObjectId();
     newQuestion.question = question;
     newQuestion.username = username;
     newQuestion.date = getDate();
 
-    const productCollections = await mongoCollections.products();
-    let insertInfo = await productCollections.updateOne({
-        "_id": mongo.ObjectId(product_id)
+    const productCollections = await mongoCollections.products()
+
+    let insertInfo = await productCollections.updateMany({
+        "_id": parseInt(product_id)
     },
         {
             "$push": {
                 "qna": {
+                    "_id": mongo.ObjectId(newQuestion._id),
                     "question": newQuestion.question,
                     "username": newQuestion.username,
                     "date": newQuestion.date
@@ -59,60 +56,48 @@ const createQuestion = async (
     return newQuestion;
 };
 
-const addAnswer = async (product_id, question_id, username, answer) => {
-    answer = validation.checkQuestion(answer);
-    username = helper.validateUsername(username);
-    questionID = validation.checkId(question_id);
-    questionID = validation.checkId(product_id);
 
 
-    let newAnswer = {
-        author,
-        answer,
-        date
+
+const addAnswer = async (qnaId, username, answer) => {
+    answer = helpers.validateQuestion(answer);
+    username = helpers.validateUsername(username);
+    qnaId = helpers.validateId(qnaId);
+    let product_id = null;
+
+    const productCollections = await mongoCollections.products()
+    console.log("Searching the product");
+    let product = await productCollections.find({ "qna._id": mongo.ObjectId(qnaId) }).toArray()
+    if (!product) throw 'Product not found';
+    product_id = product[0]._id
+    const answer1 = {
+        answer: answer,
+        author: username,
+        date: getDate()
     };
-
-    newAnswer.answer = answer;
-    newAnswer.author = username;
-    newAnswer.date = getDate();
-    
-    const productCollections = await mongoCollections.products();
-
     let insertInfo = await productCollections.updateOne(
-        {
-            "_id": mongo.ObjectId(product_id),
-            "qna._id": mongo.ObjectId(question_id)
-        },
-        {
-            "$set": {
-                "qna.$.answer": {
-                    "answer": newAnswer.answer,
-                    "author": newAnswer.author,
-                    "date": newAnswer.date
-                }
-            }
-        }
-    )
-
+        { _id: product_id, "qna._id": mongo.ObjectId(qnaId) },
+        { $set: { "qna.$.answer": answer1 } }
+    );
     if (!insertInfo.acknowledged || !insertInfo.modifiedCount)
-        throw 'Could not add answer to question';
-    return newAnswer;
-};
+        throw 'Could not add answer to review';
+    return product[0]._id;
+}
 
-const getQna = async (product_id)=>{
-    try{
+const getAllQna = async (product_id) => {
+    try {
         let product = await productData.getProductsByID(product_id);
         let qna = product.qna;
         return qna;
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
 }
 
-
+//trial();
 module.exports = {
     createQuestion,
     addAnswer,
-    getQna
+    getAllQna
 };

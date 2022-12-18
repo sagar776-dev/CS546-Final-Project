@@ -1,3 +1,4 @@
+
 $(document).ready(function ($) {
   var comparecheckbox = $("#comparecheckbox");
 
@@ -140,3 +141,4 @@ $(document).ready(function ($) {
     });
   });
 })(window.jQuery);
+
