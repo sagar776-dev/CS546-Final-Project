@@ -80,13 +80,14 @@ const validateId = (id, variableName) => {
 };
 
 const validateQuestion = (question, variableName) => {
-  if (!question) throw "You must provide a question?";
-  if (typeof question !== "string") throw "question must be a string";
+  if (!question) throw 'You must provide a question?';
+  if (typeof question !== 'string') throw 'question must be a string';
   if (question.trim().length === 0)
-    throw "question cannot be an empty string or string with just spaces";
+    throw 'question cannot be an empty string or string with just spaces';
   question = question.trim();
   return question;
-};
+}
+
 
 module.exports = {
   validateUsername,
