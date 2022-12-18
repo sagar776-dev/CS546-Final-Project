@@ -4,17 +4,6 @@ const data = require('../data');
 const helpers = require('../helper/userValidation');
 const reviewData = data.reviews;
 const productData = data.products;
-//const multer = require("multer");
-
-// const imageFilter = function (req, file, cb) {
-//   // Accept images only
-//   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-//     return cb(new Error("Only image files are allowed!"), false);
-//   }
-//   cb(null, true);
-// };
-
-// const upload = multer({ dest: "uploads/", fileFilter: imageFilter });
 
 router
   .route('/:id/like')
@@ -83,7 +72,7 @@ router
       return res.status(400).json({ error: e.message, e });
     }
     try {
-      const newReview = await reviewData.createReview(req.params.id, reviewTitle, 'naveen', reviewText, rating); //reviewPhoto);
+      const newReview = await reviewData.createReview(req.params.id, reviewTitle, req.session.username, reviewText, rating); //reviewPhoto);
       let product = await productData.getProductsByID(parseInt(req.params.id));
       let product_category = product.category;
       return res.json({product_category:product_category, product_id:req.params.id})

@@ -14,7 +14,7 @@ const registerUser = async (user) => {
   password = userValidate.validatePassword(user.password);
 
   let usersCollection = await mongoCollection.users();
-  let tempUser = await usersCollection.findOne({ username: username });
+  let tempUser = await usersCollection.findOne({ username: username.toLowerCase() });
   if (tempUser) throw "Error: User already exists";
 
   tempUser = await usersCollection.findOne({ email: email });
@@ -22,7 +22,7 @@ const registerUser = async (user) => {
 
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.saltRounds);
   user = {
-    username: username,
+    username: username.toLowerCase(),
     password: hashedPassword,
     firstName: firstName,
     lastName: lastName,
@@ -46,7 +46,7 @@ const checkUser = async (username, password) => {
   password = userValidate.validatePassword(password);
 
   let query = {
-    $or: [{ username: username }, { email: username }],
+    $or: [{ username: username.toLowerCase() }],
   };
 
   let usersCollection = await mongoCollection.users();
