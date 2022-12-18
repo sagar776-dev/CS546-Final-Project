@@ -12,7 +12,7 @@ $(document).ready(function () {
         likeCount = response.likeCount
         dislikeCount = response.dislikeCount
         $('.like-btn[data-review-id="' + reviewId + '"]').text(`Like (${likeCount})`);
-        $('.dislike-btn[data-review-id="' + reviewId + '"]').text(`Dislike (${dislike})`);
+        $('.dislike-btn[data-review-id="' + reviewId + '"]').text(`Dislike (${dislikeCount})`);
       }
     });
   });
