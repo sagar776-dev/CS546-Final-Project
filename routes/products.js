@@ -1100,7 +1100,25 @@ router
         }
     });
 
-//compareProducts not finished
+
+    router
+        .route('/:id')
+        .get(async (req, res)=>{
+            let skuId = req.params.id;
+            try {
+                //validate skuId
+                skuId = parseInt(skuId);
+                const productObj = await productData.getProductsByID(skuId);
+                return res.status(200).json({responseMessage: productObj});
+            } catch (error) {
+                console.log(error);
+                return res.status(200).json({ error: error });
+            }
+        });
+
+    module.exports = router;
+
+
 module.exports = router;
 
 

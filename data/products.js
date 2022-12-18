@@ -283,6 +283,7 @@ let exportedMethods = {
         sku,
         name,
         manufacturer,
+        category,
         startDate,
         price,
         url,
@@ -312,6 +313,7 @@ let exportedMethods = {
         Description = Description; // Description if null
         pictures = pictures; // if null dont show
         details = details; // array with objects
+        category = category;
         //validation end
         //static
         customerReviewAverage = 0
@@ -337,6 +339,7 @@ let exportedMethods = {
             Description,
             pictures,
             details,
+            category,
             reviews,
             visitedTimes,
             comments,
@@ -348,7 +351,7 @@ let exportedMethods = {
     },
     async removeProduct(skuId) {
         //validation start
-        skuId = ParseInt(skuId);
+        skuId = parseInt(skuId);
         //validation end
         const productCollection = await products();
         const product = await productCollection.findOne({ _id: skuId });
@@ -568,6 +571,13 @@ let exportedMethods = {
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
         return `Product been added with id: ${sku}`;
+    },
+
+    async getMaxSku(){
+        const productCollection = await products();
+
+        const product = await productCollection.find().sort({_id:-1}).limit(1).toArray();
+        return product[0]._id;
     },
 }
 
