@@ -1,6 +1,9 @@
 <script src="/public/js/reviews.js"></script>
 <script src="/public/js/productpage.js"></script>
 
+{{#if error}}
+<p class="error text-danger">{{error}}</p>
+{{else}}
 <div class="container product-page">
   {{#if error}}
   <p class="error text-danger">{{error}}</p>
@@ -9,8 +12,8 @@
   <div class="product-info row">
     <div class="col-sm-6">
       <h2 id="name_field" value="{{product.name}}">{{product.name}}</h2>
-      <p id="id_field"value="{{product._id}}" hidden>ID: {{product._id}}</p>
-      <p id="category_field"  value="{{product.category}}">Category: {{product.category}}</p>
+      <p id="id_field" value="{{product._id}}" hidden>ID: {{product._id}}</p>
+      <p id="category_field" value="{{product.category}}">Category: {{product.category}}</p>
       <p>Manufacturer: {{product.manufacturer}}</p>
       <p>Price: {{product.price}}</p>
       <p>Start Date: {{product.startDate}}</p>
@@ -126,4 +129,4 @@
   </article>
 
 </div>
-
+{{/if}}
