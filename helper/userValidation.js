@@ -72,11 +72,11 @@ const validateName = (name, variableName) => {
   return name;
 };
 
-const loadData = () => {
-    fs.readFile("./public/bad-words.csv", 'utf8', function (err, data) {
-      let dataArray = data.split(/\r?\n/);
-      return dataArray;
-    })
+const validateId = (id, variableName) => {
+  if (!id) throw `${variableName} should not be empty`;
+  id = id.trim();
+  if (id.length === 0) throw `${variableName} should not be empty`;
+  return id;
 };
 
   const validateId = (id, variableName) =>{
@@ -95,14 +95,12 @@ const loadData = () => {
     return question;
 }
 
-  module.exports = {
-    validateUsername,
-    validatePassword,
-    validateEmail,
-    validateGender,
-    validateName,
-    validateId,
-    validateQuestion
-  };
-  
-
+module.exports = {
+  validateUsername,
+  validatePassword,
+  validateEmail,
+  validateGender,
+  validateName,
+  validateId,
+  validateQuestion,
+};

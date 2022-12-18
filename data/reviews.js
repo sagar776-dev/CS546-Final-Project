@@ -167,12 +167,9 @@ const createReview = async (
   return newReview;
 };
 
-
-
-
 const getAllReviews = async (product_id) => {
   let id = helpers.checkId(product_id, "Product Id");
-  let product = await productData.getProductsByID(id)
+  let product = await productData.getProductsByID(id);
   reviews = product.reviews;
   if (!reviews)
     return [];
