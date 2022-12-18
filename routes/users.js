@@ -60,7 +60,7 @@ router
     } catch (e) {
       console.log(e);
       // res.render("users/login", { error: e });
-      res.status(500).json({ error: e });
+      res.status(200).json({ error: e });
       return;
     }
   });
@@ -100,14 +100,25 @@ router
     }
   })
   .post(async (req, res) => {
-    username = userValidate.validateUsername(user.username);
-    firstName = userValidate.validateName(user.firstName, "First name");
-    lastName = userValidate.validateName(user.lastName, "Last name");
-    gender = userValidate.validateGender(user.gender);
-    email = userValidate.validateEmail(user.email);
-    password = userValidate.validatePassword(user.password);
-    if (newData.newPassword.length !== 0) {
-      currentPassword = userValidate.validatePassword(user.currentPassword);
+    try {
+      let user = req.body;
+      username = userValidate.validateUsername(user.username);
+      firstName = userValidate.validateName(user.firstName, "First name");
+      lastName = userValidate.validateName(user.lastName, "Last name");
+      gender = userValidate.validateGender(user.gender);
+      email = userValidate.validateEmail(user.email);
+      //password = userValidate.validatePassword(user.password);
+      if (user.newPassword.length !== 0) {
+        currentPassword = userValidate.validatePassword(user.currentPassword);
+        newPassword = userValidate.validatePassword(user.newPassword);
+      }
+
+      let result = await userData.updateProfile(user);
+
+      res.status(200).json({message: "Profile updated"});
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({error: e.message});
     }
   });
 
