@@ -18,7 +18,7 @@ router
         try {
             res.render("qna/addQuestion", { _id: req.params.id });
         } catch (e) {
-            res.status(404).json({ error: e.message, e });
+            res.status(404).json({ error: e.message });
         }
     })
     .post(async (req, res) => {
@@ -28,12 +28,12 @@ router
         try {
             product_id = helpers.validateId(product_id, 'Id URL Param');
         } catch (e) {
-            return res.status(400).json({ error: e.message, e });
+            return res.status(200).json({ error: e.message });
         }
         try {
             question = helpers.validateQuestion(question, 'Question');
         } catch (e) {
-            return res.status(400).json({ error: e.message, e });
+            return res.status(200).json({ error: e.message });
         }
         try {
             const newQuestion = await qnaData.createQuestion(product_id, 'naveen', question);
@@ -41,7 +41,7 @@ router
             let product_category = product.category;
             return res.json({product_category:product_category, product_id:req.params.id})
         } catch (e) {
-            res.status(500).json({ error: e.message, e, e });
+            res.status(200).json({ error: e.message });
         }
     });
 
@@ -70,12 +70,12 @@ router
     try {
         question_id = helpers.validateId(question_id, 'Id URL Param');
     } catch (e) {
-        return res.status(400).json({ error: e.message, e });
+        return res.status(200).json({ error: e.message });
     }
     try {
         answer = helpers.validateQuestion(answer, 'answer');
     } catch (e) {
-        return res.status(400).json({ error: e.message, e });
+        return res.status(200).json({ error: e.message });
     }
 
     try {
@@ -85,7 +85,7 @@ router
         let product_category = product.category;
         return res.json({product_category:product_category, product_id:product_id})
     } catch (e) {
-        res.status(500).json({ error: e.message});
+        res.status(200).json({ error: e.message});
     }
 });
 
