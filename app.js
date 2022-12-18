@@ -31,10 +31,26 @@ app.use(
 //   res.redirect("/api/products");
 // });
 
+app.use(function (req, res, next) {
+  res.header(
+    "Cache-Control",
+    "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+  );
+  next();
+});
+
 app.use("/", async (req, res, next) => {
   //console.log(req.session.username, req.originalUrl);
   //req.session.username = 'sagar776';
   next();
+});
+
+app.use("/api", async (req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect("/users/login");
+  }
 });
 
 app.use("/api/admin", async (req, res, next) => {
@@ -50,21 +66,6 @@ app.use("/api/admin", async (req, res, next) => {
   }
 });
 
-app.use("/api", async (req, res, next) => {
-  if (req.session.username) {
-    next();
-  } else {
-    res.redirect("/users/login");
-  }
-});
-
-app.use(function (req, res, next) {
-  res.header(
-    "Cache-Control",
-    "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
-  );
-  next();
-});
 
 app.use("/users/wishlist", async (req, res, next) => {
   if (req.session.username) {
