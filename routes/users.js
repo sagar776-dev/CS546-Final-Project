@@ -20,12 +20,12 @@ router
     try {
       console.log("Signup route");
       let user = req.body;
-      user.username = userValidate.validateUsername(user.username);
-      user.firstName = userValidate.validateName(user.firstName, "First name");
-      user.lastName = userValidate.validateName(user.lastName, "Last name");
-      user.gender = userValidate.validateGender(user.gender);
-      user.email = userValidate.validateEmail(user.email);
-      user.password = userValidate.validatePassword(user.password);
+      user.username = userValidate.validateUsername(xss(user.username));
+      user.firstName = userValidate.validateName(xss(user.firstName, "First name"));
+      user.lastName = userValidate.validateName(xss(user.lastName, "Last name"));
+      user.gender = userValidate.validateGender(xss(user.gender));
+      user.email = userValidate.validateEmail(xss(user.email));
+      user.password = userValidate.validatePassword(xss(user.password));
       await userData.registerUser(user);
       res.status(200).json({ message: "User registered" });
     } catch (e) {
@@ -50,8 +50,8 @@ router
       //var html = xss('<script>alert("xss");</script>');
       let user = JSON.parse(xss(JSON.stringify(req.body)));
       console.log(user);
-      user.username = userValidate.validateUsername(user.username);
-      user.password = userValidate.validatePassword(user.password);
+      user.username = userValidate.validateUsername(xss(user.username));
+      user.password = userValidate.validatePassword(xss(user.password));
       let response = await userData.checkUser(user.username, user.password);
       req.session.username = user.username.toLowerCase();
       //res.json({ message: "Logged in" });
@@ -102,15 +102,15 @@ router
   .post(async (req, res) => {
     try {
       let user = req.body;
-      username = userValidate.validateUsername(user.username);
-      firstName = userValidate.validateName(user.firstName, "First name");
-      lastName = userValidate.validateName(user.lastName, "Last name");
-      gender = userValidate.validateGender(user.gender);
-      email = userValidate.validateEmail(user.email);
+      username = userValidate.validateUsername(xss(user.username));
+      firstName = userValidate.validateName(xss(user.firstName), "First name");
+      lastName = userValidate.validateName(xss(user.lastName), "Last name");
+      gender = userValidate.validateGender(xss(user.gender));
+      email = userValidate.validateEmail(xss(user.email));
       //password = userValidate.validatePassword(user.password);
       if (user.newPassword.length !== 0) {
-        currentPassword = userValidate.validatePassword(user.currentPassword);
-        newPassword = userValidate.validatePassword(user.newPassword);
+        currentPassword = userValidate.validatePassword(xss(user.currentPassword));
+        newPassword = userValidate.validatePassword(xss(user.newPassword));
       }
 
       let result = await userData.updateProfile(user);
@@ -124,7 +124,7 @@ router
 
 router.route("/wishlist").get(async (req, res) => {
   //code here for GET
-  let username = req.session.username;
+  let username = xss(req.session.username);
   try {
     username = userValidate.validateUsername(username);
   } catch (e) {
@@ -152,8 +152,8 @@ router.route("/wishlist").get(async (req, res) => {
 
 router.route("/addwishlist/:id").get(async (req, res) => {
   //code here for GET
-  let username = req.session.username;
-  let sku = req.params.id;
+  let username = xss(req.session.username);
+  let sku = xss(req.params.id);
   let product;
   try {
     username = userValidate.validateUsername(username);
@@ -177,8 +177,8 @@ router.route("/addwishlist/:id").get(async (req, res) => {
 
 router.route("/removewishlist/:id").get(async (req, res) => {
   //code here for GET
-  let username = req.session.username;
-  let sku = req.params.id;
+  let username = xss(req.session.username);
+  let sku = xss(req.params.id);
   let product;
   try {
     username = userValidate.validateUsername(username);
@@ -207,7 +207,7 @@ router.route("/removewishlist/:id").get(async (req, res) => {
 
 router.route("/viewhistory").get(async (req, res) => {
   //code here for GET
-  let username = req.session.username;
+  let username = xss(req.session.username);
   try {
     username = userValidate.validateUsername(username);
   } catch (e) {

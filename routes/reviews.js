@@ -4,12 +4,13 @@ const data = require('../data');
 const helpers = require('../helper/userValidation');
 const reviewData = data.reviews;
 const productData = data.products;
+const xss = require("xss");
 
 router
   .route('/:id/like')
   .post(async (req, res) => {
     try {
-      req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+      req.params.id = helpers.validateId(xss(req.params.id), 'Id URL Param');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
@@ -25,12 +26,12 @@ router
   .route('/:id/dislike')
   .post(async (req, res) => {
     try {
-      req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+      req.params.id = helpers.validateId(xss(req.params.id), 'Id URL Param');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
     try {
-      let a = await reviewData.dislikeReview(req.params.id, req.session.username);
+      let a = await reviewData.dislikeReview(xss(req.params.id), req.session.username);
       res.status(200).json({dislikeCount: a});
 
     } catch (e) {
@@ -43,7 +44,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+      req.params.id = helpers.validateId(xss(req.params.id), 'Id URL Param');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }
@@ -56,12 +57,12 @@ router
   .post(//upload.single("reviewPhoto"),
    async (req, res) => {
     //code here for POST
-    var reviewTitle = req.body.reviewTitle;
-    var reviewText = req.body.reviewText;
+    var reviewTitle = xss(req.body.reviewTitle);
+    var reviewText = xss(req.body.reviewText);
     //var reviewPhoto = req.file;
     var rating = req.body.rating;
     try {
-      req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+      req.params.id = helpers.validateId(xss(req.params.id), 'Id URL Param');
     } catch (e) {
       return res.status(400).json({ error: e.message, e });
     }

@@ -4,6 +4,7 @@ const data = require('../data');
 const helpers = require('../helper/userValidation');
 const qnaData = data.qna;
 const productData = data.products;
+const xss = require("xss");
 
 
 router
@@ -11,7 +12,7 @@ router
     .get(async (req, res) => {
         //code here for GET
         try {
-            req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+            req.params.id = helpers.validateId(xss(req.params.id), 'Id URL Param');
         } catch (e) {
             return res.status(400).json({ error: e.message, e });
         }
@@ -23,8 +24,8 @@ router
     })
     .post(async (req, res) => {
         //code here for POST
-        let product_id = req.body.product_id;
-        let question = req.body.question;
+        let product_id = xss(req.body.product_id);
+        let question = xss(req.body.question);
         try {
             product_id = helpers.validateId(product_id, 'Id URL Param');
         } catch (e) {
@@ -53,7 +54,7 @@ router
 .get(async (req, res) => {
     //code here for GET
     try {
-        req.params.id = helpers.validateId(req.params.id, 'Id URL Param');
+        req.params.id = helpers.validateId(xss(req.params.id), 'Id URL Param');
     } catch (e) {
         return res.status(400).json({ error: e.message, e });
     }
@@ -65,8 +66,8 @@ router
 })
 .post(async (req, res) => {
     //code here for POST
-    let question_id = req.body.question_id;
-    let answer = req.body.answer;
+    let question_id = xss(req.body.question_id);
+    let answer = xss(req.body.answer);
     try {
         question_id = helpers.validateId(question_id, 'Id URL Param');
     } catch (e) {
