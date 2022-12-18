@@ -11,7 +11,7 @@ $(document).ready(function ($) {
   const usernameRegex = /^[A-Za-z0-9\s]*$/;
   const charRegex = /^[A-Za-z\s]*$/;
   const digitRegex = /(?=.*[0-9])/;
-  const capitalRegex = /^[A-Z]/;
+  const capitalRegex = /(?=.*[A-Z])/;
   const specialRegex = /(?=.*[!@#$%^&*.])/;
   const emailRegex =
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
@@ -110,7 +110,7 @@ $(document).ready(function ($) {
         passwordErrorMessage = "Password should have atleast 1 capital letter";
       else if (!specialRegex.test(password))
         passwordErrorMessage =
-          "Password should have atleast 1 special character";
+          "Password should have atleast 1 special character among ! @ # $ % ^ & * . ";
     }
   }
 

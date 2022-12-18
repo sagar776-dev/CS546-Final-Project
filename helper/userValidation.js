@@ -7,7 +7,7 @@ const fs = require("fs");
 const usernameRegex = /^[A-Za-z0-9\s]*$/;
 const charRegex = /^[A-Za-z\s]*$/;
 const digitRegex = /(?=.*[0-9])/;
-const capitalRegex = /^[A-Z]/;
+const capitalRegex = /(?=.*[A-Z])/;
 const specialRegex = /(?=.*[!@#$%^&*.])/;
 const emailRegex =
   /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
@@ -32,7 +32,7 @@ const validatePassword = (password) => {
   if (!capitalRegex.test(password))
     throw "Password should have atleast 1 capital letter";
   if (!specialRegex.test(password))
-    throw "Password should have atleast 1 special character";
+    throw "Password should have atleast 1 special character among ! @ # $ % ^ & * . ";
   return password;
 };
 
