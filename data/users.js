@@ -205,9 +205,8 @@ const updateProfile = async (user) => {
   lastName = userValidate.validateName(user.lastName, "Last name");
   gender = userValidate.validateGender(user.gender);
   email = userValidate.validateEmail(user.email);
-  password = userValidate.validatePassword(user.password);
   let newPassword, currentPassword;
-  user = {
+  newuser = {
     firstName: firstName,
     lastName: lastName,
     email: email,
@@ -219,7 +218,7 @@ const updateProfile = async (user) => {
 
   if (!tempuser) throw "Error: User does not exists";
 
-  if (newData.newPassword.length !== 0) {
+  if (user.newPassword.length !== 0) {
     currentPassword = userValidate.validatePassword(user.currentPassword);
     newPassword = userValidate.validatePassword(user.newPassword);
 
@@ -233,12 +232,12 @@ const updateProfile = async (user) => {
       newPassword,
       config.bcrypt.saltRounds
     );
-    user.password = hashedPassword;
+    newuser.password = hashedPassword;
   }
 
   const updateInfo = await usersCollection.updateOne(
-    { _id: ObjectId(user._id) },
-    { $set: user }
+    { username: username },
+    { $set: newuser }
   );
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
     throw "Update failed";
