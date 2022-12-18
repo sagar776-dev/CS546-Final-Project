@@ -96,7 +96,7 @@ $(document).ready(function ($) {
         ids.push(p.id);
       }
       for (let p of comparelist) {
-        if (!ids.push(ids.includes(p.id))) {
+        if (productId !== p.id) {
           newCompareList.push(p);
         }
       }

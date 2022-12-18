@@ -53,14 +53,14 @@ router
       user.username = userValidate.validateUsername(user.username);
       user.password = userValidate.validatePassword(user.password);
       let response = await userData.checkUser(user.username, user.password);
-      req.session.username = user.username;
+      req.session.username = user.username.toLowerCase();
       //res.json({ message: "Logged in" });
       res.status(200).json(response);
       return;
     } catch (e) {
       console.log(e);
       // res.render("users/login", { error: e });
-      res.status(500).json({ error: e });
+      res.status(200).json({ error: e });
       return;
     }
   });

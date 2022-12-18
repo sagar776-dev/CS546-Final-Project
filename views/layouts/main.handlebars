@@ -70,45 +70,12 @@
                 >Admin</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/api/products">Products</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" id="compare-prods" href="#">
                   Compare
                 </a>
-              </li>
-              {{! <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Categories
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Smartphones</a></li>
-                  <li><a class="dropdown-item" href="#">Laptops</a></li>
-                  <li><hr class="dropdown-divider" />Tablets</li>
-                </ul>
-              </li> }}
-
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
               </li>
 
               <li class="nav-item">
@@ -118,18 +85,19 @@
                 <a class="nav-link" href="/users/viewhistory">View History</a>
               </li>
               <li>
-                <form class="d-flex" role="search">
-                  <input
-                    class="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
+                <form id="searchForm" action="/api/products" method="get">
+                  <label>
+                    <input type="text" id="searchInput" name="search" />
+                  </label>
                   <button class="btn btn-success" type="submit">Search</button>
                 </form>
               </li>
               <li>
-                <a class="nav-link me-2" id="profile-nav" href="/users/userprofile">profile</a>
+                <a
+                  class="nav-link me-2"
+                  id="profile-nav"
+                  href="/users/userprofile"
+                >profile</a>
               </li>
               <li>
                 <a class="nav-link me-2" href="/users/logout">Logout</a>

@@ -14,7 +14,7 @@ const registerUser = async (user) => {
   password = userValidate.validatePassword(user.password);
 
   let usersCollection = await mongoCollection.users();
-  let tempUser = await usersCollection.findOne({ username: username });
+  let tempUser = await usersCollection.findOne({ username: username.toLowerCase() });
   if (tempUser) throw "Error: User already exists";
 
   tempUser = await usersCollection.findOne({ email: email });
@@ -22,7 +22,7 @@ const registerUser = async (user) => {
 
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.saltRounds);
   user = {
-    username: username,
+    username: username.toLowerCase(),
     password: hashedPassword,
     firstName: firstName,
     lastName: lastName,
@@ -31,6 +31,8 @@ const registerUser = async (user) => {
     userType: "user",
     wishlist: [],
     history: [],
+    likedReviews: [],
+    dislikedReviews: [],
   };
   //console.log("User ",user);
   let insertInfo = await usersCollection.insertOne(user);
@@ -44,7 +46,7 @@ const checkUser = async (username, password) => {
   password = userValidate.validatePassword(password);
 
   let query = {
-    $or: [{ username: username }, { email: username }],
+    $or: [{ username: username.toLowerCase() }],
   };
 
   let usersCollection = await mongoCollection.users();
@@ -186,10 +188,24 @@ const getHistoryForUser = async (username) => {
   let historyProducts = await productCollection
     .find({
       _id: { $in: history },
-    })
-    .toArray();
-  console.log("Wishlist ", historyProducts);
-  return historyProducts;
+    }).toArray();
+    // .then((result) => {
+    //   let sorted = history.map((i) => result.find((j) => j.id === i));
+    //   console.log(sorted);
+    // });
+    let historyNew = [];
+  for(let pid of history){
+    //console.log(pid);
+    for(let pr of historyProducts){
+      console.log(pr);
+      if(pr._id === pid){
+        historyNew.push(pr);
+      }
+    }
+  }
+
+  console.log("Wishlist ", historyNew);
+  return historyNew;
 };
 
 const getUserProfile = async (username) => {
@@ -269,5 +285,5 @@ module.exports = {
   getHistoryForUser,
   getUserProfile,
   checkIfWishlisted,
-  updateProfile
+  updateProfile,
 };

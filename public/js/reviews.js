@@ -8,7 +8,7 @@ $(document).ready(function () {
       success: function (response) {
         console.log('Like count increased successfully');
         // Increment the like count by 1 and update the button text
-        likeCount++;
+        likeCount = response.likeCount
         $('.like-btn[data-review-id="' + reviewId + '"]').text(`Like (${likeCount})`);
       }
     });
@@ -25,7 +25,7 @@ $(document).ready(function () {
         console.log('Dislike count increased successfully');
         // Increment the dislike count by 1 and update the button text
         let dislike = parseInt(dislikeCount)
-        dislike++;
+        dislike = response.dislikeCount;
         $('.dislike-btn[data-review-id="' + reviewId + '"]').text(`Dislike (${dislike})`);
       }
     });
