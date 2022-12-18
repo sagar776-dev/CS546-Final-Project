@@ -1,6 +1,7 @@
 const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
-const funcProducts = data.products
+const funcProducts = data.products;
+const userData = data.users;
 const fs = require('fs');
 
 const main = async () => {
@@ -358,7 +359,57 @@ const main = async () => {
         console.log(e)
     }
 
-    console.log('Done!');
+    console.log('Products Done!');
+
+
+    let users = [
+        {
+            "username": "sagar776",
+            "password": "$2b$07$r1vPthVJOAcQBiywyxERIOfGEKgB7rjW8BJkSUpHwyZyuHsXwcsPm",
+            "firstName": "Sagar",
+            "lastName": "Mathada",
+            "email": "sagara199@gmail.com",
+            "gender": "man",
+            "userType": "user",
+            "history": [
+              6447818,
+              6478315,
+              6507126,
+              6443068,
+              6443398,
+              6443288,
+              6518252,
+              6443179,
+              6443399,
+              6461943,
+              6461925
+            ],
+            "wishlist": [
+              6478315,
+              6507126,
+              6443179,
+              6447818
+            ],
+            "dislikedReviews": [],
+            "likedReviews": []
+          },
+          {
+            "username": "manudeep123",
+            "password": "$2b$07$xUYPgaVmLBiuLQw5UufUsejm17JAKusWUXVWdi5wTorvop0/IsNEm",
+            "firstName": "Manudeep",
+            "lastName": "Reddy",
+            "email": "manudeep@gmail.com",
+            "gender": "man",
+            "userType": "user",
+            "wishlist": [],
+            "history": [],
+            "dislikedReviews": [],
+            "likedReviews": []
+          }
+    ]
+
+
+
     await dbConnection.closeConnection();
 };
 

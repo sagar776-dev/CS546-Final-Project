@@ -24,13 +24,15 @@ $(document).ready(function ($) {
       compareDiv.hide();
     }
     var comparelist = JSON.parse(localStorage.getItem("comparelist"));
-    console.log(comparelist);
+    if(comparelist.length === 0){
+      compareDiv.hide();
+    }
+    //console.log(comparelist);
     for (let prod of comparelist) {
       console.log(prod.name);
       const col = `<div class="col"> ${prod.name} </div>`;
       console.log(col);
       compareDivRow.append(col);
-      //compareDiv
     }
   }
 
