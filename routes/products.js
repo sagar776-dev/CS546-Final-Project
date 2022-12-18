@@ -97,7 +97,6 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                console.log(price)
             }
             else {
                 price = xss(newobj.price)
@@ -190,8 +189,8 @@ router
             }
             // console.log(productList.length)
             // console.log(error)
-            console.log(url_query)
-            console.log(query_list)
+            // console.log(url_query)
+            // console.log(query_list)
             //page start
             current = page
             if (current < 1) {
@@ -325,7 +324,7 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                console.log(price)
+                // console.log(price)
             }
             else {
                 price = xss(newobj.price)
@@ -571,7 +570,7 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                console.log(price)
+                // console.log(price)
             }
             else {
                 price = xss(newobj.price)
@@ -812,7 +811,7 @@ router
             if (Array.isArray(price) === true) {
                 temp = xss(newobj.price)
                 price = `${temp[0]}`
-                console.log(price)
+                // console.log(price)
             }
             else {
                 price = xss(newobj.price)
