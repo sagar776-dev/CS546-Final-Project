@@ -240,7 +240,7 @@ const updateProfile = async (user) => {
       newPassword = userValidate.validatePassword(user.newPassword);
 
       try {
-        let auth = checkUser(username, currentPassword);
+        let auth = await checkUser(username, currentPassword);
       } catch (e) {
         throw "Error: Wrong current password entered";
       }

@@ -39,7 +39,14 @@
         <label for="gender" class="control-label">Gender:</label>
       </div>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="gender" value={{user.gender}}>
+        <select name="gender" id="gender" class="form-control">
+          <option value="prefer not to respond" {{#if user.gender}}selected{{/if}}>prefer not to respond</option>
+          <option value="woman" {{#if user.gender}}selected{{/if}}>woman</option>
+          <option value="transgender" {{#if user.gender}}selected{{/if}}>transgender</option>
+          <option value="non-binary/non-conforming" {{#if user.gender}}selected{{/if}}>non-binary/non-conforming
+          </option>
+          <option value="man" {{#if user.gender}}selected{{/if}}>man</option>
+        </select>
       </div>
     </div>
     <div class="row">
@@ -68,7 +75,7 @@
     </div>
     <div class="row">
       <div class="col-sm-offset-2 col-sm-10">
-        <input type="submit" value="Submit" class="btn btn-primary">
+        <input type="submit" value="Submit" class="btn btn-dark">
       </div>
     </div>
   </form>

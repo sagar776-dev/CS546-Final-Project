@@ -21,7 +21,9 @@
     </div>
     <div class="col-sm-6">
       <p>Best Buy Rating: {{product.customerReviewAverage}}</p>
+      {{#if product.overallRating}}
       <p>LookUpDevice Users Rating: {{product.overallRating}}</p>
+      {{/if}}
     </div>
   </div>
 
@@ -32,7 +34,7 @@
   </div>
 
   <div class="actions mt-3">
-    <p id="isWishListed">{{isWishlisted}}</p>
+    <p id="isWishListed" hidden>{{isWishlisted}}</p>
     <p id="remove-wishlist-p">Remove from wishlist :
       <a id="remove-wishlist" class="btn btn-danger btn-xs">Remove</a>
     </p>
@@ -66,8 +68,8 @@
   </table>
 
 
-  <a href="/api/qna/{{product._id}}" class="btn btn-primary">Ask a Question</a>
-  <a href="/api/reviews/{{product._id}}" class="btn btn-primary">Add a review</a>
+  <a href="/api/qna/{{product._id}}" class="btn btn-dark">Ask a Question</a>
+  <a href="/api/reviews/{{product._id}}" class="btn btn-dark">Add a review</a>
 
 
   <table class="table table-striped">
@@ -92,7 +94,7 @@
         {{else}}
         <td colspan="3">No answer yet</td>
 
-        <td><a href="/api/qna/answer/{{_id}}" class="btn btn-primary">Add Answer</a></td>
+        <td><a href="/api/qna/answer/{{_id}}" class="btn btn-dark">Add Answer</a></td>
         {{/if}}
       </tr>
       {{/each}}
@@ -119,7 +121,7 @@
         {{/if}}
       </div>
       <div class="card-footer d-flex justify-content-between">
-        <button class="btn btn-primary like-btn" data-review-id="{{_id}}">Like ({{like}})</button>
+        <button class="btn btn-dark like-btn" data-review-id="{{_id}}">Like ({{like}})</button>
         <button class="btn btn-secondary dislike-btn" data-review-id="{{_id}}">Dislike ({{dislike}})</button>
       </div>
     </div>

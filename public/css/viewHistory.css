@@ -1,0 +1,12 @@
+.popular-prod-div-col {
+  max-width: 250px;
+}
+
+.mr-3 {
+  height: 68px;
+  width: 70px;
+}
+
+.card-body {
+  min-height: 300px;
+}

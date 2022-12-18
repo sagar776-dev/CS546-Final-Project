@@ -1,7 +1,11 @@
 $(document).ready(function () {
+    // Handlebars.registerHelper('eq', function(a, b, options) {
+    //     return a == b ? options.fn(this) : options.inverse(this);
+    //   });
     $('#edit-form').submit(function (e) {
         console.log("triggered");
         e.preventDefault();
+
         const usernameRegex = /^[A-Za-z0-9\s]*$/;
         const charRegex = /^[A-Za-z\s]*$/;
         const digitRegex = /(?=.*[0-9])/;
@@ -9,6 +13,8 @@ $(document).ready(function () {
         const specialRegex = /(?=.*[!@#$%^&*.])/;
         const emailRegex =
             /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+        const data = [];
 
         const validateUsername = (username) => {
             if (!username) throw "Username should not be empty";
@@ -28,7 +34,7 @@ $(document).ready(function () {
             if (!capitalRegex.test(password))
                 throw "Password should have atleast 1 capital letter";
             if (!specialRegex.test(password))
-                throw "Password should have atleast 1 special character";
+                throw "Password should have atleast 1 special character among ! @ # $ % ^ & * . ";
             return password;
         };
 
@@ -67,13 +73,6 @@ $(document).ready(function () {
                 throw `${variableName} should only have alphabets`;
             return name;
         };
-        //   // Validate form
-        //   var isValid = true;
-        //   $('#edit-form input').each(function() {
-        //     if (!$(this).val()) {
-        //       isValid = false;
-        //     }
-        //   });
 
         // Validate passwords
         var currentPassword = $('#current-password').val();
@@ -97,10 +96,7 @@ $(document).ready(function () {
                 return;
             }
         }
-        //   if (!isValid) {
-        //     alert("All fields are required.");
-        //     return;
-        //   }
+
         let username = $("#username").val()
         let email = $("#email").val()
         let firstname = $("#firstname").val()
@@ -141,3 +137,4 @@ $(document).ready(function () {
         });
     });
 });
+
