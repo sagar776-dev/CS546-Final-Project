@@ -305,12 +305,9 @@
 
         if(errorList.length < 1){
             var requestConfig = {
-                method: "DELETE",
-                url: `/api/admin`,
+                method: "GET",
+                url: `/api/admin/${skuId}`,
                 contentType: "application/json",
-                data: JSON.stringify({
-                    skuId: skuId
-                }),
             };
 
             $.ajax(requestConfig).then(function (responseMessage){

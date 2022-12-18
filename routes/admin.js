@@ -34,7 +34,7 @@ router
             const skuId = maxSku + 1;
 
             const responseMessage = await productData.addProduct(skuId, product.name, product.manufacturer, product.category, product.startDate, 
-                product.price, product.url, true, product.description, product.pictures, product.details);
+                product.price, product.url, true, product.Description, product.pictures, product.details);
             
             return res.status(200).json({responseMessage: responseMessage});
 
@@ -58,7 +58,7 @@ router
             // });
 
             const responseMessage = await productData.updateProduct(product.skuId, product.name, product.manufacturer, product.startDate,
-                product.price, product.url, true, product.description, product.pictures, product.details);
+                product.price, product.url, true, product.Description, product.pictures, product.details);
 
             return res.status(200).json({responseMessage:responseMessage});
         } catch (e) {
@@ -66,9 +66,26 @@ router
             return res.status(200).json({ error: e.toString()});
         }
     })
+// router
+//     .route('/:id')
+//     .delete(async (req, res) => {
+//         //remove
+//         let skuId = req.body.skuId;
+//         try {
+//             //validation start
+//             skuId = validation.validateSkuId(skuId);
+//             skuId = parseInt(skuId);
+//             let responseMessage = await productData.removeProduct(skuId);
+//             return res.status(200).json({responseMessage: responseMessage});
+//         } catch (error) {
+//             //console.log(error);
+//             return res.status(200).json({ error: error });
+//         }
+//     });
+
 router
-    .route('/:id')
-    .delete(async (req, res) => {
+    .route('delete/:id')
+    .get(async (req, res) => {
         //remove
         let skuId = req.body.skuId;
         try {
