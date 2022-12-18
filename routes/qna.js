@@ -36,7 +36,7 @@ router
             return res.status(200).json({ error: e.message });
         }
         try {
-            const newQuestion = await qnaData.createQuestion(product_id, 'naveen', question);
+            const newQuestion = await qnaData.createQuestion(product_id, req.session.username, question);
             let product = await productData.getProductsByID(parseInt(product_id));
             let product_category = product.category;
             return res.json({product_category:product_category, product_id:req.params.id})
@@ -79,7 +79,7 @@ router
     }
 
     try {
-        const newAnswer = await qnaData.addAnswer(question_id, 'naveen', answer);
+        const newAnswer = await qnaData.addAnswer(question_id, req.session.username, answer);
         let product_id = newAnswer;
         let product = await productData.getProductsByID(parseInt(product_id));
         let product_category = product.category;

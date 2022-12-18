@@ -88,6 +88,7 @@ const validateQuestion = (question, variableName) => {
   return question;
 }
 
+
 module.exports = {
   validateUsername,
   validatePassword,
