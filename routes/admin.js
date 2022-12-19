@@ -3,17 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const productData = data.products;
 const validation = require('../helper/adminValidation');
-//const multer = require('multer');
-
-// var storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './public/images/uploads')
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// })
-// var upload = multer({ storage: storage }).single("pictures");
+const xss = require('xss');
 
 router
     .route('/')
@@ -28,6 +18,23 @@ router
         //add
         try {
             let product = req.body;
+
+            product.name = xss(product.name);
+            product.manufacturer = xss(product.manufacturer);
+            product.startDate = xss(product.startDate);
+            product.url = xss(product.url);
+            product.Description = xss(product.Description);
+            product.category = xss(product.category);
+
+            for(let i=0;i<product.pictures.length;i++){
+                product.pictures[i] = xss(product.pictures[i]);
+            }
+
+            for(let i=0;i<product.details.length;i++){
+                product.details[i].name = xss(product.details[i].name);
+                product.details[i].value = xss(product.details[i].value);
+            }
+
             product = validation.inputValidation(product);
 
             const maxSku = await productData.getMaxSku();
@@ -47,6 +54,22 @@ router
         //update
         try {
             let product = req.body;
+
+            product.name = xss(product.name);
+            product.manufacturer = xss(product.manufacturer);
+            product.startDate = xss(product.startDate);
+            product.url = xss(product.url);
+            product.Description = xss(product.Description);
+            product.category = xss(product.category);
+
+            for(let i=0;i<product.pictures.length;i++){
+                product.pictures[i] = xss(product.pictures[i]);
+            }
+
+            for(let i=0;i<product.details.length;i++){
+                product.details[i].name = xss(product.details[i].name);
+                product.details[i].value = xss(product.details[i].value);
+            }
             product.skuId = validation.validateSkuId(product.skuId);
             product = validation.inputValidation(product);
 
