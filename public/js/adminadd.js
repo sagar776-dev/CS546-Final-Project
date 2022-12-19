@@ -1,16 +1,15 @@
 (function ($) {
     var form = $("#product-add-form");
-    nameInput = $("#name");
-    manufacturerInput = $("#manufacturer");
-    startDateInput = $("#startDate");
-    priceInput = $("#price");
-    urlInput = $("#url");
-    descriptionInput = $("#description");
-    categoryInput = $("#category");
-    picturesInput = $("#pictures");
-    errorLi = $("#errorlist");
-    errorDiv = $("#errorDiv");
-
+        nameInput = $("#name");
+        manufacturerInput = $("#manufacturer");
+        startDateInput = $("#startDate");
+        priceInput = $("#price");
+        urlInput = $("#url");
+        descriptionInput = $("#description");
+        categoryInput = $("#category");
+        errorLi = $("#errorlist");
+        errorDiv = $("#errorDiv");
+        
 
     let errorList = [];
     let pictureUrl = [];
@@ -129,31 +128,44 @@
         if (!product.category) {
             errorList.push("Must select one of the three categories");
         }
-
-        if (product.pictures.length < 1) {
-            errorList.push("At least one picture must be uploaded");
+        
+        if(product.pictures.length !== 2){
+            errorList.push("Both front and rear image urls of the Product must be submitted");
+        }else{
+            for (let i=0; i< product.pictures.length; i++) {
+                if(!product.pictures[i]){
+                    errorList.push("Image url can not be empty");
+                }
+                else{
+                    product.pictures[i] = product.pictures[i].trim();
+                    if(product.pictures[i].length < 1)
+                        errorList.push("URL should not be empty");
+                    else if(!isValidURL(product.pictures[i]))
+                        errorList.push("Invalid URL for the Product");
+                }
+            }
         }
 
         if (product.details.length < 1) {
             errorList.push("Must enter specification details");
         }
-        else {
-            product.details.find(element => element.name === "Screen Size").value = alphanumericStringValidation("Screen Size", (product.details.find(element => element.name === "Screen Size") || emptyDetailsObj).value);
-            product.details.find(element => element.name === "Processor Model").value = alphanumericStringValidation("Processor Model", (product.details.find(element => element.name === "Processor Model") || emptyDetailsObj).value);
-            product.details.find(element => element.name === "Screen Resolution").value = alphanumericStringValidation("Screen Resolution", (product.details.find(element => element.name === "Screen Resolution") || emptyDetailsObj).value);
-            product.details.find(element => element.name === "Operating System").value = alphanumericStringValidation("Operating System", (product.details.find(element => element.name === "Operating System") || emptyDetailsObj).value);
-            product.details.find(element => element.name === "Color").value = alphanumericStringValidation("Color", (product.details.find(element => element.name === "Color") || emptyDetailsObj).value);
-            if (product.category === "laptops") {
-                product.details.find(element => element.name === "System Memory (RAM)").value = alphanumericStringValidation("System Memory (RAM)", (product.details.find(element => element.name === "System Memory (RAM)") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Graphics").value = alphanumericStringValidation("Graphics", (product.details.find(element => element.name === "Graphics") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Storage Type").value = alphanumericStringValidation("Storage Type", (product.details.find(element => element.name === "Storage Type") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Total Storage Capacity").value = alphanumericStringValidation("Total Storage Capacity", (product.details.find(element => element.name === "Total Storage Capacity") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Touch Screen").value = alphanumericStringValidation("Touch Screen", (product.details.find(element => element.name === "Touch Screen") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Processor Model Number").value = alphanumericStringValidation("Processor Model Number", (product.details.find(element => element.name === "Processor Model Number") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Battery Type").value = alphanumericStringValidation("Battery Type", (product.details.find(element => element.name === "Battery Type") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Backlit Keyboard").value = alphabetsStringValidation("Backlit Keyboard", (product.details.find(element => element.name === "Backlit Keyboard") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Brand").value = alphanumericStringValidation("Brand", (product.details.find(element => element.name === "Brand") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Model Number").value = alphanumericStringValidation("Model Number", (product.details.find(element => element.name === "Model Number") || emptyDetailsObj).value);
+        else{
+            product.details.find(element=>element.name==="Screen Size").value = alphanumericStringValidation("Screen Size", (product.details.find(element=>element.name==="Screen Size")||emptyDetailsObj).value);
+            product.details.find(element=>element.name==="Processor Model").value = alphanumericStringValidation("Processor Model", (product.details.find(element=>element.name==="Processor Model")||emptyDetailsObj).value);
+            product.details.find(element=>element.name==="Screen Resolution").value= alphanumericStringValidation("Screen Resolution", (product.details.find(element=>element.name==="Screen Resolution")||emptyDetailsObj).value);
+            product.details.find(element=>element.name==="Operating System").value = alphanumericStringValidation("Operating System", (product.details.find(element=>element.name==="Operating System")||emptyDetailsObj).value);
+            //product.details.find(element=>element.name==="Color").value = alphanumericStringValidation("Color", (product.details.find(element=>element.name==="Color")||emptyDetailsObj).value);
+            if(product.category==="laptops"){
+                product.details.find(element=>element.name==="System Memory (RAM)").value = alphanumericStringValidation("System Memory (RAM)", (product.details.find(element=>element.name==="System Memory (RAM)")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Graphics").value = alphanumericStringValidation("Graphics", (product.details.find(element=>element.name==="Graphics")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Storage Type").value = alphanumericStringValidation("Storage Type", (product.details.find(element=>element.name==="Storage Type")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Total Storage Capacity").value = alphanumericStringValidation("Total Storage Capacity", (product.details.find(element=>element.name==="Total Storage Capacity")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Touch Screen").value = alphanumericStringValidation("Touch Screen", (product.details.find(element=>element.name==="Touch Screen")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Processor Model Number").value = alphanumericStringValidation("Processor Model Number", (product.details.find(element=>element.name==="Processor Model Number")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Battery Type").value = alphanumericStringValidation("Battery Type", (product.details.find(element=>element.name==="Battery Type")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Backlit Keyboard").value = alphabetsStringValidation("Backlit Keyboard", (product.details.find(element=>element.name==="Backlit Keyboard")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Brand").value = alphanumericStringValidation("Brand", (product.details.find(element=>element.name==="Brand")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Model Number").value = alphanumericStringValidation("Model Number", (product.details.find(element=>element.name==="Model Number")||emptyDetailsObj).value);
             }
             else if (product.category === "tablets") {
                 product.details.find(element => element.name === "Carrier").value = alphabetsStringValidation("Carrier", (product.details.find(element => element.name === "Carrier") || emptyDetailsObj).value);
@@ -164,12 +176,12 @@
                 product.details.find(element => element.name === "Keyboard Type").value = alphabetsStringValidation("Keyboard Type", (product.details.find(element => element.name === "Keyboard Type") || emptyDetailsObj).value);
                 product.details.find(element => element.name === "Wireless Compatibility").value = alphabetsStringValidation("Wireless Compatibility", (product.details.find(element => element.name === "Wireless Compatibility") || emptyDetailsObj).value);
             }
-            else if (product.category === "phones") {
-                product.details.find(element => element.name === "Total Storage Capacity").value = alphanumericStringValidation("Total Storage Capacity", (product.details.find(element => element.name === "Total Storage Capacity") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "System Memory (RAM)").value = alphanumericStringValidation("System Memory (RAM)", (product.details.find(element => element.name === "System Memory (RAM)") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "System Memory (RAM)").value = alphanumericStringValidation("Wireless Connectivity", (product.details.find(element => element.name === "Wireless Connectivity") || emptyDetailsObj).value);
-                product.details.find(element => element.name === "Battery Type").value = alphanumericStringValidation("Battery Type", (product.details.find(element => element.name === "Battery Type") || emptyDetailsObj).value);
-
+            else if(product.category==="phones"){
+                product.details.find(element=>element.name==="Total Storage Capacity").value = alphanumericStringValidation("Total Storage Capacity", (product.details.find(element=>element.name==="Total Storage Capacity")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="System Memory (RAM)").value = alphanumericStringValidation("System Memory (RAM)", (product.details.find(element=>element.name==="System Memory (RAM)")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Wireless Connectivity").value = alphanumericStringValidation("Wireless Connectivity", (product.details.find(element=>element.name==="Wireless Connectivity")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Battery Type").value = alphanumericStringValidation("Battery Type", (product.details.find(element=>element.name==="Battery Type")||emptyDetailsObj).value);
+                
             }
         }
         return product;
@@ -212,7 +224,8 @@
         errorDiv.addClass("hidden");
         errorLi.empty();
 
-        pictureUrl.push(picturesInput.val());
+        pictureUrl.push($("#frontImageUrl").val());
+        pictureUrl.push($("#rearImageUrl").val());
 
         let product = {
             name: nameInput.val(),
@@ -246,10 +259,10 @@
             name: "Operating System",
             value: $("#operatingSystem").val()
         });
-        product.details.push({
-            name: "Color",
-            value: $("#color").val()
-        });
+        // product.details.push({
+        //     name: "Color",
+        //     value: $("#color").val()
+        // });
 
         if (product.category === "laptops") {
             product.details.push({
@@ -357,10 +370,10 @@
                 contentType: "application/json",
                 data: JSON.stringify(product),
             };
-
-            $.ajax(requestConfig).then(function (responseMessage) {
+    
+            $.ajax(requestConfig).then(function (responseMessage){
                 //console.log({responseMessage});
-                if (responseMessage.error) {
+                if(responseMessage.error){
                     errorDiv.removeClass("hidden");
                     errorLi.append($("<li>").text(responseMessage.error));
                 }

@@ -83,14 +83,23 @@
             </div>
 
             <div class="form-group">
-                <label for="pictures">Pictures
+                <label for="pictures">Front Picture url
                     <input
                     class="form-control"
-                    type="file"
-                    id="pictures"
-                    name="pictures"
-                    accept="image/x-png,image/gif,image/jpeg"
-                    multiple
+                    type="url"
+                    id="frontImageUrl"
+                    name="pictures[]"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="pictures">Rear Picture url
+                    <input
+                    class="form-control"
+                    type="url"
+                    id="rearImageUrl"
+                    name="pictures[]"
                     >
                 </label>
             </div>
@@ -137,16 +146,6 @@
                 </label>
             </div>
 
-            <div class="form-group">
-                <label for="color">Color Category
-                    <input
-                    class="form-control"
-                    type="text"
-                    id="color"
-                    name="colorCategory"
-                    >
-                </label>
-            </div>
 
             <div id="spec-div-laptops" class="spec-div-laptops">
                 <div class="form-group">
