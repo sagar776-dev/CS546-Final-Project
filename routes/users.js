@@ -102,6 +102,8 @@ router
   })
   .post(async (req, res) => {
     const user = req.body.user;
+    let currentPassword='';
+    let newPassword='';
     try {
       username = userValidate.validateUsername(xss(user.username));
       firstName = userValidate.validateName(xss(user.firstname), "First name");
@@ -112,11 +114,16 @@ router
         currentPassword = userValidate.validatePassword(user.currentPassword);
         newPassword = userValidate.validatePassword(user.newPassword);
       }
-      else{
-        user.currentPassword='';
-        user.newPassword='';
-      }
-      const updatedUser = await userData.updateProfile(user);
+      newuser = {
+        username: req.session.username,
+        firstname: firstName,
+        lastname: lastName,
+        email: email,
+        gender: gender,
+        currentPassword: currentPassword,
+        newPassword: newPassword
+      };
+      const updatedUser = await userData.updateProfile(newuser);
       res.json({user: updatedUser, message: "Updated successfully"});
     } catch (e) {
       res.status(400).json({user:user , message:e})

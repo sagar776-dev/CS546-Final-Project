@@ -24,7 +24,7 @@ $(document).ready(function ($) {
       compareDiv.hide();
     }
     var comparelist = JSON.parse(localStorage.getItem("comparelist"));
-    if(comparelist.length === 0){
+    if (comparelist.length === 0) {
       compareDiv.hide();
     }
     ////console.log(comparelist);
@@ -101,4 +101,4 @@ $(document).ready(function ($) {
   //     }
   //   });
   // });
-})(window.jQuery);
+})

@@ -57,8 +57,6 @@ const createQuestion = async (
 };
 
 
-
-
 const addAnswer = async (qnaId, username, answer) => {
     answer = helpers.validateQuestion(answer);
     username = helpers.validateUsername(username);
