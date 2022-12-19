@@ -1,8 +1,21 @@
 # CS546-Final-Project
 CS546 Final web project
 
+not use prettier for handlebars
 
- 
+SETUP:
+    1: Clone the repo to your local machine
+    2: Run `npm install` inside the repo
+    3: Run `npm run seed` to seed the database with test data.
+    4: Run `npm start` to start web aplication
+
+Demo Users:
+    username: `sagar776`
+    password: `Test.1234`
+Demo Admin:
+    username: `admin123`
+    password: `Admin.123`
+
 Review Products
 Name: LookUpDevice
 Group Members: Sagar Chakravarthy Mathada Veera, Murad Aleskerov, Manudeep Reddy Manudeep Reddy, Naveen Mathews Renji 
