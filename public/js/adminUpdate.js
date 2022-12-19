@@ -1,10 +1,10 @@
 (function ($){
-    var form = $("#product-update-form");
-        skuIdInput = $("#skuId");
-        updateBtn = $("#updateBtn");
-        deleteBtn = $("#deleteBtn");
-        categoryInput = $("#category");
-        errorDiv = $("#errorDiv");
+    var form = $("#product-update-form"),
+        skuIdInput = $("#skuId"),
+        updateBtn = $("#updateBtn"),
+        deleteBtn = $("#deleteBtn"),
+        categoryInput = $("#category"),
+        errorDiv = $("#errorDiv"),
         errorLi = $("#errorlist");
 
 
@@ -520,4 +520,4 @@
             }
         }
     });
-})(window.jQuery)
+})(window.jQuery);

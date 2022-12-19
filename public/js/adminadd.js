@@ -1,13 +1,13 @@
 (function ($) {
-    var form = $("#product-add-form");
-        nameInput = $("#name");
-        manufacturerInput = $("#manufacturer");
-        startDateInput = $("#startDate");
-        priceInput = $("#price");
-        urlInput = $("#url");
-        descriptionInput = $("#description");
-        categoryInput = $("#category");
-        errorLi = $("#errorlist");
+    var form = $("#product-add-form"),
+        nameInput = $("#name"),
+        manufacturerInput = $("#manufacturer"),
+        startDateInput = $("#startDate"),
+        priceInput = $("#price"),
+        urlInput = $("#url"),
+        descriptionInput = $("#description"),
+        categoryInput = $("#category"),
+        errorLi = $("#errorlist"),
         errorDiv = $("#errorDiv");
         
 
@@ -391,4 +391,4 @@
             }
         }
     });
-})
+})(window.jQuery);

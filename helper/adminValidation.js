@@ -1,3 +1,28 @@
+// function isImageUrl(url) {
+//     // Check if the URL ends with one of the common image file extensions
+//     const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+//     const urlExtension = url.split('.').pop();
+//     if (imageExtensions.includes(urlExtension)) {
+//       return true;
+//     }
+  
+//     // Check if the URL points to an image file using the "Content-Type" header
+//     // const xhr = new XMLHttpRequest();
+//     // xhr.open('HEAD', url);
+//     // xhr.onreadystatechange = function() {
+//     //   if (this.readyState === this.DONE) {
+//     //     const contentType = xhr.getResponseHeader('Content-Type');
+//     //     if (contentType.startsWith('image/')) {
+//     //       return true;
+//     //     }
+//     //   }
+//     // };
+//     // xhr.send();
+  
+//     // it's not an image URL
+//     return false;
+// }
+
 function isValidURL(url){
     try {
         var givenUrl = new URL(url);
@@ -134,9 +159,9 @@ function inputValidation(product){
             else{
                 product.pictures[i] = product.pictures[i].trim();
                 if(product.pictures[i].length < 1)
-                    throw("URL should not be empty");
+                    throw("Image URL should not be empty");
                 else if(!isValidURL(product.pictures[i]))
-                    throw("Invalid URL for the Product");
+                    throw("Invalid image URL for the Product");
             }
         }
     }
