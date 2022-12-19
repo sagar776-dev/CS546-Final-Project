@@ -1,7 +1,7 @@
 # CS546-Final-Project
 CS546 Final web project
 
-not use prettier for handlebars
+DO not use prettier for handlebars
 
 SETUP:
     1: Clone the repo to your local machine
@@ -12,6 +12,7 @@ SETUP:
 Demo Users:
     username: `sagar776`
     password: `Test.1234`
+    
 Demo Admin:
     username: `admin123`
     password: `Admin.123`
