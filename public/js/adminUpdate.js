@@ -151,8 +151,6 @@
             for (let i=0; i< product.pictures.length; i++) {
                 if(!product.pictures[i]){
                     errorList.push("Image url can not be empty");
-                } else if(!(product.pictures[i].endsWith('jpg') || product.pictures[i].endsWith('jpeg') || product.pictures[i].endsWith('png'))){
-                    errorList.push("Image URL is not an image");
                 }
                 else{
                     product.pictures[i] = product.pictures[i].trim();

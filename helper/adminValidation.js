@@ -151,10 +151,7 @@ function inputValidation(product){
     
     if(product.pictures.length !== 2){
         throw("Both front and rear image urls of the Product must be submitted");
-    }else if(!(product.pictures[i].endsWith('jpg') || product.pictures[i].endsWith('jpeg') || product.pictures[i].endsWith('png'))){
-        throw("Image URL is not an image");
-    }
-    else{
+    }else{
         for (let i=0; i< product.pictures.length; i++) {
             if(!product.pictures[i]){
                 throw("Image url can not be empty");

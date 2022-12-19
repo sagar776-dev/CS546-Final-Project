@@ -20,8 +20,6 @@
   background-color: rgb(249, 111, 111);
 }
 
-
-
 .popular-prod-div-row {
   overflow-x: auto;
   padding-left: 10px;
@@ -94,9 +92,11 @@
 #content-wrap {
   padding-bottom: 2.5rem;
 }
+
 #content-wrap-product {
   padding-bottom: 2.5rem;
 }
+
 #footer {
   position: absolute;
   bottom: 0;
@@ -104,6 +104,13 @@
   height: 2.5rem;
 }
 
+.page-link {
+  color: rgb(0, 14, 207);
+}
+
+.dark-blue {
+  color: rgb(0, 14, 207);
+}
 
 /* [data-theme="dark"]{
   background-color: #111 !important;
