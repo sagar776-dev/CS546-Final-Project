@@ -1,4 +1,4 @@
-<article class="product-list">
+<div class="product-list">
     {{#if error}}
     {{#each error}}
     <p>{{this}}</p>
@@ -45,7 +45,7 @@
         <ul class="pagination">
             {{#if productList.page.previous}}
             {{#if productList.page.manufacturer}}
-            <li class="page-item">
+            <li>
                 <a class="page-link" aria-label="page number"
                     href="?page={{productList.page.previous}}{{productList.page.query_list}}">Previous</a>
             </li>
@@ -182,7 +182,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <button class="btn btn-xs btn-success" type="submit">Submit Filter</button>
+                                <button type="button" class="btn btn-dark" type="submit">Submit Filter</button>
                             </form>
                         </td>
                     </tr>
@@ -198,7 +198,7 @@
                             <img src={{ pictures.[0] }} alt="{{name}}" width="140" height="110">
                         </td>
                         <td>
-                            <a href="/api/products/{{category}}/{{_id}}">{{name}}</a>
+                            <a class="dark-blue" href="/api/products/{{category}}/{{_id}}">{{name}}</a>
                             <p>Price: {{price}}</p>
                             <p>Review: {{customerReviewAverage}}</p>
                         </td>
@@ -295,4 +295,5 @@
     </nav>
     {{/if}}
 
-</article>
+    <link rel="stylesheet" href="../../public/css/main.css" />
+</div>
