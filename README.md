@@ -1,7 +1,7 @@
 # CS546-Final-Project
 CS546 Final web project
 
-DO not use prettier for handlebars
+Note: Please do not modify the handlebar files using prettier. This will cause syntax error in some parts.
 
 SETUP:
     1: Clone the repo to your local machine
