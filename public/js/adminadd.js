@@ -7,7 +7,6 @@
         urlInput = $("#url");
         descriptionInput = $("#description");
         categoryInput = $("#category");
-        picturesInput = $("#pictures");
         errorLi = $("#errorlist");
         errorDiv = $("#errorDiv");
         
@@ -130,8 +129,21 @@
             errorList.push("Must select one of the three categories");
         }
         
-        if(product.pictures.length < 1){
-            errorList.push("At least one picture must be uploaded");
+        if(product.pictures.length !== 2){
+            errorList.push("Both front and rear image urls of the Product must be submitted");
+        }else{
+            for (let i=0; i< product.pictures.length; i++) {
+                if(!product.pictures[i]){
+                    errorList.push("Image url can not be empty");
+                }
+                else{
+                    product.pictures[i] = product.pictures[i].trim();
+                    if(product.pictures[i].length < 1)
+                        errorList.push("URL should not be empty");
+                    else if(!isValidURL(product.pictures[i]))
+                        errorList.push("Invalid URL for the Product");
+                }
+            }
         }
 
         if(product.details.length < 1){
@@ -142,7 +154,7 @@
             product.details.find(element=>element.name==="Processor Model").value = alphanumericStringValidation("Processor Model", (product.details.find(element=>element.name==="Processor Model")||emptyDetailsObj).value);
             product.details.find(element=>element.name==="Screen Resolution").value= alphanumericStringValidation("Screen Resolution", (product.details.find(element=>element.name==="Screen Resolution")||emptyDetailsObj).value);
             product.details.find(element=>element.name==="Operating System").value = alphanumericStringValidation("Operating System", (product.details.find(element=>element.name==="Operating System")||emptyDetailsObj).value);
-            product.details.find(element=>element.name==="Color").value = alphanumericStringValidation("Color", (product.details.find(element=>element.name==="Color")||emptyDetailsObj).value);
+            //product.details.find(element=>element.name==="Color").value = alphanumericStringValidation("Color", (product.details.find(element=>element.name==="Color")||emptyDetailsObj).value);
             if(product.category==="laptops"){
                 product.details.find(element=>element.name==="System Memory (RAM)").value = alphanumericStringValidation("System Memory (RAM)", (product.details.find(element=>element.name==="System Memory (RAM)")||emptyDetailsObj).value);
                 product.details.find(element=>element.name==="Graphics").value = alphanumericStringValidation("Graphics", (product.details.find(element=>element.name==="Graphics")||emptyDetailsObj).value);
@@ -167,7 +179,7 @@
             else if(product.category==="phones"){
                 product.details.find(element=>element.name==="Total Storage Capacity").value = alphanumericStringValidation("Total Storage Capacity", (product.details.find(element=>element.name==="Total Storage Capacity")||emptyDetailsObj).value);
                 product.details.find(element=>element.name==="System Memory (RAM)").value = alphanumericStringValidation("System Memory (RAM)", (product.details.find(element=>element.name==="System Memory (RAM)")||emptyDetailsObj).value);
-                product.details.find(element=>element.name==="System Memory (RAM)").value = alphanumericStringValidation("Wireless Connectivity", (product.details.find(element=>element.name==="Wireless Connectivity")||emptyDetailsObj).value);
+                product.details.find(element=>element.name==="Wireless Connectivity").value = alphanumericStringValidation("Wireless Connectivity", (product.details.find(element=>element.name==="Wireless Connectivity")||emptyDetailsObj).value);
                 product.details.find(element=>element.name==="Battery Type").value = alphanumericStringValidation("Battery Type", (product.details.find(element=>element.name==="Battery Type")||emptyDetailsObj).value);
                 
             }
@@ -212,7 +224,8 @@
         errorDiv.addClass("hidden");
         errorLi.empty();
 
-        pictureUrl.push(picturesInput.val());
+        pictureUrl.push($("#frontImageUrl").val());
+        pictureUrl.push($("#rearImageUrl").val());
 
         let product = {
             name: nameInput.val(),
@@ -246,10 +259,10 @@
             name: "Operating System",
             value: $("#operatingSystem").val()
         });
-        product.details.push({
-            name: "Color",
-            value: $("#color").val()
-        });
+        // product.details.push({
+        //     name: "Color",
+        //     value: $("#color").val()
+        // });
 
         if(product.category === "laptops"){
             product.details.push({
@@ -359,7 +372,7 @@
             };
     
             $.ajax(requestConfig).then(function (responseMessage){
-                //console.log({responseMessage});
+                console.log(responseMessage);
                 if(responseMessage.error){
                     errorDiv.removeClass("hidden");
                     errorLi.append($("<li>").text(responseMessage.error));
