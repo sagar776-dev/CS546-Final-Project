@@ -1,109 +1,75 @@
-<div class="signup-page">
-  <div class="container text-center">
-    <h3>User Profile</h3>
-    <form id="user-form" method="POST">
+<script src="/public/js/userprofile.js"></script>
 
-      <div class="form-group">
-        <label for="firstName">First Name
-          <input
-            class="form-control"
-            type="text"
-            id="firstName"
-            
-            name="firstName"
-          />
-        </label>
+<div class="form-container">
+  <form id="edit-form" class="form-horizontal">
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="username" class="control-label">Username:</label>
       </div>
-
-      <div class="form-group">
-        <label for="lastName">Last Name
-          <input
-            class="form-control"
-            type="text"
-            id="lastName"
-            
-            name="lastName"
-          />
-        </label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="username" value={{user.username}} readonly>
       </div>
-
-      <div class="form-group">
-        <label for="email">Email ID
-          <input
-            class="form-control"
-            type="text"
-            id="email"
-            
-            name="email"
-          />
-        </label>
-      </div>
-
-      <div class="form-group">
-        <label for="gender">Gender
-          <select
-            class="form-control"
-            id="gender"
-           
-            name="gender"
-          >
-            <option value="man">Man</option>
-            <option value="woman">Woman</option>
-            <option value="transgender">Transgender</option>
-            <option
-              value="non-binary/non-conforming"
-            >Non-binary/Non-conforming</option>
-            <option value="prefer not to respond">Prefer not to respond</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="form-group">
-        <label for="currentpassword">Current Password
-          <input
-            class="form-control"
-            class="form-control"
-            type="password"
-            id="currentpassword"
-           
-            name="currentpassword"
-          />
-        </label>
-      </div>
-
-      <div class="form-group">
-        <label for="newpassword">New Password
-          <input
-            class="form-control"
-            type="password"
-            id="newPassword"
-            
-            name="newPassword"
-          />
-        </label>
-      </div>
-
-      <div class="form-group">
-        <label for="passwordConfirm">Confirm Password
-          <input
-            class="form-control"
-            type="password"
-            id="passwordConfirm"
-            name="passwordConfirm"
-          />
-        </label>
-      </div>
-
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-    </form>
-
-    <div id="errorDiv" class="error hidden">
-      <ul id="errorlist">
-      </ul>
     </div>
-
-    <script src="/public/js/userprofile.js"></script>
-  </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="email" class="control-label">Email:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="email" value={{user.email}}>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="firstname" class="control-label">First Name:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="firstname" value={{user.firstName}}>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="lastname" class="control-label">Last Name:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="lastname" value={{user.lastName}}>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="gender" class="control-label">Gender:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="gender" value={{user.gender}} readonly>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="current-password" class="control-label">Current Password:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="current-password">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="new-password" class="control-label">New Password:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="new-password">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label for="confirm-new-password" class="control-label">Confirm New Password:</label>
+      </div>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="confirm-new-password">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" value="Submit" class="btn btn-dark">
+      </div>
+    </div>
+  </form>
 </div>

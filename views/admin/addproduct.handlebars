@@ -1,0 +1,402 @@
+<div class="add-product">
+    <div class="container text-center">
+        <p class="h3">Add Product</p>
+        <form id="product-add-form" class="product-add-form" method="POST">
+            <div class="form-group">
+                <label for="name">Name
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="name"
+                    name="name"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="manufacturer"
+                    name="manufacturer"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="releaseDate">Release Date
+                    <input
+                    class="form-control"
+                    type="date"
+                    id="startDate"
+                    name="startDate"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="price"
+                    name="price"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="url">BestBuy url
+                    <input
+                    class="form-control"
+                    type="url"
+                    id="url"
+                    name="url"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="description"
+                    name="description"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="pictures">Front Picture url
+                    <input
+                    class="form-control"
+                    type="url"
+                    id="frontImageUrl"
+                    name="pictures[]"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="pictures">Rear Picture url
+                    <input
+                    class="form-control"
+                    type="url"
+                    id="rearImageUrl"
+                    name="pictures[]"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category
+                    <select
+                    class="form-control"
+                    id="category"
+                    name="category"
+                    >
+                    <option value="">Select one...</option>
+                    <option value="phones">Phone</option>
+                    <option value="laptops">Laptop</option>
+                    <option value="tablets">Tablet</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="screenSize">Screen Size
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="screenSize"
+                    name="screenSize"
+                    >
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="processorModel">Processor Model
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="processorModel"
+                    name="processorModel"
+                    >
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="screenRes">Screen Resolution
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="screenRes"
+                    name="screenRes"
+                    >
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="operatingSystem">Operating System
+                    <input
+                    class="form-control"
+                    type="text"
+                    id="operatingSystem"
+                    name="operatingSystem"
+                    >
+                </label>
+            </div>
+
+            <div id="spec-div-laptops" class="spec-div-laptops">
+                <div class="form-group">
+                    <label for="ram-laptops">System Memory (RAM)
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="ram-laptops"
+                        name="ram-laptops"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="graphics">Graphics
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="graphics"
+                        name="graphics"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="storageType">Storage Type
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="storageType"
+                        name="storageType"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="laptopStorage">Total Storage Capacity
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="laptopStorage"
+                        name="laptopStorage"
+                        >
+                    </label>
+                </div>
+
+                <div class="form-group">
+                <label for="touchScreen">Touch Screen
+                    <select
+                    class="form-control"
+                    id="touchScreen"
+                    name="touchScreen"
+                    >
+                    <option value="">Select one...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    </select>
+                </label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="processorModelNo">Processor Model Number
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="processorModelNo"
+                        name="processorModelNo"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="laptopBatteryType">Battery Type
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="laptopBatteryType"
+                        name="batteryType"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                <label for="backlitKeyboard">Backlit Keyboard
+                    <select
+                    class="form-control"
+                    id="backlitKeyboard"
+                    name="backlitKeyboard"
+                    >
+                    <option value="">Select one...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    </select>
+                </label>
+                </div>
+                <div class="form-group">
+                    <label for="laptop-brand">Brand
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="laptop-brand"
+                        name="brand"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="modelNumber">Model Number
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="modelNumber"
+                        name="modelNumber"
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <div id="spec-div-tablets" class="spec-div-tablets">
+                <div class="form-group">
+                    <label for="carrier">Carrier
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="carrier"
+                        name="carrier"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="wirelessTech">Wireless Technology
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="wirelessTech"
+                        name="wirelessTech"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="voiceAssistant">Voice Assistant Built-in
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="voiceAssistant"
+                        name="voiceAssistant"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="camera">Rear-Facing Camera
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="camera"
+                        name="camera"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="tabletBrand">Brand
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="tabletBrand"
+                        name="tabletBrand"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                <label for="bluetoothEnabled">Bluetooth Enabled
+                    <select
+                    class="form-control"
+                    id="bluetoothEnabled"
+                    name="bluetoothEnabled"
+                    >
+                    <option value="">Select one...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    </select>
+                </label>
+            </div>
+                <div class="form-group">
+                    <label for="kbType">Keyboard Type
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="kbType"
+                        name="kbType"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="wirelessCompatability">Wireless Compatibility
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="wirelessCompatability"
+                        name="wirelessCompatability"
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <div id="spec-div-phones" class="spec-div-phones">
+                <div class="form-group">
+                    <label for="phoneStorage">Total Storage Capacity
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="phoneStorage"
+                        name="phoneStorage"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="ram-phones">System Memory (RAM)
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="ram-phones"
+                        name="ram-phones"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="wirelessConnectivity">Wireless Connectivity
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="wirelessConnectivity"
+                        name="wirelessConnectivity"
+                        >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="phoneBatteryType">Battery Type
+                        <input
+                        class="form-control"
+                        type="text"
+                        id="phoneBatteryType"
+                        name="phoneBatteryType"
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-dark" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div id="errorDiv" class="error hidden">
+            <ul id="errorlist">
+            </ul>
+        <div>
+    </div>
+</div>
+
+<script src="/public/js/adminadd.js"></script>

@@ -22,8 +22,8 @@ let exportedMethods = {
 
         const productCollection = await products();
         product.visitedTimes++;
-        const updatedInfo = await productCollection.updateOne({_id: skuId}, {$set: {visitedTimes: product.visitedTimes}});
-        if(updatedInfo.modifiedCount === 0) throw "Could not update the product with the counter";
+        const updatedInfo = await productCollection.updateOne({ _id: skuId }, { $set: { visitedTimes: product.visitedTimes } });
+        if (updatedInfo.modifiedCount === 0) throw "Could not update the product with the counter";
 
         let updatedProduct = this.getProductsByID(skuId);
         return updatedProduct;
@@ -98,13 +98,15 @@ let exportedMethods = {
         return product;
     },
     //get product by release date andcategory
-    async getProductsByReleaseDateandCategory(releaseDate,category) {
+    async getProductsByReleaseDateandCategory(releaseDate, category) {
         //validation start
         category = category;
         //validation end
         const productCollection = await products();
-        let product = await productCollection.find({ category: category,
-        releaseDate:releaseDate }).toArray()
+        let product = await productCollection.find({
+            category: category,
+            releaseDate: releaseDate
+        }).toArray()
         if (!product) throw 'Product not found';
         return product;
     },
@@ -134,7 +136,7 @@ let exportedMethods = {
                         "sku": laptop._id,
                         "name": laptop.name,
                         "url": laptop.url,
-                        "Price":'$'+laptop.price,
+                        "Price": '$' + laptop.price,
                         "Rating": laptop.customerReviewAverage,
                         "Processor Model": "",
                         "System Memory (RAM)": "",
@@ -167,7 +169,7 @@ let exportedMethods = {
                     errors.push({ error: `Product:${productsListSKU[i]} not a laptop, you need to use ${laptop.category} category` })
                 }
             } catch (e) {
-                console.log(e);
+                //console.log(e);
                 errors.push({ error: `Product id:${productsListSKU[i]} not found` })
             }
         }
@@ -283,6 +285,7 @@ let exportedMethods = {
         sku,
         name,
         manufacturer,
+        category,
         startDate,
         price,
         url,
@@ -301,7 +304,7 @@ let exportedMethods = {
             }
         }
         catch (e) {
-            console.log(e);
+            //console.log(e);
         }
         name = name; // Name
         manufacturer = manufacturer; // manufacturer
@@ -312,6 +315,7 @@ let exportedMethods = {
         Description = Description; // Description if null
         pictures = pictures; // if null dont show
         details = details; // array with objects
+        category = category;
         //validation end
         //static
         customerReviewAverage = 0
@@ -337,6 +341,7 @@ let exportedMethods = {
             Description,
             pictures,
             details,
+            category,
             reviews,
             visitedTimes,
             comments,
@@ -348,7 +353,7 @@ let exportedMethods = {
     },
     async removeProduct(skuId) {
         //validation start
-        skuId = ParseInt(skuId);
+        skuId = parseInt(skuId);
         //validation end
         const productCollection = await products();
         const product = await productCollection.findOne({ _id: skuId });
@@ -415,11 +420,11 @@ let exportedMethods = {
                 throw 'URL is not found';
             });
         let final = [];
-        console.log(data.totalPages)
+        //console.log(data.totalPages)
         if (data.totalPages > 1) {
             for (let i = 1; i <= data.totalPages; i++) {
                 final = final.concat(await this.getProductsByAxios1(i, key, API_KEY))
-                console.log(final.length)
+                //console.log(final.length)
             }
         }
         else {
@@ -428,20 +433,20 @@ let exportedMethods = {
         return final; // this will be the array of people objects
     },
     //Will return the Top 5 popular products in each category
-    async getPopularProducts(){
+    async getPopularProducts() {
         const productCollection = await products();
 
-        const popularLaptops = await productCollection.find({category:"laptops"})
-                                                        .sort({visitedTimes:-1}).limit(5).toArray();
-        if(!popularLaptops) throw "Error: Could not fetch popular Laptops from DB";
+        const popularLaptops = await productCollection.find({ category: "laptops" })
+            .sort({ visitedTimes: -1 }).limit(5).toArray();
+        if (!popularLaptops) throw "Error: Could not fetch popular Laptops from DB";
 
-        const popularPhones = await productCollection.find({category:"phones"})
-                                                        .sort({visitedTimes:-1}).limit(5).toArray();
-        if(!popularPhones) throw "Error: Could not fetch popular phones from DB";
+        const popularPhones = await productCollection.find({ category: "phones" })
+            .sort({ visitedTimes: -1 }).limit(5).toArray();
+        if (!popularPhones) throw "Error: Could not fetch popular phones from DB";
 
-        const popularTablets = await productCollection.find({category:"tablets"})
-                                                        .sort({visitedTimes:-1}).limit(5).toArray();
-        if(!popularTablets) throw "Error: Could not fetch popular tablets from DB";
+        const popularTablets = await productCollection.find({ category: "tablets" })
+            .sort({ visitedTimes: -1 }).limit(5).toArray();
+        if (!popularTablets) throw "Error: Could not fetch popular tablets from DB";
 
         const popularProducts = {
             laptops: popularLaptops,
@@ -541,7 +546,7 @@ let exportedMethods = {
         }
         details = fixDetails;
         // fixes end
-        let visitedTimes = 0;
+        let visitedTimes = Math.floor(Math.random() * 100);
         let comments = [];
         let qna = [];
 
@@ -568,6 +573,13 @@ let exportedMethods = {
         const newInsertInformation = await productCollection.insertOne(newProduct);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
         return `Product been added with id: ${sku}`;
+    },
+
+    async getMaxSku() {
+        const productCollection = await products();
+
+        const product = await productCollection.find().sort({ _id: -1 }).limit(1).toArray();
+        return product[0]._id;
     },
 }
 

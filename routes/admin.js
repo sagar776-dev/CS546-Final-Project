@@ -2,79 +2,124 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const productData = data.products;
-// const validation = require('../helpers');
-const path = require('path');
+const validation = require('../helper/adminValidation');
+//const multer = require('multer');
+
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './public/images/uploads')
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname)
+//   }
+// })
+// var upload = multer({ storage: storage }).single("pictures");
 
 router
     .route('/')
     .get(async (req, res) => {
-        let url_query = req.query
-        //move to validation - object to lowercase
-        let key, keys = Object.keys(url_query);
-        let n = keys.length;
-        let newobj = {}
-        while (n--) {
-            key = keys[n];
-            newobj[key.toLowerCase()] = url_query[key];
-        }
-        //validation start
-        let findsku = parseInt(newobj.findsku)
-        console.log(findsku)
-        //validation end
-        let product = {};
-        let pictures = [];
-        let details = {};
         try {
-            if (findsku !== undefined) {
-                product = await productData.getProductsByID(findsku)
-                //pictures 
-                //details
-            }
+            res.render('admin/admin_main');
         } catch (e) {
-            return res.status(400).render('admin/admin_main', { error: e });
+            return res.status(404).json({ error: e });
         }
+    })
+    .put(async (req, res) => {
+        //add
         try {
-            res.render('admin/update_product', { product: product, pictures: product.pictures, details: product.details })
+            let product = req.body;
+            product = validation.inputValidation(product);
+
+            const maxSku = await productData.getMaxSku();
+            const skuId = maxSku + 1;
+
+            const responseMessage = await productData.addProduct(skuId, product.name, product.manufacturer, product.category, product.startDate, 
+                product.price, product.url, true, product.Description, product.pictures, product.details);
+            
+            return res.status(200).json({responseMessage: responseMessage});
+
         } catch (e) {
-            return res.status(404).render('admin/update_product', { error: e });
+            //console.log(e);
+            return res.status(200).json({ error: e.toString() });
         }
     })
     .post(async (req, res) => {
         //update
         try {
-            res.render('admin/admin_main')
+            let product = req.body;
+            product.skuId = validation.validateSkuId(product.skuId);
+            product = validation.inputValidation(product);
+
+            // upload(req, res, function(error){
+            //     if(error) {
+            //         //console.log(error);
+            //     }
+            //     product.pictures.push(req.file.path);
+            // });
+
+            const responseMessage = await productData.updateProduct(product.skuId, product.name, product.manufacturer, product.startDate,
+                product.price, product.url, true, product.Description, product.pictures, product.details);
+
+            return res.status(200).json({responseMessage:responseMessage});
         } catch (e) {
-            return res.status(404).json({ error: e });
+            //console.log(e);
+            return res.status(200).json({ error: e.toString()});
         }
     })
+// router
+//     .route('/:id')
+//     .delete(async (req, res) => {
+//         //remove
+//         let skuId = req.body.skuId;
+//         try {
+//             //validation start
+//             skuId = validation.validateSkuId(skuId);
+//             skuId = parseInt(skuId);
+//             let responseMessage = await productData.removeProduct(skuId);
+//             return res.status(200).json({responseMessage: responseMessage});
+//         } catch (error) {
+//             //console.log(error);
+//             return res.status(200).json({ error: error });
+//         }
+//     });
+
 router
-    .route('/:id')
-    .put(async (req, res) => {
-        //add
-        req.params.id = parseInt(req.params.id);
-        try {
-            let a = await productData.getProductsByID(req.params.id)
-            res.render('admin/admin_main')
-        } catch (e) {
-            return res.status(404).json({ error: e });
-        }
-    })
-router
-    .route('/:id')
-    .delete(async (req, res) => {
+    .route('/delete/:id')
+    .get(async (req, res) => {
         //remove
+        let skuId = req.params.id;
         try {
             //validation start
-            let deleteSKU = parseInt(req.params.id);
-            console.log(deleteSKU)
-            //validation end
-            let a = await productData.getProductsByID(deleteSKU)
-            await productData.removeProduct(deleteSKU)
-            res.render('admin/admin_main', { SKU_ID: deleteSKU })
-        } catch (e) {
-            return res.status(404).json({ error: e });
+            skuId = validation.validateSkuId(skuId);
+            skuId = parseInt(skuId);
+            let responseMessage = await productData.removeProduct(skuId);
+            return res.status(200).json({responseMessage: responseMessage});
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({ error: error });
         }
-    })
+    });
+
+router
+    .route('/addproduct')
+    .get(async (req, res) => {
+        try {
+            res.render('admin/addproduct');
+        } catch (error) {
+            return res.status(500).json({error: error});
+        }
+    });
+
+router
+    .route('/updateproduct')
+    .get(async (req, res) => {
+        try {
+            res.render('admin/updateproduct');
+        } catch (error) {
+            return res.status(500).json({error: error});
+        }
+    });
+
 router
     .route('/checkUsers')
     .get(async (req, res) => {

@@ -6,7 +6,7 @@ const homeRoutes = require('./home');
 const qnaRoutes = require('./qna');
 
 const constructorMethod = (app) => {
-    app.use('/api/admin', adminRoutes);
+    app.use('/admin', adminRoutes);
     app.use('/api/products', productsRoutes);
     app.use('/api/reviews', reviewsRoutes);
     app.use('/users', usersRoutes);

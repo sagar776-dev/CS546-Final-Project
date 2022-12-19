@@ -37,6 +37,10 @@ const likeReview = async (review_id, username) => {
   const userCollections = await mongoCollections.users();
   let user = await userCollections.findOne({ username: username });
   let insertInfo;
+  if(user.dislikedReviews.includes(review_id)){
+    await dislikeReview(review_id, username);
+  }
+  user = await userCollections.findOne({ username: username });
   if (!user.likedReviews.includes(review_id)) {
     user.likedReviews.push(review_id);
     insertInfo = await productCollections.updateOne(
@@ -69,15 +73,17 @@ const likeReview = async (review_id, username) => {
     let updatedProduct = await productCollections.findOne({ _id: product_id });
     updatedProduct.reviews.forEach((element) => {
       if (element._id == review_id) {
-        latestLikeCount = element.like;
+        latestdisLikeCount = element.dislike;
+        latestLikeCount = element.like
       }
     });
   } else {
     // If the update was not successful
     latestLikeCount = 0;
+    latestdisLikeCount = 0;
   }
 
-  return latestLikeCount;
+  return {likeCount: latestLikeCount, dislikeCount: latestdisLikeCount};
 };
 
 const dislikeReview = async (review_id, username) => {
@@ -98,6 +104,11 @@ const dislikeReview = async (review_id, username) => {
   const userCollections = await mongoCollections.users();
   let user = await userCollections.findOne({ username: username });
   let insertInfo;
+
+  if(user.likedReviews.includes(review_id)){
+    await likeReview(review_id, username);
+  }
+  user = await userCollections.findOne({ username: username });
   if (!user.dislikedReviews.includes(review_id)) {
     user.dislikedReviews.push(review_id);
     insertInfo = await productCollections.updateOne(
@@ -124,21 +135,23 @@ const dislikeReview = async (review_id, username) => {
       throw "Could not dislike";
   }
 
-  let latestdisLikeCount;
+  let latestdisLikeCount, latestLikeCount;
   if (insertInfo.modifiedCount > 0) {
     // If the update was successful, retrieve the updated document and get the latest value of "like"
     let updatedProduct = await productCollections.findOne({ _id: product_id });
     updatedProduct.reviews.forEach((element) => {
       if (element._id == review_id) {
         latestdisLikeCount = element.dislike;
+        latestLikeCount = element.like
       }
     });
   } else {
     // If the update was not successful
     latestdisLikeCount = 0;
+    latestLikeCount = 0;
   }
 
-  return latestdisLikeCount;
+  return {likeCount: latestLikeCount, dislikeCount: latestdisLikeCount};
 };
 
 const createReview = async (
