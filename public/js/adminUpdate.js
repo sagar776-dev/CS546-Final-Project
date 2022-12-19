@@ -145,7 +145,7 @@
             errorList.push("Must select one of the three categories");
         }
         
-        if(product.pictures.length < 2){
+        if(product.pictures.length !== 2){
             errorList.push("Both front and rear image urls of the Product must be submitted");
         }else{
             for (let i=0; i< product.pictures.length; i++) {
