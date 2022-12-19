@@ -245,6 +245,7 @@ const updateProfile = async (user) => {
   let tempuser = await usersCollection.findOne({ username: user.username });
 
   if (!tempuser) throw "Error: User does not exists";
+  newuser.gender=tempuser.gender;
   if (user.currentPassword) {
     if (user.newPassword.length !== 0) {
       currentPassword = userValidate.validatePassword(user.currentPassword);
@@ -266,7 +267,6 @@ const updateProfile = async (user) => {
     if (
       tempuser.firstName == firstName &&
       tempuser.lastName == lastName &&
-      tempuser.gender == gender &&
       tempuser.email == email
     )
       throw "No Change in details to modify the user profile";

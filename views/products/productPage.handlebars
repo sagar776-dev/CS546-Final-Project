@@ -1,133 +1,130 @@
 <script src="/public/js/reviews.js"></script>
 <script src="/public/js/productpage.js"></script>
 
-{{#if error}}
-<p class="error text-danger">{{error}}</p>
-{{else}}
-<div class="container product-page">
-  {{#if error}}
-  <p class="error text-danger">{{error}}</p>
-  {{/if}}
-
-  <div class="product-info row">
-    <div class="col-sm-6">
-      <h1 id="name_field">{{product.name}}</h1>
-      <p id="id_field" hidden>ID: {{product._id}}</p>
-      <p id="category_field">Category: {{product.category}}</p>
-      <p>Manufacturer: {{product.manufacturer}}</p>
-      <p>Price: {{product.price}}</p>
-      <p>Start Date: {{product.startDate}}</p>
-      <p>In-store Availability: {{product.inStoreAvailability}}</p>
-    </div>
-    <div class="col-sm-6">
-      <p>Best Buy Rating: {{product.customerReviewAverage}}</p>
-      {{#if product.overallRating}}
-      <p>LookUpDevice Users Rating: {{product.overallRating}}</p>
-      {{/if}}
-    </div>
-  </div>
-
-  <div id="product-images" class="carousel">
-    {{#each pictures}}
-    <img src={{this}} alt={{this}} width="300" height="250" class="img-fluid" />
-    {{/each}}
-  </div>
-
-  <div class="actions mt-3">
-    <p id="isWishListed" hidden>{{isWishlisted}}</p>
-    <p id="remove-wishlist-p">Remove from wishlist :
-      <a id="remove-wishlist" class="btn btn-danger btn-xs">Remove</a>
-    </p>
-    <p id="add-wishlist-p">Add to wishlist :
-      <a id="add-wishlist" class="btn btn-success btn-xs">Add</a>
-    </p>
-    {{!-- <p>Wishlist:{{isWishlisted}}
-      <input type="checkbox" id="wishlistcheckbox" value="wishlisted" {{#if isWishlisted}}checked{{/if}} /> --}}
-    <p>Compare product:
-      <label for="comparecheckbox">
-        <input type="checkbox" id="comparecheckbox" value="compared" />
-      </label>
-      {{! <button id="compare" class="btn btn-success btn-xs" type="button">Add to Compare</button> }}
-    </p>
-  </div>
-
-  <h2 class="mt-3">Description:</h2>
-  <p>{{product.description}}</p>
-
-  <h3 class="mt-3">Details:</h3>
-  <table class="table table-striped">
-
-    <tr>
-      <th>Name</th>
-      <th>Spec</th>
-    </tr>
-    {{#each details}}
-    <tr>
-      <td>{{name}}</td>
-      <td>{{value}}</td>
-    </tr>
-    {{/each}}
-  </table>
-
-
-  <a href="/api/qna/{{product._id}}" class="btn btn-dark">Ask a Question</a>
-  <a href="/api/reviews/{{product._id}}" class="btn btn-dark">Add a review</a>
-
-
-  <table class="table table-striped">
-    {{#each product.qna}}
-    <thead>
-      <tr>
-        <th>Question</th>
-        <th>Answer</th>
-        <th>Author</th>
-        <th>Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{question}}</td>
-        {{#if answer}}
-        <td>{{answer.answer}}</td>
-        <td>{{answer.author}}</td>
-        <td>{{answer.date}}</td>
-        <td></td>
-        {{else}}
-        <td colspan="3">No answer yet</td>
-
-        <td><a href="/api/qna/answer/{{_id}}" class="btn btn-dark">Add Answer</a></td>
-        {{/if}}
-      </tr>
-    </tbody>
-    {{/each}}
-  </table>
-
-  <div class="container">
-    {{#each product.reviews}}
-    <div class="card mt-4">
-      <div class="card-header">
-        <h4>{{reviewTitle}}</h4>
-        <p>By {{reviewerName}} on {{reviewDate}}</p>
+<div id="content-wrap-product">
+  <div class="container product-page">
+    {{#if error}}
+    <p class="error text-danger">{{error}}</p>
+    {{else}}
+    {{/if}}
+    <br>
+    <div class="product-info row">
+      <div class="col-sm-6">
+        <h1 id="name_field">{{product.name}}</h1>
+        <p id="id_field" hidden>ID: {{product._id}}</p>
+        <p id="category_field">Category: {{product.category}}</p>
+        <p>Manufacturer: {{product.manufacturer}}</p>
+        <p>Price: {{product.price}}</p>
+        <p>Start Date: {{product.startDate}}</p>
+        <p>In-store Availability: {{product.inStoreAvailability}}</p>
       </div>
-      <div class="card-body">
-        <p>{{review}}</p>
-        {{#if pictures}}
-        <div class="row mt-4">
-          {{#each pictures}}
-          <div class="col-md-3">
-            <img src="{{this}}" class="img-fluid">
-          </div>
-          {{/each}}
+      <div class="col-sm-6">
+        <p>Best Buy Rating: {{product.customerReviewAverage}}</p>
+        {{#if product.overallRating}}
+        <p>LookUpDevice Users Rating: {{product.overallRating}}</p>
+        {{/if}}
+      </div>
+    </div>
+    <div id="product-images" class="carousel">
+      {{#each pictures}}
+      <img src={{this}} alt={{this}} width="300" height="250" class="img-fluid" />
+      {{/each}}
+    </div>
+    <div class="actions mt-3">
+      <p id="isWishListed" hidden>{{isWishlisted}}</p>
+      <p id="remove-wishlist-p">Remove from wishlist :
+        <a id="remove-wishlist" class="btn btn-danger btn-xs">Remove</a>
+      </p>
+      <p id="add-wishlist-p">Add to wishlist :
+        <a id="add-wishlist" class="btn btn-success btn-xs">Add</a>
+      </p>
+      {{!-- <p>Wishlist:{{isWishlisted}}
+        <input type="checkbox" id="wishlistcheckbox" value="wishlisted" {{#if isWishlisted}}checked{{/if}} /> --}}
+      <p>Compare product:
+        <label for="comparecheckbox">
+          <input type="checkbox" id="comparecheckbox" value="compared" />
+        </label>
+        {{! <button id="compare" class="btn btn-success btn-xs" type="button">Add to Compare</button> }}
+      </p>
+    </div>
+    <div class="container text-center">
+      <br>
+      <a href="/api/qna/{{product._id}}" class="btn btn-dark">Ask a Question</a>
+      <br>
+      <br>
+      <a href="/api/reviews/{{product._id}}" class="btn btn-dark">Add a review</a>
+      <br>
+    </div>
+    <h2 class="mt-3">Description:</h2>
+    <p>{{product.description}}</p>
+    <h3 class="mt-3">Details:</h3>
+    <table class="table table-striped">
+
+      <tr>
+        <th>Name</th>
+        <th>Spec</th>
+      </tr>
+      {{#each details}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{value}}</td>
+      </tr>
+      {{/each}}
+    </table>
+    <table class="table table-striped">
+      {{#each product.qna}}
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+          <th>Author</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{question}}</td>
+          {{#if answer}}
+          <td>{{answer.answer}}</td>
+          <td>{{answer.author}}</td>
+          <td>{{answer.date}}</td>
+          <td></td>
+          {{else}}
+          <td colspan="3">No answer yet</td>
+
+          <td><a href="/api/qna/answer/{{_id}}" class="btn btn-dark">Add Answer</a></td>
+          {{/if}}
+        </tr>
+      </tbody>
+      {{/each}}
+    </table>
+    <div class="container product-reviews">
+      {{#each product.reviews}}
+      <div class="card mt-4">
+        <div class="card-header">
+          <h4>{{reviewTitle}}</h4>
+          <p>By {{reviewerName}} on {{reviewDate}}</p>
         </div>
-        {{/if}}
+        <div class="card-body">
+          <p>{{review}}</p>
+          {{#if pictures}}
+          <div class="row mt-4">
+            {{#each pictures}}
+            <div class="col-md-3">
+              <img src="{{this}}" class="img-fluid">
+            </div>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <button class="btn btn-dark like-btn" data-review-id="{{_id}}">Like ({{like}})</button>
+          <button class="btn btn-secondary dislike-btn" data-review-id="{{_id}}">Dislike ({{dislike}})</button>
+        </div>
       </div>
-      <div class="card-footer d-flex justify-content-between">
-        <button class="btn btn-dark like-btn" data-review-id="{{_id}}">Like ({{like}})</button>
-        <button class="btn btn-secondary dislike-btn" data-review-id="{{_id}}">Dislike ({{dislike}})</button>
-      </div>
+      {{/each}}
     </div>
-    {{/each}}
+    <br>
   </div>
 </div>
-{{/if}}
