@@ -388,11 +388,11 @@ const main = async () => {
 
     let users = [
         {
-            "username": "sagar776",
+            "username": "johndoe",
             "password": "Test.1234",
-            "firstName": "Sagar",
-            "lastName": "Mathada",
-            "email": "sagara199@gmail.com",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "johndoe@gmail.com",
             "gender": "man",
             "userType": "user",
             "history": [

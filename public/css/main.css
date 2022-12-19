@@ -93,16 +93,17 @@
 
 #content-wrap {
   padding-bottom: 2.5rem;
-  /* Footer height */
 }
-
+#content-wrap-product {
+  padding-bottom: 2.5rem;
+}
 #footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 2.5rem;
-  /* Footer height */
 }
+
 
 /* [data-theme="dark"]{
   background-color: #111 !important;
