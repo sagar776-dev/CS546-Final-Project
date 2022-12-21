@@ -2,6 +2,8 @@ const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const funcProducts = data.products;
 const userData = data.users;
+const reviewsData = data.reviews;
+const qnaData = data.qna;
 const fs = require('fs');
 
 const main = async () => {
@@ -83,7 +85,15 @@ const main = async () => {
                 data_lap[i].details,
                 "laptops"
             ));
+            let a = await reviewsData.createReview(
+                `${data_lap[i].sku}`,
+                "Great Laptop",
+                "Bob",
+                "One of the Best Laptop",
+                5
+            )
         }
+        console.log("here")
     } catch (e) {
         console.log(e)
     }
@@ -118,6 +128,13 @@ const main = async () => {
                 data_tab[i].details,
                 "tablets"
             ));
+            let a = await reviewsData.createReview(
+                `${data_tab[i].sku}`,
+                "Great Tablets",
+                "Bob",
+                "One of the Best Tablets",
+                5
+            )
         }
     }
     catch (e) {
@@ -154,262 +171,271 @@ const main = async () => {
                 data_pho[i].details,
                 "phones"
             ));
+            let a = await reviewsData.createReview(
+                `${data_pho[i].sku}`,
+                "Great Phones",
+                "Bob",
+                "One of the Best Phones",
+                5
+            )
         }
     } catch (e) {
         console.log(e)
     }
 
-    //test cases
-    //addProduct 1111111
-    console.log()
-    console.log("addProduct")
-    try {
-        //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
-        console.log(await funcProducts.addProduct(
-            1111111,
-            "Yes",
-            "Yes manufacturer",
-            "Yes startDate",
-            "Yes price",
-            "Yes url",
-            "Yes inStoreAvailability",
-            "Yes Description",
-            "Yes pictures",
-            "Yes details",
-            "laptop"
-        ));
-    } catch (e) {
-        console.log(e)
-    }
-    //addProduct 1111111 (error)
-    console.log()
-    console.log("addProduct")
-    try {
-        //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
-        console.log(await funcProducts.addProduct(
-            1111111,
-            "Yes",
-            "Yes manufacturer",
-            "Yes startDate",
-            "Yes price",
-            "Yes url",
-            "Yes inStoreAvailability",
-            "Yes Description",
-            "Yes pictures",
-            "Yes details",
-            "laptop"
-        ));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getProductsByID")
-    try {
-        console.log(await funcProducts.getProductsByID(1111111));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getProductsByManufacturer")
-    try {
-        await funcProducts.getProductsByManufacturer("Acer");
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getAllProducts")
-    try {
-        await funcProducts.getAllProducts();
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("updateProduct")
-    try {
-        // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
-        console.log(await funcProducts.updateProduct(
-            111111,
-            "Best",
-            "Markovka",
-            "20-29-2022",
-            1234.99,
-            "utl",
-            true,
-            "Description",
-            [1, 2, 3],
-            [{ "0": 0 }, { "1": 1 }, { "2": 2 }]));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("removeProduct")
-    try {
-        // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
-        console.log(await funcProducts.removeProduct(1111111));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("compareProducts(111111)")
-    try {
-        console.log(await funcProducts.compareProducts(1111111));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("compareProducts(111111, 6447818, 6502184)")
-    try {
-        console.log(await funcProducts.compareProducts(1111111, 6447818, 6502184));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getProductsByManufacturer(HP)")
-    try {
-        console.log(await funcProducts.getProductsByManufacturer("HP"));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getManufacturersOfProducts()")
-    try {
-        console.log(await funcProducts.getManufacturersOfProducts());
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getProductByName(HP)")
-    try {
-        console.log(await funcProducts.getProductByName("HP"));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getProductsByCategory(laptops)")
-    try {
-        console.log(await funcProducts.getProductsByCategory("laptops"));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("getProductsByCategoryAndManufacturer(laptops, manufacturer)")
-    try {
-        console.log(await funcProducts.getProductsByCategoryAndManufacturer("laptops", "Acer"));
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("compareLaptops(productsListSKU)")
-    let compare = 0;
-    try {
-        compare = await funcProducts.compareLaptops([6447818, 6518252, 6477889, 6502230, 6509654])
-        console.log(compare[0]);
-        console.log(compare[1]);
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("different products compareLaptops(productsListSKU)")
-    compare = 0;
-    try {
-        compare = await funcProducts.compareLaptops([6447818, 6477100, 6477093, 6502230, 6487439]);
-        console.log(compare[0]);
-        console.log(compare[1]);
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("comparePhones(productsListSKU)")
-    compare = 0;
-    try {
-        compare = await funcProducts.comparePhones([6487439, 6487254, 6468291, 6520023, 6487356]);
-        console.log(compare[0]);
-        console.log(compare[1]);
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("different products comparePhones(productsListSKU)")
-    compare = 0;
-    try {
-        compare = await funcProducts.comparePhones([6447818, 6477100, 6477093, 6502230, 6487439]);
-        console.log(compare[0]);
-        console.log(compare[1]);
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("compareTablets(productsListSKU)")
-    compare = 0;
-    try {
-        compare = await funcProducts.compareTablets([6517642, 6492318, 6340608, 4263701, 6461942]);
-        console.log(compare[0]);
-        console.log(compare[1]);
-    } catch (e) {
-        console.log(e)
-    }
-    console.log()
-    console.log("different products compareTablets(productsListSKU)")
-    compare = 0;
-    try {
-        compare = await funcProducts.compareTablets([6461942, null, 6477093, 6340498, 6487439]);
-        console.log(compare[0]);
-        console.log(compare[1]);
-    } catch (e) {
-        console.log(e)
-    }
+    // //test cases
+    // //addProduct 1111111
+    // console.log()
+    // console.log("addProduct")
+    // try {
+    //     //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
+    //     console.log(await funcProducts.addProduct(
+    //         1111111,
+    //         "Yes",
+    //         "Yes manufacturer",
+    //         "Yes startDate",
+    //         "Yes price",
+    //         "Yes url",
+    //         "Yes inStoreAvailability",
+    //         "Yes Description",
+    //         "Yes pictures",
+    //         "Yes details",
+    //         "laptop"
+    //     ));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // //addProduct 1111111 (error)
+    // console.log()
+    // console.log("addProduct")
+    // try {
+    //     //sku,name,manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details,category
+    //     console.log(await funcProducts.addProduct(
+    //         1111111,
+    //         "Yes",
+    //         "Yes manufacturer",
+    //         "Yes startDate",
+    //         "Yes price",
+    //         "Yes url",
+    //         "Yes inStoreAvailability",
+    //         "Yes Description",
+    //         "Yes pictures",
+    //         "Yes details",
+    //         "laptop"
+    //     ));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getProductsByID")
+    // try {
+    //     console.log(await funcProducts.getProductsByID(1111111));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getProductsByManufacturer")
+    // try {
+    //     await funcProducts.getProductsByManufacturer("Acer");
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getAllProducts")
+    // try {
+    //     await funcProducts.getAllProducts();
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("updateProduct")
+    // try {
+    //     // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
+    //     console.log(await funcProducts.updateProduct(
+    //         111111,
+    //         "Best",
+    //         "Markovka",
+    //         "20-29-2022",
+    //         1234.99,
+    //         "utl",
+    //         true,
+    //         "Description",
+    //         [1, 2, 3],
+    //         [{ "0": 0 }, { "1": 1 }, { "2": 2 }]));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("removeProduct")
+    // try {
+    //     // sku,name, manufacturer,startDate,price,url,inStoreAvailability,Description,pictures,details
+    //     console.log(await funcProducts.removeProduct(1111111));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("compareProducts(111111)")
+    // try {
+    //     console.log(await funcProducts.compareProducts(1111111));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("compareProducts(111111, 6447818, 6502184)")
+    // try {
+    //     console.log(await funcProducts.compareProducts(1111111, 6447818, 6502184));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getProductsByManufacturer(HP)")
+    // try {
+    //     console.log(await funcProducts.getProductsByManufacturer("HP"));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getManufacturersOfProducts()")
+    // try {
+    //     console.log(await funcProducts.getManufacturersOfProducts());
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getProductByName(HP)")
+    // try {
+    //     console.log(await funcProducts.getProductByName("HP"));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getProductsByCategory(laptops)")
+    // try {
+    //     console.log(await funcProducts.getProductsByCategory("laptops"));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("getProductsByCategoryAndManufacturer(laptops, manufacturer)")
+    // try {
+    //     console.log(await funcProducts.getProductsByCategoryAndManufacturer("laptops", "Acer"));
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("compareLaptops(productsListSKU)")
+    // let compare = 0;
+    // try {
+    //     compare = await funcProducts.compareLaptops([6447818, 6518252, 6477889, 6502230, 6509654])
+    //     console.log(compare[0]);
+    //     console.log(compare[1]);
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("different products compareLaptops(productsListSKU)")
+    // compare = 0;
+    // try {
+    //     compare = await funcProducts.compareLaptops([6447818, 6477100, 6477093, 6502230, 6487439]);
+    //     console.log(compare[0]);
+    //     console.log(compare[1]);
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("comparePhones(productsListSKU)")
+    // compare = 0;
+    // try {
+    //     compare = await funcProducts.comparePhones([6487439, 6487254, 6468291, 6520023, 6487356]);
+    //     console.log(compare[0]);
+    //     console.log(compare[1]);
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("different products comparePhones(productsListSKU)")
+    // compare = 0;
+    // try {
+    //     compare = await funcProducts.comparePhones([6447818, 6477100, 6477093, 6502230, 6487439]);
+    //     console.log(compare[0]);
+    //     console.log(compare[1]);
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("compareTablets(productsListSKU)")
+    // compare = 0;
+    // try {
+    //     compare = await funcProducts.compareTablets([6517642, 6492318, 6340608, 4263701, 6461942]);
+    //     console.log(compare[0]);
+    //     console.log(compare[1]);
+    // } catch (e) {
+    //     console.log(e)
+    // }
+    // console.log()
+    // console.log("different products compareTablets(productsListSKU)")
+    // compare = 0;
+    // try {
+    //     compare = await funcProducts.compareTablets([6461942, null, 6477093, 6340498, 6487439]);
+    //     console.log(compare[0]);
+    //     console.log(compare[1]);
+    // } catch (e) {
+    //     console.log(e)
+    // }
 
-    console.log('Products Done!');
+    // console.log('Products Done!');
 
 
     let users = [
         {
-            "username": "sagar776",
-            "password": "$2b$07$r1vPthVJOAcQBiywyxERIOfGEKgB7rjW8BJkSUpHwyZyuHsXwcsPm",
-            "firstName": "Sagar",
-            "lastName": "Mathada",
-            "email": "sagara199@gmail.com",
+            "username": "johndoe",
+            "password": "Test.1234",
+            "firstName": "John",
+            "lastName": "Doe",
+            "email": "johndoe@gmail.com",
             "gender": "man",
             "userType": "user",
             "history": [
-              6447818,
-              6478315,
-              6507126,
-              6443068,
-              6443398,
-              6443288,
-              6518252,
-              6443179,
-              6443399,
-              6461943,
-              6461925
+                6447818,
+                6478315,
+                6507126,
+                6443068,
+                6443398,
+                6443288,
+                6518252,
+                6443179,
+                6443399,
+                6461943,
+                6461925
             ],
             "wishlist": [
-              6478315,
-              6507126,
-              6443179,
-              6447818
+                6478315,
+                6507126,
+                6443179,
+                6447818
             ],
             "dislikedReviews": [],
             "likedReviews": []
-          },
-          {
-            "username": "manudeep123",
-            "password": "$2b$07$xUYPgaVmLBiuLQw5UufUsejm17JAKusWUXVWdi5wTorvop0/IsNEm",
-            "firstName": "Manudeep",
-            "lastName": "Reddy",
-            "email": "manudeep@gmail.com",
+        },
+        {
+            "username": "admin123",
+            "password": "Admin.123",
+            "firstName": "Admin",
+            "lastName": "User",
+            "email": "admin@gmail.com",
             "gender": "man",
-            "userType": "user",
+            "userType": "admin",
             "wishlist": [],
             "history": [],
-            "dislikedReviews": [],
-            "likedReviews": []
-          }
+            "likedReviews": [],
+            "dislikedReviews": []
+        }
     ]
 
-
-
+    for (let user of users) {
+        await userData.seedUser(user);
+    }
+    console.log("Users done");
     await dbConnection.closeConnection();
 };
 

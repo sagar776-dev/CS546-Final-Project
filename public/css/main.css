@@ -8,6 +8,10 @@
   padding: 10px;
 }
 
+.signup-page .signup-url {
+  color: rgb(44, 0, 146)
+}
+
 .signup-page .form-group .form-control {
   width: 100%;
 }
@@ -37,8 +41,75 @@
   width: min-content;
 }
 
-.compareDivRow col{
-  max-width:min-content;
+.compareDivRow col {
+  max-width: min-content;
+}
+
+
+.add-product .product-add-form .spec-div-laptops {
+  display: none;
+}
+
+.add-product .product-add-form .spec-div-phones {
+  display: none;
+}
+
+.add-product .product-add-form .spec-div-tablets {
+  display: none;
+}
+
+.add-product .error-div {
+  background-color: rgb(249, 111, 111);
+}
+
+.update-product .product-update-form .update-inputs {
+  display: none;
+}
+
+.update-product .product-update-form .spec-div-laptops {
+  display: none;
+}
+
+.update-product .product-update-form .spec-div-phones {
+  display: none;
+}
+
+.update-product .product-update-form .spec-div-tablets {
+  display: none;
+}
+
+.update-product .error-div {
+  background-color: rgb(249, 111, 111);
+}
+
+
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;
+}
+
+#content-wrap-product {
+  padding-bottom: 2.5rem;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+}
+
+.page-link {
+  color: rgb(0, 14, 207);
+}
+
+.dark-blue {
+  color: rgb(0, 14, 207);
 }
 
 /* [data-theme="dark"]{
@@ -46,7 +117,7 @@
   color: #eee;
 } */
 
- /* body > *{
+/* body > *{
   background-color: #111 !important;
   color: #eee;
 }
@@ -69,4 +140,3 @@ p, h1, h2, h3, h4, h5, h6{
 p, h1, h2, h3, h4, h5, h6{
   color: aliceblue;
 } */
-

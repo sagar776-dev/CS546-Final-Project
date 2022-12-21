@@ -80,7 +80,7 @@ router
       
       //res.redirect('/api/products/' + product_category + '/' + req.params.id);
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       res.status(500).json({ error: e.message, e, e });
     }
 

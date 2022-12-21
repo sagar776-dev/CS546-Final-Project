@@ -72,8 +72,8 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     // handle the error
-                    console.log(xhr);
-                    console.log(error);
+                    //console.log(xhr);
+                    //console.log(error);
                     errorDiv.removeClass("hidden");
                     errorLi.append($("<li>").text(xhr.responseJSON.e));
                 }

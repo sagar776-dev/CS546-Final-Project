@@ -7,7 +7,7 @@ $(document).ready(function () {
       url: '/api/reviews/' + reviewId + '/like',
       type: 'POST',
       success: function (response) {
-        console.log('Like count increased successfully');
+        //console.log('Like count increased successfully');
         // Increment the like count by 1 and update the button text
         likeCount = response.likeCount
         dislikeCount = response.dislikeCount
@@ -26,7 +26,7 @@ $(document).ready(function () {
       url: '/api/reviews/' + reviewId + '/dislike',
       type: 'POST',
       success: function (response) {
-        console.log('Dislike count increased successfully');
+        //console.log('Dislike count increased successfully');
         // Increment the dislike count by 1 and update the button text
         let dislike = parseInt(dislikeCount)
         dislike = response.dislikeCount;
